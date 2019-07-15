@@ -3,10 +3,10 @@
  * includes Vue and other libraries. It is a great starting point when
  * building robust, powerful web applications using Vue and Laravel.
  */
-require('./jQuery-3.4.1.min');
-require('./sticky-sidebar.min');
-require('./datepicker.min.js');
-require('./leaflet.js');
+// require('./jQuery-3.4.1.min.js');
+require('./sticky-sidebar.min.js');
+// require('./datepicker.min.js');
+// require('./leaflet.js');
 
 $.easing.custom = function (x, t, b, c, d) {
 	if ((t/=d/2) < 1) return c/2*t*t + b;
