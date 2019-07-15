@@ -104,7 +104,7 @@
         </footer>
     </div>
     <!-- Scripts -->
-    <script src="{{ asset('js/jQuery-3.4.1.min.js') }}"></script>
+    <script src="{{ asset('js/jquery-3.4.1.min.js') }}"></script>
     <script src="{{ asset('js/app.js') }}"></script>
 </body>
 </html>

@@ -3,7 +3,7 @@
  * includes Vue and other libraries. It is a great starting point when
  * building robust, powerful web applications using Vue and Laravel.
  */
-// require('./jQuery-3.4.1.min.js');
+// require('./jquery-3.4.1.min.js');
 require('./sticky-sidebar.min.js');
 // require('./datepicker.min.js');
 // require('./leaflet.js');
