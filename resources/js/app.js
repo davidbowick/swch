@@ -6,6 +6,7 @@
 require('./jQuery-3.4.1.min');
 require('./sticky-sidebar.min');
 require('./datepicker.min.js');
+require('./leaflet.js');
 
 $.easing.custom = function (x, t, b, c, d) {
 	if ((t/=d/2) < 1) return c/2*t*t + b;

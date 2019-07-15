@@ -69,7 +69,8 @@ class ShowcasesTableSeeder extends Seeder
 		App\Showcase::create([
 			'venue'=>'David\'s Place',
 			'date_time'=>'2019-07-22',
-			'address'=>'1838 Barry Ave. #12'
+			'address'=>'1838 Barry Ave. #12',
+			'active'=>1
 		]);
 	}
 }
