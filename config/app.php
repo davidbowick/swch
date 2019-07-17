@@ -14,6 +14,7 @@ return [
     */
 
     'name' => env('APP_NAME', '[SW/CH]'),
+    'deploy_secret' => env('APP_DEPLOY_SECRET'),
 
     /*
     |--------------------------------------------------------------------------
