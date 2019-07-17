@@ -442,11 +442,12 @@ select {
 #main-content {
     padding-top: 52px;
     background: white;
+    padding-bottom: $gutter-site;
 }
 .main-footer {
     background: #f0f0f0;
     padding: $gutter-site 0;
-    margin-top: $gutter-site;
+    // margin-top: $gutter-site;
     li {
         line-height: 1.8;
     }
