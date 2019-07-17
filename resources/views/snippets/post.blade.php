@@ -73,12 +73,12 @@
 			</div>
 			@endforeach
 			@endif
-			<form action="/posts/{{ $post->id }}/comments" method="POST" class="comment-form">
+			<form action="/posts/{{ $post->id }}/comments" method="POST" class="comment-form" autocomplete="off">
 				@csrf
 				<input name="comment" type="text" placeholder="What do you think?"></textarea>
 				<input type="hidden" value="{{ Auth::id() }}" name="user_id">
 				<input type="hidden" value="{{ $post->id }}" name="post_id">
-				<button type="submit" >Add Comment</button>
+				<button class="btn btn--dark" type="submit" >Submit</button>
 			</form>
 		</div>
 	</div>

@@ -70,6 +70,8 @@ class ShowcasesTableSeeder extends Seeder
 			'venue'=>'David\'s Place',
 			'date_time'=>'2019-07-22',
 			'address'=>'1838 Barry Ave. #12',
+			'lat'=>'34.0398158',
+			'lng'=>'-118.4529809',
 			'active'=>1
 		]);
 	}

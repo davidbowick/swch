@@ -6,7 +6,15 @@
 // require('./jquery-3.4.1.min.js');
 require('./sticky-sidebar.min.js');
 // require('./datepicker.min.js');
-// require('./leaflet.js');
+require('./leaflet.js');
+
+function isMobile() {
+   if(window.innerWidth <= 600) {
+     return true;
+   } else {
+     return false;
+   }
+}
 
 $.easing.custom = function (x, t, b, c, d) {
 	if ((t/=d/2) < 1) return c/2*t*t + b;
@@ -54,6 +62,12 @@ function debounce(func, wait, immediate) {
 };
 
 $(function() {
+	if(isMobile()){
+		$(document).on('click','.main-nav__user-link',function(e) {
+			e.preventDefault();
+			$('.user-drop-wrap').toggleClass('show');
+		});
+	}
 	/* Show lyrics on click */
 	$(document).on('click','.show-lyrics',function(e) {
 		console.log('boo');
@@ -63,7 +77,12 @@ $(function() {
 	/* Show comments on click */
 	$(document).on('click','.post__comment-link',function(e) {
 		e.preventDefault();
-		$(this).closest('.post').find('.comments').slideToggle();
+		var $this = $(this);
+		$this.closest('.post').find('.post__comments').slideToggle('fast',function() {
+			if($(this).is(':visible')) {
+				$(this).find('input[name="comment"]').focus();
+			}
+		});
 	});
 	$(document).on('click', '.post_player .play-pause-btn', function(e) {
 		var $this = $(this);
@@ -141,11 +160,6 @@ $(function() {
 			r.success ? $this.addClass('liked') : $this.removeClass('liked');
 			$this.find('.like-count').text(r.total_likes);
 		});
-	});
-	$(document).on('click','.post__comment-link',function(e) {
-		e.preventDefault();
-		var $this = $(this);
-		$this.closest('.post').find('.post__comments').slideToggle();
 	});
 	$('.comment-form').submit(function(e) {
 		var $this = $(this);
@@ -228,7 +242,7 @@ $(function() {
 	});
 
  	// console.log($('.sidebar__inner').data('sticky'));
- 	if($('.sidebar__inner').data('sticky') == true) {
+ 	if($('.sidebar__inner').data('sticky') == true && isMobile == false ) {
  		var sidebar = new StickySidebar('.sidebar', {
  			containerSelector: '#page-content',
  			innerWrapperSelector: '.sidebar__inner',
@@ -288,6 +302,19 @@ $(function() {
  			$(usernameInput).val(generateUsername);
  		}
  	},500));
+
+ 	// if($('#showcase-map').length && showcaseLat && showcaseLng) {
+ 	// 	// console.log(showcaseLat,showcaseLng);
+ 	// 	// // var mymap = L.map('showcase-map').setView([51.505, -0.09], 17);
+ 	// 	// let map = L.map('showcase-map', {
+ 	// 	// 	zoomControl: false,
+ 	// 	// 	center: L.latLng(41.593220, -90.573187),
+ 	// 	// 	zoom: 11,
+ 	// 	// 	minZoom: 4,
+ 	// 	// 	maxZoom: 19
+ 	// 	// 	// layers: [this.mapService.baseMaps.Esri]
+ 	// 	// });
+ 	// }
  });
 
 

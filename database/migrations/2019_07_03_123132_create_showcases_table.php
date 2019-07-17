@@ -18,6 +18,8 @@ class CreateShowcasesTable extends Migration
             $table->string('venue');
             $table->dateTime('date_time');
             $table->string('address');
+            $table->string('lat')->nullable();
+            $table->string('lng')->nullable();
             $table->boolean('active')->default(0);
             $table->timestamps();
         });

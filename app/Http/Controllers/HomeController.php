@@ -30,8 +30,10 @@ class HomeController extends Controller
         // dd('what?');
         $prompts = Prompt::where('active',1)->take(2)->get();
 
-        $showcase = Showcase::where('active',1)->first();
-        $users_attending = Like::where('likeable_id',$showcase->id)->where('likeable_type','App\Showcase')->count();
+        $showcase = Showcase::where('active',1)->firstOrFail();
+        if($showcase) {
+            $users_attending = Like::where('likeable_id',$showcase->id)->where('likeable_type','App\Showcase')->count();
+        }
 
         $top_posts = Post::withCount('likes')->orderByDesc('likes_count')->get();
         if(Auth::user()) {

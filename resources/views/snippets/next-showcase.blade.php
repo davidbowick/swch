@@ -8,6 +8,8 @@
         <span class="icon"><i class="fa fa-{{ $showcase->isLiked ? 'thumbs-up' : 'question' }}"></i></span>
         <span class="button-text">{{ $showcase->isLiked ? 'I\'ll Be There!' : 'Be there?' }}</span>
     </button>
+    <br/><br/>
+    <a class="is-link" href="/showcase/{{ $showcase->id }}">View More</a>
     @if ($users_attending)
     <hr class="hr--invisible" >
     <p class="grey">{{$users_attending}} user{{ $users_attending > 1 ? 's' : '' }} attending</p>

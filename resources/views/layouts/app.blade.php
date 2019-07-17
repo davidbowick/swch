@@ -11,7 +11,7 @@
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>
-<body class="{{ Auth::user() ? 'user--logged-in' : 'no-user' }}">
+<body class="{{ Auth::user() ? 'user--logged-in' : 'no-user' }} {{ empty($body_class) ? '' : $body_class }}">
     <div id="app">
         <header id="main-header">
             <nav class="main-nav">
@@ -24,7 +24,7 @@
                         @if(Auth::user()->type == 'admin')
                         <a class="main-nav__admin-link" href="/admin">Admin</a>
                         @endif 
-                        <div class="top-search-wrapper">
+                        <div class="top-search-wrapper small--hide">
                             <form method="GET" action="/search" id="top-search">                               
                                 <input id="ts" type="text" placeholder="Search" name="q" value="" autocomplete="off"> 
                                 <input class="hidden" type="submit" value="Submit"> 
@@ -66,7 +66,7 @@
         </main>
         <footer class="main-footer clearfix">
             <div class="container">
-                <div class="even-columns">
+                <div class="even-columns small--flex-wrap small--text-center">
                     <div class="even-column">
                         <img src="/images/songwriting-challenge.png" width="100" alt="Songwriting Challenge">
                     </div>

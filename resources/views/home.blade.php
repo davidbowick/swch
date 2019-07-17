@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('content')
-<div id="page-content" class="flex">
-    <div class="sidebar">
+<div id="page-content" class="flex small--flex-wrap">
+    <div class="sidebar small--one-whole">
         <div class="sidebar__inner" data-sticky="true">
             @if ($prompts->count())
             <div class="current-prompts">
@@ -18,7 +18,7 @@
             @endif
         </div>
     </div>
-    <div class="main">
+    <div class="main small--one-whole">
         @if ($posts->count())
         <h2>Current Submissions</h2>
         @foreach ($posts as $post)

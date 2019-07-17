@@ -1,8 +1,8 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="flex">
-	<div class="sidebar one-third ">
+<div class="flex small--flex-wrap">
+	<div class="sidebar one-third small--one-whole ">
 		<div class="sidebar__inner">
 			<h2>Remember the rules</h2>
 			<div class="rte">
@@ -16,7 +16,7 @@
 			</div>
 		</div>
 	</div>
-	<div class="main">
+	<div class="main small--one-whole">
 		<h1 class="title">Submit New Song</h1>
 		<form enctype="multipart/form-data" method="POST" action="/posts">
 			@csrf
