@@ -132,5 +132,10 @@ class LikeablesTableSeeder extends Seeder
 			'likeable_id'=>1,
 			'likeable_type'=>'App\Showcase'
 		]);
+		App\Like::create([
+			'user_id'=>2,
+			'likeable_id'=>1,
+			'likeable_type'=>'App\User'
+		]);
 	}
 }

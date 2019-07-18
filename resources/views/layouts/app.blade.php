@@ -92,11 +92,19 @@
                             <li><a href="/contact">Contact</a></li>
                         </ul>
                     </div>
-                    <div class="even-column">
+                    <div class="even-column newsletter-column">
                         <h4>Stay up-to-date</h4>
-                        <form class="footer-signup flex" action="" method="POST">
-                            <input type="text" value="" name="email" placeholder="Email">
-                            <button class="btn btn--dark" type="submit">Sign up!</button>
+                        <form action="https://davidbowick.us12.list-manage.com/subscribe/post?u=5035c57f5d2a06c796c105e76&amp;id=754537b934" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate footer-signup" target="_blank" novalidate>
+                            <div class="field flex">
+                                <label class="visually-hidden" for="mce-EMAIL">Email Address </label>
+                                <input type="email" value="" placeholder="Email Address" name="EMAIL" class="required email" id="mce-EMAIL">
+                                <button class="btn btn--dark" type="submit">Sign up!</button>
+                            </div>
+                            <div id="mce-responses" class="clear">
+                                <div class="response" id="mce-error-response" style="display:none"></div>
+                                <div class="response" id="mce-success-response" style="display:none"></div>
+                            </div>    <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
+                            <div style="position: absolute; left: -5000px;" aria-hidden="true"><input type="text" name="b_5035c57f5d2a06c796c105e76_754537b934" tabindex="-1" value=""></div>
                         </form>
                     </div>
                 </div>

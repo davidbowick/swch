@@ -19,7 +19,7 @@
 </div>
 <div class="flex flex--wrap user--followers-list">
 	@foreach($user->likes as $follower)
-		<a class="user-mini-link one-sixth" href="/{{$follower->username}}"><img width="30" src="/storage/uploads/avatars/{{$follower->avatar}}"></a>
+		<a data-tooltip="{{$follower->name}}" class="user-mini-link one-sixth" href="/{{$follower->username}}"><img width="30" src="/storage/uploads/avatars/{{$follower->avatar}}"></a>
 	@endforeach
 </div>
 @if ($user->profile)

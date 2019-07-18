@@ -29,12 +29,10 @@ class HomeController extends Controller
     {
         // dd('what?');
         $prompts = Prompt::where('active',1)->take(2)->get();
-
         $showcase = Showcase::where('active',1)->firstOrFail();
         if($showcase) {
             $users_attending = Like::where('likeable_id',$showcase->id)->where('likeable_type','App\Showcase')->count();
         }
-
         $top_posts = Post::withCount('likes')->orderByDesc('likes_count')->get();
         if(Auth::user()) {
            $user = Auth::user();
@@ -44,5 +42,27 @@ class HomeController extends Controller
         } else {
             return view('welcome');
         }
+    }
+
+    public function welcome() 
+    {
+
+        $prompts = Prompt::where('active',1)->take(2)->get();
+        $showcase = Showcase::where('active',1)->firstOrFail();
+        if($showcase) {
+            $users_attending = Like::where('likeable_id',$showcase->id)->where('likeable_type','App\Showcase')->count();
+        }
+        $top_posts = Post::withCount('likes')->orderByDesc('likes_count')->get();
+        if(Auth::user()) {
+           $user = Auth::user();
+           $userIds = Like::where('user_id',$user->id)->get()->toArray();
+           // dd($userIds);
+           $posts = Post::whereIn('user_id',$userIds)->get();
+           dd($posts);
+           return view('newcomer',compact('posts','prompts','showcase','users_attending','user','top_posts'));
+        } else {
+            return redirect('/');
+        }
+
     }
 }
