@@ -94,7 +94,7 @@
                     </div>
                     <div class="even-column newsletter-column">
                         <h4>Stay up-to-date</h4>
-                        <form action="https://davidbowick.us12.list-manage.com/subscribe/post?u=5035c57f5d2a06c796c105e76&amp;id=754537b934" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate footer-signup" target="_blank" novalidate>
+                        <form action="https://davidbowick.us12.list-manage.com/subscribe/post?u=5035c57f5d2a06c796c105e76&amp;id=754537b934" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate footer-signup" target="_blank" novalidate autocomplete="off">
                             <div class="field flex">
                                 <label class="visually-hidden" for="mce-EMAIL">Email Address </label>
                                 <input type="email" value="" placeholder="Email Address" name="EMAIL" class="required email" id="mce-EMAIL">

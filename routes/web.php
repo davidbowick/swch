@@ -17,6 +17,8 @@ Route::get('/','HomeController@index', function () {
 
 Route::get('/welcome','HomeController@welcome');
 
+Route::get('/contact','PageController@contact');
+
 Auth::routes();
 Route::get('/logout', '\App\Http\Controllers\Auth\LoginController@logout');
 
@@ -27,6 +29,8 @@ Route::get('/admin','AdminController@admin')
 # Admin 
 Route::resource('/admin/prompts','PromptController');
 Route::resource('/admin/showcases','ShowcaseController');
+Route::resource('/admin/faqs','FaqController');
+Route::get('/faq','FaqController@faqPage');
 
 # Search
 Route::get('/search','SearchController@search');
@@ -57,5 +61,7 @@ Route::get('/{username}/edit','ProfilesController@edit');
 Route::post('/update-profile/{username}','ProfilesController@update');
 Route::get('/{username}/{param}','ProfilesController@showSinglePost');
 Route::get('/user/like/{id}',['as' => 'user.like', 'uses' => 'LikeController@likeUser']);
+
+
 
 // Route::post('/deploy','DeployController@deploy');

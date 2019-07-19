@@ -54,6 +54,9 @@ ul {
         margin-bottom: 1em;
     }
 }
+.rte p {
+    line-height: 1.618;
+}
 html,body {
     padding: 0;
     margin: 0;
@@ -138,6 +141,11 @@ textarea
     font-size: 16px;
     font-family: 'gm';
     padding: 10px;
+    outline: 0;
+    &:focus {
+        border-color: $teal;
+        box-shadow: 0 0 3px $teal;
+    }
 }
 select {
     display: block;
@@ -187,6 +195,7 @@ select {
 }
 .btn--primary {
     min-width: 200px;
+    max-width: 100%;
     font-size: 18px;
     background-color: #437588;
     background: linear-gradient(#559eae,#437588) !important;
@@ -839,7 +848,7 @@ body.no-user .main {
     @include arrow-top(10px, #ebebeb, 0, transparent, 45px);
     input[type=text] {
         background: #ebebeb;
-        border: 0;
+        border-color: transparent;
         font-size: 13px;
     }
     input[type=submit] {
@@ -1288,4 +1297,13 @@ time.icon span {
 [data-tooltip]:hover:after {
   visibility: visible;
   opacity: 1;
+}
+
+.faq__item {
+    margin-top: 2em;
+    padding-top: 2em;
+    border-top: 1px solid #f0f0f0;
+    .faq__question {
+        margin-bottom: .25em;
+    }
 }
