@@ -11,7 +11,7 @@
 </div>
 <hr class="hr--invisible">
 <div class="flex flex--align-center flex--justify-space-between">
-	<a href="/user/like/{{ $user->id }}" class="btn follow-btn {{ $user->isLiked ? 'liked' : '' }}">
+	<a href="/user/like/{{ $user->id }}" class="btn no-link follow-btn {{ $user->isLiked ? 'liked' : '' }}">
 		<i class='fa fa-star'></i>
 		<span class="like-text">{{ $user->isLiked ? 'Following' : 'Follow' }}</span>
 	</a>

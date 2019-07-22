@@ -94,15 +94,14 @@
                     </div>
                     <div class="even-column newsletter-column">
                         <h4>Stay up-to-date</h4>
-                        <form action="https://davidbowick.us12.list-manage.com/subscribe/post?u=5035c57f5d2a06c796c105e76&amp;id=754537b934" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate footer-signup" target="_blank" novalidate autocomplete="off">
+                        <form action="https://davidbowick.us12.list-manage.com/subscribe/post-json?u=5035c57f5d2a06c796c105e76&amp;id=754537b934&c=?" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate footer-signup" target="_blank" novalidate autocomplete="off">
                             <div class="field flex">
                                 <label class="visually-hidden" for="mce-EMAIL">Email Address </label>
                                 <input type="email" value="" placeholder="Email Address" name="EMAIL" class="required email" id="mce-EMAIL">
                                 <button class="btn btn--dark" type="submit">Sign up!</button>
                             </div>
-                            <div id="mce-responses" class="clear">
-                                <div class="response" id="mce-error-response" style="display:none"></div>
-                                <div class="response" id="mce-success-response" style="display:none"></div>
+                            <div id="mce-responses" class="alert">
+                                
                             </div>    <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
                             <div style="position: absolute; left: -5000px;" aria-hidden="true"><input type="text" name="b_5035c57f5d2a06c796c105e76_754537b934" tabindex="-1" value=""></div>
                         </form>
@@ -110,6 +109,35 @@
                 </div>
             </div>
         </footer>
+    </div>
+    <div class="main-player" data-song-id="0">
+        <div class="flex flex--align-center">
+            <audio class="main-player__audio" src=""></audio>
+            <div class="main-player__image"></div>
+            <div class="main-player__title"></div>
+            <a class="main-player__prompt" href="/prompts/etc"><i class="fa fa-tag"></i> <span class="main-player__prompt-name"></span></a>
+            <div class="main-player__transport flex flex--align-center">
+                <a href="#" class="play-pause-btn no-link">
+                    <i class="fa fa-play"></i> 
+                </a>
+                <div class="main-player__volume-wrapper">
+                    <i class="fa fa-volume-up"></i>
+                   {{--  <div class="volume-control">
+                        <input class="volume" type="range" value="100" max="100">
+                    </div>   --}}
+                </div>
+            </div>
+
+            <div class="main-player__playbar-wrapper flex flex--align-center">
+                <span class="main-player__current-time"></span>
+                <div class="main-player__playbar">
+                    <div class="main-player__playbar--loading"></div>
+                    <div class="main-player__playbar--progress"></div>
+                </div>
+                <span class="main-player__total-time"></span>
+            </div>
+            <a href="/post/like/" class="no-link main-player__like"><i class="fa fa-heart"></i></a>
+        </div>
     </div>
     <!-- Scripts -->
     <script src="{{ asset('js/jquery-3.4.1.min.js') }}"></script>

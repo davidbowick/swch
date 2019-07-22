@@ -17,6 +17,7 @@ class DatabaseSeeder extends Seeder
         $this->call(ProfilesTableSeeder::class);
         $this->call(PostsTableSeeder::class);
         $this->call(LikeablesTableSeeder::class);
+        $this->call(FaqTableSeeder::class);
     }
 }
 class UsersTableSeeder extends Seeder 
@@ -86,7 +87,12 @@ class ProfilesTableSeeder extends Seeder
 			'website'=>'http://davidbowick.com',
 			'bio'=>'Inspiration is an impatient mistress',
 			'city'=>'Los Angeles',
-			'state'=>'CA'
+			'state'=>'CA',
+			'country'=>'United States',
+			'facebook_url'=>'https://facebook.com/davidbowick',
+			'twitter_url'=>'https://twitter.com/davidbowick',
+			'youtube_url'=>'https://youtube.com/davidbowick',
+			'instagram_url'=>'https://instagram.com/davidbowick'
 		]);
 	}
 }
@@ -136,6 +142,17 @@ class LikeablesTableSeeder extends Seeder
 			'user_id'=>2,
 			'likeable_id'=>1,
 			'likeable_type'=>'App\User'
+		]);
+	}
+}
+class FaqTableSeeder extends Seeder 
+{
+	public function run() 
+	{
+		DB::table('faqs')->delete();
+		App\Faq::create([
+			'question'=>'What\'s the deal with airline FAQs?',
+			'answer'=>'I mean what is the deal!?'
 		]);
 	}
 }

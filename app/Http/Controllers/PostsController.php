@@ -35,17 +35,18 @@ class PostsController extends Controller
             'slug' => str_slug(request()->get('title'))
         ]);
         $request->validate([
-            'title' => 'required|min:3|max:255|regex:[A-Za-z1-9]',
+            'title' => 'required|min:3|max:255|regex:/(^[A-Za-z0-9 ]+$)+/',
             'user_id' => 'required',
             'slug' => 'required',
             'prompt_id' => 'required',
-            'filename' => 'nullable|mimes:audio/mp3,mpga,mp3|max:8000',
+            'filename' => 'nullable|mimes:audio/mp3,mpga,mp3|max:12000',
             'lyrics' => 'nullable|regex:[A-Za-z1-9]'
         ]);
         if($request->filename) {
             // dd($request->filename);
             $fileName = $user->id.''.$request->slug.'.'.$request->filename->getClientOriginalExtension();
-            $request->filename->storeAs('storage/uploads/','mp3/'.$fileName);
+            $request->filename->storeAs('uploads/mp3s',$fileName);
+            // $request->avatar->storeAs('uploads/avatars',$avatarName);
             $request->filename = $fileName;
         }
         Post::create([

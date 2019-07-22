@@ -13,7 +13,7 @@
 	@endif
 </h1>
 @foreach ($faqs as $faq)
-<div class="faq__item">
+<div class="faq__item anim-in">
 	<h3 class="faq__question">
 		{{ $faq->question }}
 		@if(Auth::user())

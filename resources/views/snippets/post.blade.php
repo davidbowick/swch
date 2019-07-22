@@ -1,4 +1,4 @@
-<div class="post anim-in" data-prompt="{{ $post->prompt->id}}" data-song-id="{{ $post->id }}" data-plays="" data-prompt-title="{{ $post->title }}">
+<div class="post anim-in" data-prompt="{{ $post->prompt->id}}" data-prompt-title="{{$post->prompt->title}}" data-prompt-slug="{{ $post->prompt->slug }}" data-song-id="{{ $post->id }}" data-plays="" data-title="{{ $post->title }}" data-audio="{{ $post->filename ? '/storage/uploads/mp3s/'.$post->filename : 'null' }}" data-user-name="{{$post->user->name}}">
 	<div class="post_player">
 		<div class="post__inner flex">
 			@if ($post->filename)
@@ -7,7 +7,7 @@
 			<div class="post__cover">
 				<img src="/storage/uploads/avatars/{{ $post->user->avatar }}">
 				@if ($post->filename)
-				<a href="/play/{{ $post->id }}" class="play-pause-btn"><i class="fa fa-play"></i></a>
+				<a href="/play/{{ $post->id }}" class="no-link play-pause-btn"><i class="fa fa-play"></i></a>
 				@endif
 			</div>
 			<div class="post__detail">
@@ -19,13 +19,13 @@
 				@endif
 				<div class="post__buttons">
 					@if ($post->filename)
-					<a href="/play/{{ $post->id }}" class="play-pause-btn">
+					<a href="/play/{{ $post->id }}" class="play-pause-btn no-link">
 						<i class="fa fa-play"></i> 
 						<span class="play-count">{{ $post->play_count }}</span>
 					</a>
 					@endif
 					<a  href="/post/like/{{ $post->id }}" 
-						class="like {{ $post->isLiked ? 'liked' : '' }}"
+						class="like {{ $post->isLiked ? 'liked' : '' }} no-link"
 						data-song-id="{{ $post->id }}" 
 						data-user-id="{{ $post->user_id }}">
 						<i class="fa fa-heart"></i> 
@@ -35,7 +35,7 @@
 						<i class="fa fa-tag"></i> 
 						{{ $post->prompt->title }}
 					</a>
-					<a href="#" class="post__comment-link">
+					<a href="#" class="post__comment-link no-link">
 						<i class="fa fa-comment"></i> 
 						<span class="comment-count">{{ $post->comments->count() }}</span>
 					</a>
@@ -46,7 +46,7 @@
 						<i class="fa fa-share"></i>
 					</a>
 					@if ($post->lyrics)
-					<a href="#" class="show-lyrics">LYRICS</a>
+					<a href="#" class="show-lyrics no-link">LYRICS</a>
 					@endif
 				</div>
 				<div class="bars" style="display: none;">

@@ -32,10 +32,16 @@
 			<div class="field">
 				<label for="title">Title</label>
 				<input id="title" type="text" name="title" placeholder="Title">
+				@error('title')
+				<div class="alert alert-danger" role="alert">{{ $message }}</div>
+				@enderror
 			</div>
 			<div class="field">
 				<label for="filename">Song File <i>(mp3 only)</i></label>
 				<input id="filename" type="file" name="filename">
+				@error('filename')
+				<div class="alert alert-danger" role="alert">{{ $message }}</div>
+				@enderror
 			</div>
 			<div class="field">
 				<label for="lyrics">Lyrics</label>

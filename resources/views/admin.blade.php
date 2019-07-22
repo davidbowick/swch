@@ -22,7 +22,7 @@
 		<a class="link--small" href="/admin/prompts">All Prompts</a>
 	</div>
 	
-	<div class="anim-in grid__item small--one-whole rte">
+	<div class="anim-in grid__item small--one-whole">
 		<h4>Showcases</h4>
 		@if ($showcase)
 			<a class="no-underline" href="/admin/showcases/{{$showcase->id}}/edit">
