@@ -7,6 +7,7 @@
 			@include('snippets.profile-sidebar')
 		</div>
 	</div>
+	
 	<div class="main small--one-whole">
 		@if ($user->posts->count())
 			@foreach ($user->posts as $post)

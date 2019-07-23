@@ -1,12 +1,12 @@
 @extends('layouts.app')
 @section('content')
-<div id="page-content" class="flex">
-	<div class="sidebar">
-		<div class="sidebar__inner">
+<div id="page-content" class="flex small--flex-wrap">
+	<div class="sidebar small--one-whole">
+		<div class="sidebar__inner" data-sticky="true">
 			@include('snippets.profile-sidebar')
 		</div>
 	</div>
-	<div class="main">
+	<div class="main small--one-whole">
 		@include('snippets.post')
 	</div>
 	@if (Auth::user())

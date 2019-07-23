@@ -240,7 +240,10 @@ $(function() {
 
 		countedMe = false;
 		NowPlaying.isPlaying = false;
-		var myIndex = $('.post[data-song-id="'+NowPlaying.currentPostId+'"]').index();
+		if(playlist.songs.length) {
+			var myIndex = playlist.songs.findIndex(x => x.id === NowPlaying.currentPostId);
+			console.log(myIndex);
+		}
 	});
 
 	$(document).on('click','.main-player .play-pause-btn',function(e) {
@@ -381,7 +384,8 @@ $(function() {
 	});
 
  	// console.log($('.sidebar__inner').data('sticky'));
- 	if($('.sidebar__inner').data('sticky') == true && isMobile == false ) {
+ 	if($('.sidebar__inner').data('sticky') === true && isMobile() === false ) {
+ 		console.log('sticky sidebar');
  		var sidebar = new StickySidebar('.sidebar', {
  			containerSelector: '#page-content',
  			innerWrapperSelector: '.sidebar__inner',

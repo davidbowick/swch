@@ -188,7 +188,10 @@ select {
     letter-spacing: 1px;
     text-decoration: none !important;
     color: #000;
-    max-width: 200px;
+    @include desktop {
+        max-width: 200px;    
+    }
+    
     border-radius: 3px;
     cursor: pointer;
 }
@@ -459,6 +462,9 @@ select {
     li {
         line-height: 1.8;
     }
+    .even-column:nth-child(1) {
+        margin-bottom: 2em;
+    }
 }
 .newsletter-column {
     min-width: 400px;
@@ -479,6 +485,18 @@ select {
         border-bottom-left-radius: 0;
         color: white;
         min-width: 90px;
+    }
+    .flex {
+        @include phone {
+            @include flex-direction(column);
+            input {
+                text-align: center;
+            }
+            .btn {
+                margin-top: 10px;
+                width: 100%;
+            }
+        }
     }
 }
 .breadcrumb {
@@ -818,8 +836,13 @@ body.no-user .main {
         color: $teal;
     }
 }
+.the-tag--mobile {
+    color: #999;
+    font-size: 14px;
+    display: block;
+    margin-bottom: 1em;
+}
 .post__comments {
-
     @include desktop {
         padding: 0 0 1em 100px;    
         font-size: 13px;
@@ -941,6 +964,7 @@ body.no-user .main {
 .anim-in {
     @include transition();
     opacity: 0;    
+    visibility: visible;
 }
 .come-in {
   @include transform(translateY(50px));

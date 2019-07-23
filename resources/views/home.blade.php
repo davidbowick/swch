@@ -34,10 +34,29 @@
         @endif
     </div>
     @if (Auth::user())
-<div class="submit-song__wrapper">
-    <a href="/posts/create" class="btn submit-song btn--primary">Submit a Song</a>
+    <div class="submit-song__wrapper">
+        <a href="/posts/create" class="btn submit-song btn--primary">Submit a Song</a>
+    </div>
+    @endif
 </div>
-@endif
-</div>
-
 @endsection
+
+@if ($posts->count())
+@section('scripts')
+<script>
+    var playlist = {};
+    playlist.songs = [];
+    @foreach ($posts as $post)
+    @if ($post->filename)
+    playlist.songs.push({
+        id: {{$post->id}},
+        title: "{{$post->title}}",
+        slug: "{{$post->slug}}",
+        file: "{{$post->filename}}"
+    });
+    @endif
+    @endforeach
+    console.log(playlist);
+</script>
+@endsection
+@endif
