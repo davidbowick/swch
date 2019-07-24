@@ -90,6 +90,7 @@ class PromptController extends Controller
     public function update(Request $request, Prompt $prompt)
     {
         // $prompt->update(request()->validate(['title','active']));
+        $prompt->update(request(['showcase_id','title']));
         $prompt->update([
             'active' => request()->has('active')
         ]);

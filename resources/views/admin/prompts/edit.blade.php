@@ -20,8 +20,9 @@
 		<label for="showcase">Showcase</label>
 		<div class="control">
 			<select name="showcase_id">
+				<option name="showcase_id" value="">Please Select a Showcase</option>
 			@foreach($showcases as $showcase) 
-			<option value="{{$showcase->id}}">{{ $showcase->venue }} | {{ $showcase->date_time->format('M j, Y - ga') }}</option>
+			<option value="{{$showcase->id}}" {{ ($prompt->showcase_id  == $showcase->id) ? 'selected' : '' }}>{{ $showcase->venue }} | {{ $showcase->date_time->format('M j, Y - ga') }}</option>
 			@endforeach
 			</select>
 			{{-- <input id="showcase" type="text" name="title" placeholder="Title" value="{{ $prompt->title}}"> --}}
@@ -29,9 +30,11 @@
 	</div>
 	@endif 
 	<div class="field">
+		<input id="is-active" type="checkbox" name="active[]" value="{{ $prompt->active }}" {{ $prompt->active ? 'checked' : '' }}>
 		<label for="is-active">
-			<input id="is-active" type="checkbox" name="active[]" value="{{ $prompt->active }}" {{ $prompt->active ? 'checked' : '' }}>
+			<span>
 			Active?
+		</span>
 		</label>
 	</div>
 	<button type="submit" class="btn btn--primary">Update</button>
