@@ -16,7 +16,7 @@ class DeployController extends Controller
         $output = shell_exec('shell-script.sh');
         chdir($old_path);
         echo $output;
-
+/*
     	$githubPayload = $request->getContent();
     	$githubHash = $request->header('X-Hub-Signature');
     	
@@ -35,6 +35,6 @@ class DeployController extends Controller
     		$process->run(function ($type, $buffer) {
     			echo $buffer;
     		});*/
-    	}
+    	}*/
     }
 }
