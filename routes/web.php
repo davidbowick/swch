@@ -62,6 +62,4 @@ Route::post('/update-profile/{username}','ProfilesController@update');
 Route::get('/{username}/{param}','ProfilesController@showSinglePost');
 Route::get('/user/like/{id}',['as' => 'user.like', 'uses' => 'LikeController@likeUser']);
 
-
-
 Route::post('/deploy','DeployController@deploy');
