@@ -61,9 +61,7 @@
         <div id="fade"></div>
         <main id="main-content" class="py-4 ">
             <div class="container">
-
                 @yield('content')
-                CHANGED back!!
             </div>
         </main>
         <footer class="main-footer clearfix">

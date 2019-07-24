@@ -20,6 +20,7 @@
 			<a class="btn" href="/admin/prompts/create">Add New</a>
 		</p>
 		<a class="link--small" href="/admin/prompts">All Prompts</a>
+		<hr class="hr--invisible">
 	</div>
 	
 	<div class="anim-in grid__item small--one-whole">
@@ -33,12 +34,14 @@
 			<a class="btn" href="/admin/showcases/create">Add New</a>
 		</p>
 		<a class="link--small" href="/admin/showcases">All Showcases</a>
+		<hr class="hr--invisible">
 	</div>
 	<div class="anim-in grid__item rte small--one-whole">
 		<h4>Users</h4>
 		@foreach ($users as $user)
 			@include('snippets.user-card')
 		@endforeach
+		<hr class="hr--invisible">
 	</div>
 	<div class="anim-in grid__item rte small--one-whole">
 		<h4>Submissions</h4>
@@ -53,6 +56,7 @@
 			</li>
 			@endforeach
 		</ul>
+		<hr class="hr--invisible">
 	</div>
 </div>
 @endsection

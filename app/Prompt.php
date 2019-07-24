@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Prompt extends Model
 {
     protected $fillable = [
-        'title', 'active','slug'
+        'title', 'active','slug','showcase_id'
     ];
     public function posts() 
     {

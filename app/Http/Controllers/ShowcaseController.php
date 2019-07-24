@@ -17,7 +17,8 @@ class ShowcaseController extends Controller
      */
     public function index()
     {
-        $showcases = Showcase::all();
+        // $showcases = Showcase::all()->orderBy('id', 'desc');
+        $showcases = Showcase::orderBy('id','desc')->get();
         return view('admin.showcases.index',compact('showcases'));
     }
 

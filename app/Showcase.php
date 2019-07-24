@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Showcase extends Model
 {
-    protected $fillable = ['venue','date_time','address','active'];
+    protected $fillable = ['venue','date_time','address','active','showcase_id'];
     protected $dates = ['date_time'];
     public function likes() 
     {

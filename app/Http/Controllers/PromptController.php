@@ -4,11 +4,12 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Prompt;
 use App\Post;
+use App\Showcase;
 use Auth;
 
 class PromptController extends Controller
 {
-    protected $fillable = ['title','active','slug'];
+    protected $fillable = ['title','active','slug','showcase_id'];
     /**
      * Display a listing of the resource.
      *
@@ -16,7 +17,8 @@ class PromptController extends Controller
      */
     public function index()
     {
-        $prompts = Prompt::all();
+        $prompts = Prompt::orderBy('id','desc')->get();
+        // $showcases = Showcase::orderBy('id','desc')->get();
         return view('admin.prompts.index',compact('prompts'));
     }
 
@@ -73,7 +75,9 @@ class PromptController extends Controller
      */
     public function edit(Prompt $prompt)
     {
-         return view('admin.prompts.edit',compact('prompt'));
+        // $showcases = Showcase::all();
+        $showcases = Showcase::orderBy('id','desc')->get();
+        return view('admin.prompts.edit',compact('prompt','showcases'));
     }
 
     /**

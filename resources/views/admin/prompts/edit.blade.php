@@ -15,6 +15,19 @@
 			<input id="title" type="text" name="title" placeholder="Title" value="{{ $prompt->title}}">
 		</div>
 	</div>
+	@if ($showcases)
+	<div class="field">
+		<label for="showcase">Showcase</label>
+		<div class="control">
+			<select name="showcase_id">
+			@foreach($showcases as $showcase) 
+			<option value="{{$showcase->id}}">{{ $showcase->venue }} | {{ $showcase->date_time->format('M j, Y - ga') }}</option>
+			@endforeach
+			</select>
+			{{-- <input id="showcase" type="text" name="title" placeholder="Title" value="{{ $prompt->title}}"> --}}
+		</div>
+	</div>
+	@endif 
 	<div class="field">
 		<label for="is-active">
 			<input id="is-active" type="checkbox" name="active[]" value="{{ $prompt->active }}" {{ $prompt->active ? 'checked' : '' }}>
