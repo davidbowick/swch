@@ -114,22 +114,13 @@
     </div>
     <div class="main-player" data-song-id="0">
         <div class="flex flex--align-center">
+        </div>
+        <div class="flex flex--align-center">
             <audio class="main-player__audio" src=""></audio>
             <div class="main-player__image"></div>
             <div class="main-player__title"></div>
             <a class="main-player__prompt" href="/prompts/etc"><i class="fa fa-tag"></i> <span class="main-player__prompt-name"></span></a>
-            <div class="main-player__transport flex flex--align-center">
-                <a href="#" class="play-pause-btn no-link">
-                    <i class="fa fa-play"></i> 
-                </a>
-                <div class="main-player__volume-wrapper">
-                    <i class="fa fa-volume-up"></i>
-                   {{--  <div class="volume-control">
-                        <input class="volume" type="range" value="100" max="100">
-                    </div>   --}}
-                </div>
-            </div>
-
+            
             <div class="main-player__playbar-wrapper flex flex--align-center">
                 <span class="main-player__current-time"></span>
                 <div class="main-player__playbar">
@@ -138,10 +129,31 @@
                 </div>
                 <span class="main-player__total-time"></span>
             </div>
-            <a href="/post/like/" class="no-link main-player__like"><i class="fa fa-heart"></i></a>
+            <div class="main-player__transport flex flex--align-center">
+                <a href="#" class="play-pause-btn no-link">
+                    <i class="fa fa-play"></i> 
+                </a>
+                <div class="main-player__volume-wrapper">
+                    <i class="fa fa-volume-up"></i>
+
+                    <div class="volume__sliderWrapper" role="slider" aria-valuemin="0" aria-valuemax="1" aria-label="Volume" aria-valuenow="0.73">
+                        <div class="volume__sliderInner">
+                          <div class="volume__sliderBackground"></div>
+                          <div class="volume__sliderProgress" style="height: 67.16px;"></div>
+                          <div class="volume__sliderHandle" style="top: 34.84px;">
+                              <div class="volume__sliderHandleInner"></div>
+                          </div>
+                      </div>
+                  </div>
+                </div>
+                <a href="/post/like/" class="no-link main-player__like"><i class="fa fa-heart"></i></a>
+            </div>
         </div>
     </div>
     <!-- Scripts -->
+    @if (Auth::user())
+    <script>var currentUser = {{Auth::user()->id}};</script>
+    @endif
     @yield('scripts')
     <script src="{{ asset('js/jquery-3.4.1.min.js') }}"></script>
     <script src="{{ asset('js/app.js') }}"></script>

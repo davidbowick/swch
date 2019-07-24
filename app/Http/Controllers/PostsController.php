@@ -65,4 +65,8 @@ class PostsController extends Controller
         $post->increment('play_count');
         return $post->play_count;
     }
+    public function getNextSong($id) {
+        $post = Post::with('likes')->with('user')->with('prompt')->where('id',$id)->firstOrFail();
+        return $post;
+    }
 }

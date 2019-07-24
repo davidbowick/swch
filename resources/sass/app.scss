@@ -225,6 +225,10 @@ select {
     color: white;
     // border-color: #dfdfdf #dfdfdf #dfdfdf !important;
 }
+.btn--small {
+    padding: 5px 10px;
+
+}
 .btn--full {
     width: 100%;
     max-width: 100%;
@@ -735,9 +739,14 @@ body.no-user .main {
     }
 }
 .post__cover {
-    width: 30px;
+    width: 50px;
     @include desktop {
     width: 100px;
+    }
+    @include phone {
+        position: absolute;
+        top: 0;
+        right: 0;
     }
     
     border-radius: 50%;
@@ -776,9 +785,10 @@ body.no-user .main {
     @include align-items(flex-start);
 }
 .post__detail {
-    padding: 0px 0 10px 10px;
+    padding: 0px 0 10px 0px;
     @include desktop {
         padding-top: 10px;
+        padding-left: 10px;
     }
     width: 100%;
     .bars {
@@ -810,12 +820,18 @@ body.no-user .main {
 .post_title {
     color: #6095A3;
     margin-bottom: .5em;
+    @include phone {
+        padding-right: 60px;
+    }
     margin-top: 0;
 }
 .post_artist {
     font-size: 12px;
     margin-bottom: 1em;
     display: block;
+     @include phone {
+        padding-right: 60px;
+    }
 }
 .post__buttons {
     padding-top: .5em;
@@ -838,7 +854,7 @@ body.no-user .main {
 }
 .the-tag--mobile {
     color: #999;
-    font-size: 14px;
+    font-size: 12px;
     display: block;
     margin-bottom: 1em;
 }
@@ -1096,10 +1112,14 @@ body.no-user .main {
     border-color: #ffeeba;
 }
 .admin-list {
-    margin-left: 1em;
+    // margin-left: 1em;
     li {
-        display: block;
-        margin: 1em 0;
+        // display: block;
+        margin-left: -1em;
+        padding: 1em;
+        &:nth-child(even) {
+            background: #f6f6f6;
+        }
     }
 }
 .admin-list__submissions {
@@ -1357,23 +1377,77 @@ $spacing: 15px;
 }
 .main-player__volume-wrapper {
     position: relative;
-    padding: 0 $spacing;
+    padding: $spacing;
     cursor: pointer;
-    // .volume-control {
-    //     position: absolute;
-    //     display: none;
-    //     bottom: 100%;
-    //     background: #f0f0f0;
-    //     width: 20px;
-    //     .volume {
-    //         -webkit-appearance: slider-vertical;
-    //         width: 20px;
-    //     }
-    // }  
-    // &:hover .volume-control {
-    //     display: block;
-    // }
+    margin-top: -$spacing;
+    margin-bottom: -$spacing;
 }
+.main-player__volume-slider {
+    display: none;
+    position: absolute;
+    bottom: 57px;
+    left: -100%;
+    height: 30px;
+    width: 100px;
+    padding: 10px;
+    background: #f0f0f0;
+    @include transform(rotate(270deg));
+    input {
+        border: 0 !important;
+    }
+}
+
+.volume__sliderWrapper {
+    display: none;
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    margin-left: -15px;
+    width: 30px;
+    height: 100px;
+    background: #f0f0f0;
+    box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.2);
+    padding: 10px;
+    .volume__sliderInner {
+        position: relative;
+        width: 100%;
+        height: 100%;
+    }
+    .volume__sliderBackground {
+        width: 2px;
+        background: #ccc;
+        position: absolute;
+        // top: 10px;
+        left: 50%;
+        top: 0;
+        height: 100%;
+        // bottom: 10px;
+    }
+    .volume__sliderProgress {
+        position: absolute;
+        // bottom: 10px;
+        bottom: 0;
+        background: $teal;
+        width: 2px;
+        left: 50%;
+    }
+    .volume__sliderHandle {
+        position: absolute;
+        padding: 10px;
+        left: -8px;
+        margin-top: -10px;
+    }
+    .volume__sliderHandleInner {
+        // position: absolute;
+        // left: 50%;
+        // margin-left: -3px;
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: $teal;
+    }
+}
+
 .main-player__image {
     width: 25px;
     border: 3px solid rgba(255,255,255,.5);
@@ -1413,12 +1487,12 @@ $spacing: 15px;
 }
 .main-player__playbar--loading {
     background: #ccc;
-    height: 1px;
+    height: 2px;
     width: 0%;
     position: absolute;
 }
 .main-player__playbar--progress {
-    height: 1px;
+    height: 2px;
     width: 0;
     background: $teal;
     position: absolute;
@@ -1427,4 +1501,11 @@ $spacing: 15px;
     &.liked {
         color: $teal;
     }
+}
+.inline-form {
+    display: inline-block;
+}
+
+.float-right {
+    float: right;
 }

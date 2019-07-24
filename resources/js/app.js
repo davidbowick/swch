@@ -148,7 +148,7 @@ $(function() {
 	    $mainBtn.attr('class', $item.hasClass('is-playing') ? 'fa fa-pause' : 'fa fa-play');
 	    
 	});
-
+    /*
 	$(document).on('click','.main-player__volume-wrapper',function(e) {
 		e.preventDefault();
 		var myIcon = $(this).find('i'),
@@ -173,6 +173,7 @@ $(function() {
 			// Cookies.set('volume', 1);
 		}
 	});
+	*/
 
 	var mainAudio = '.main-player__audio',
 		loadingIndicator = '.main-player__playbar--loading',
@@ -195,7 +196,12 @@ $(function() {
 	}
 	var pos = 0;
 	var countedMe = false;
-	$(mainAudioPlayer).bind('timeupdate',function() {
+	$(mainAudioPlayer).on("loadeddata", function() {
+		console.log('loaded');
+		audioFunctions();
+	});
+	function audioFunctions() {
+		$(mainAudioPlayer).bind('timeupdate',function() {
 		// console.log(mainAudioPlayer.currentTime);
 		// AUDIO_PLAYING = true;
 		// NowPlaying.isPlaying = true
@@ -217,8 +223,10 @@ $(function() {
 		var secondsTotal = parseInt(mainAudioPlayer.duration % 60, 10);
 		secondsTotal = (secondsTotal < 10 ? "0" : "") + secondsTotal;
 
-		$('.main-player__current-time').text(minutesElapsed+':'+secondsElapsed);
-		$('.main-player__total-time').text(minutesTotal+':'+secondsTotal);
+		if($.isNumeric(mainAudioPlayer.duration)) {
+			$('.main-player__current-time').text(minutesElapsed+':'+secondsElapsed);
+			$('.main-player__total-time').text(minutesTotal+':'+secondsTotal);
+		}
 		$(progressIndicator).css({width: pos + '%'});
 		// Update for all iterations on page.
 		if(!countedMe && pos >= 50) {
@@ -233,18 +241,53 @@ $(function() {
 	$(mainAudioPlayer).bind('ended',function() {
 		mainAudioPlayer.currentTime = 0;
 		$('.post[data-song-id="'+NowPlaying.currentPostId+'"')
-			.removeClass('is-playing');
+		.removeClass('is-playing');
 		$('.play-pause-btn i')
-			.removeClass('fa-pause')
-			.addClass('fa-play');
+		.removeClass('fa-pause')
+		.addClass('fa-play');
 
 		countedMe = false;
 		NowPlaying.isPlaying = false;
 		if(playlist.songs.length) {
 			var myIndex = playlist.songs.findIndex(x => x.id === NowPlaying.currentPostId);
-			console.log(myIndex);
+			var nextIndex = playlist.songs[myIndex+1].id;
+			if(nextIndex) {
+				$.get('/next/'+nextIndex,function(data) {
+					console.log(data);
+					nextSong(data);
+				});
+			}
 		}
 	});
+}
+	function nextSong(s) {
+		var mainAudio = '.main-player__audio';
+		$(mainAudio).attr('src','/storage/uploads/mp3s/'+s.filename);
+		$(mainAudio).get(0).load();
+		var promise = $(mainAudio).get(0).play();
+		if (promise) {
+		    promise.catch(function(error) { console.error(error); });
+		}
+		NowPlaying.isPlaying = true;
+		$('.main-player__title').html('<b><a href="/'+s.user.username+'">'+s.user.name+'</b><br/><a href="/'+s.user.username+'/'+s.slug+'">'+s.title+'</a>');
+		$('.main-player__image img').attr('src','/storage/uploads/avatars/'+s.user.avatar);
+		$('.main-player__prompt').attr('href','/prompts/'+s.prompt.slug);
+		$('.main-player__prompt-name').text(s.prompt.title);
+		$('.play-pause-btn i').removeClass('fa-pause').addClass('fa-play');
+		$('.main-player__transport .play-pause-btn i').removeClass('fa-play').addClass('fa-pause');
+		NowPlaying.currentPostId = s.id;
+		$('.main-player').attr('data-song-id',s.id);
+		console.log(NowPlaying.currentPostId);
+		var iLike = s.likes.findIndex(x => x.id === currentUser);
+		(iLike > -1) ? $('.main-player__like').addClass('liked') : $('.main-player__like').removeClass('liked');
+		
+		// console.log(myIndex);
+		// if(s.likes)
+		
+		$('.post[data-song-id="'+NowPlaying.currentPostId+'"').find('.play-pause-btn i').removeClass('.fa-play').addClass('fa-pause');
+
+	}
+	
 
 	$(document).on('click','.main-player .play-pause-btn',function(e) {
 		e.preventDefault();
@@ -257,7 +300,11 @@ $(function() {
 			btn.removeClass('fa-pause').addClass('fa-play');
 			NowPlaying.isPlaying = false;
 		} else {
-			$('.main-player__audio').get(0).play();
+			var promise = $('.main-player__audio').get(0).play();
+			// var promise = $(mainAudio).get(0).play();
+			if (promise) {
+				promise.catch(function(error) { console.error(error); });
+			}
 			btn.removeClass('fa-play').addClass('fa-pause');
 			NowPlaying.isPlaying = true;
 		}
@@ -315,6 +362,24 @@ $(function() {
 		postID = $(this).data('song-id');
 
 		getLike(postID);
+	});
+	$(document).on('change','.ajax-active input',function(e) {
+		e.preventDefault();
+		var $this = $(this),
+			form = $this.closest('form');
+		// $(this).closest('form').submit();
+		$.ajax({
+			url: form.attr('action'),
+			type: 'post',
+			data: form.serialize(),
+			dataType: 'json',
+			success: function(r) {
+				console.log('success!');
+			},
+			error: function(e) {
+				console.log('boo hissss!');
+			}
+		});
 	});
 	$(document).on('submit','.comment-form',function(e) {
 		e.preventDefault();
@@ -377,6 +442,8 @@ $(function() {
  			$this.next().text('Followers: '+r.total_likes);
  		});
 	});
+
+
 	
 
 	$(document).on('change keyup keydown paste cut','textarea',function() {
@@ -506,6 +573,53 @@ $(function() {
 			}
 		})
 	});	
+
+	/* Volume Slider */
+	var dragItem = $('.volume__sliderHandle');
+    var dragContainer = $('.volume__sliderInner');
+    var e = document.querySelector('.volume-slider-con');
+    var eInner = document.querySelector('.volume-slider');
+    var audio = $('.main-player__audio').get(0);
+    var drag = false;
+    dragItem.on('mousedown',function(ev){
+    	drag = true;
+    	updateBar(ev.clientY);
+    });
+    dragItem.on('mousemove',function(ev){
+    	if(drag){
+    		updateBar(ev.clientY);
+    	}
+    });
+    dragItem.on('mouseup',function(ev){
+    	drag = false;
+    });
+    var updateBar = function (y, vol) {
+    	var volume = dragItem;
+    	var percentage;
+        //if only volume have specificed
+        //then direct update volume
+        console.log('boo');
+        if (vol) {
+            percentage = vol * 100;
+        } else {
+            var position = y + volume.offset().top;
+            percentage = 100 * position / volume.height();
+        }
+        console.log(percentage);
+
+        if (percentage > 100) {
+            percentage = 100;
+        }
+        if (percentage < 0) {
+            percentage = 0;
+        }
+
+        //update volume bar and video volume
+        // eInner.style.width = percentage +'%';
+        $('.volume__sliderProgress').css('height', percentage +'%');
+        // audio.volume = percentage / 100;
+	};
+    
 
  });
 

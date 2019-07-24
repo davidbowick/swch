@@ -42,6 +42,7 @@ Route::get('/prompts/{param}','PromptController@showSingle');
 
 # Posts
 Route::get('/play/{id}','PostsController@increasePlayCount');
+Route::get('/next/{id}','PostsController@getNextSong');
 Route::resource('/posts','PostsController');
 Route::get('/post/like/{id}',['as' => 'post.like', 'uses' => 'LikeController@likePost']);
 

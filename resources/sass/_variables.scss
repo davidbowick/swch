@@ -30,3 +30,28 @@ $gutter-grid: 25px;
 	color: $grey;
 }
 
+/* Range Sliders */
+$track-color: #999 !default;
+$thumb-color: $teal !default;
+
+$thumb-radius: 3px !default;
+$thumb-height: 6px !default;
+$thumb-width: 6px !default;
+$thumb-shadow-size: 0px !default;
+$thumb-shadow-blur: 0px !default;
+$thumb-shadow-color: rgba(0, 0, 0, 0) !default;
+$thumb-border-width: 0px !default;
+$thumb-border-color: #eceff1 !default;
+
+$track-width: 100% !default;
+$track-height: 1px !default;
+$track-shadow-size: 0px !default;
+$track-shadow-blur: 0px !default;
+$track-shadow-color: rgba(0, 0, 0, 0) !default;
+$track-border-width: 0px !default;
+$track-border-color: #cfd8dc !default;
+
+$track-radius: 0px !default;
+$contrast: 5% !default;
+
+$ie-bottom-track-color: darken($track-color, $contrast) !default;

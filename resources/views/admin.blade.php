@@ -42,7 +42,7 @@
 	</div>
 	<div class="anim-in grid__item rte small--one-whole">
 		<h4>Submissions</h4>
-		<ul class="admin-list admin-list__submissions">
+		<ul class="admin-list__submissions">
 			@foreach ($posts as $post)
 			<li>
 				<a href="/{{ $post->user->username }}/{{ $post->slug }}">{{ $post->title }}</a>

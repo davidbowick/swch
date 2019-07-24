@@ -17,7 +17,7 @@ class CreatePromptsTable extends Migration
             $table->bigIncrements('id');
             $table->string('title');
             $table->string('slug');
-            $table->integer('showcase_id');
+            $table->integer('showcase_id')->nullable();
             $table->boolean('active')->default(0);
             $table->timestamps();
         });
