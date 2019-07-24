@@ -61,6 +61,7 @@
         <div id="fade"></div>
         <main id="main-content" class="py-4 ">
             <div class="container">
+                CHANGED!!
                 @yield('content')
             </div>
         </main>
