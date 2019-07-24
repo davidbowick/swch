@@ -8,8 +8,6 @@ class DeployController extends Controller
 {
     public function deploy(Request $request) 
     {
-
-        
     	$githubPayload = $request->getContent();
     	$githubHash = $request->header('X-Hub-Signature');
     	
@@ -18,16 +16,11 @@ class DeployController extends Controller
     	
     	if (hash_equals($githubHash, $localHash)) {
     		$root_path = base_path();
-            $old_path = getcwd();
-            chdir('/var/www/swch');
-            //make sure to make the shell file executeable first before running the shell_exec function
-            $output = shell_exec('shell-script.sh');
-            chdir($old_path);
-            echo $output;
-    		/*$process = new Process('cd ' . $root_path . '; ./deploy.sh');
+    		$process = new Process('cd ' . $root_path . '; ./deploy.sh');
     		$process->run(function ($type, $buffer) {
     			echo $buffer;
-    		});*/
+                echo 'working?';
+    		});
     	}
     }
 }
