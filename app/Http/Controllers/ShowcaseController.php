@@ -44,7 +44,8 @@ class ShowcaseController extends Controller
             request()->validate([
                 'venue' => 'required|min:3|max:255',
                 'date_time' => 'required|date',
-                'address' => 'required'
+                'address' => 'required',
+                'showcase_id' => 'nullable'
             ])
         );
         return redirect('/admin/showcases');
