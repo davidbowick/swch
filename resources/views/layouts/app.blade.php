@@ -63,7 +63,7 @@
             <div class="container">
 
                 @yield('content')
-                CHANGED!!
+                CHANGED back!!
             </div>
         </main>
         <footer class="main-footer clearfix">
