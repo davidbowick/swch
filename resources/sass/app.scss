@@ -145,6 +145,10 @@ textarea
         border-color: $teal;
         box-shadow: 0 0 3px $teal;
     }
+    &:disabled {
+        background: #f9f9f9;
+        border-color: transparent;
+    }
 }
 select {
     display: block;
@@ -198,7 +202,7 @@ select {
 .btn--primary {
     min-width: 200px;
     max-width: 100%;
-    font-size: 18px;
+    font-size: 20px;
     background-color: #437588;
     background: linear-gradient(#559eae,#437588) !important;
     box-shadow: inset 0 1px 1px #b0d9e2 !important;
@@ -470,8 +474,10 @@ select {
         margin-bottom: 2em;
     }
 }
-.newsletter-column {
-    min-width: 400px;
+@include desktop {
+    .newsletter-column {
+        min-width: 400px;
+    }
 }
 .footer-signup {
     input {
@@ -670,7 +676,7 @@ select {
 .main {
     width: 80%;
     @include desktop {
-        padding-right: 200px;
+        padding-right: 250px;
         padding-top: $gutter-site;
         padding-left: 75px;
     }
@@ -721,7 +727,7 @@ body.no-user .main {
 .post {
     position: relative;
     padding-bottom: 1em;
-    max-width: 500px;
+    // max-width: 500px;
     .post-prompt {
         color: #999;
         position: absolute;
@@ -1529,10 +1535,11 @@ input[type=checkbox] {
     margin-right: 10px;
     display: inline-block;
     vertical-align: text-top;
-    width: 20px;
-    height: 20px;
-    margin-top: -3px;
+    width: 15px;
+    height: 15px;
+    margin-top: -1px;
     background: rgba($teal,.5);
+    border: 1px solid $teal;
     border-radius: 3px;
     @include transition();
   }
@@ -1568,7 +1575,7 @@ input[type=checkbox] {
   &:checked + label:after {
     content: '';
     position: absolute;
-    left: 5px;
+    left: 2px;
     top: 6px;
     background: white;
     width: 2px;
@@ -1584,66 +1591,3 @@ input[type=checkbox] {
     @include transition();
   }
 }
-/* Styling Checkbox Starts 
-
-.checkbox-label {
-
-}
-.checkbox-input {
-    display: inline-block;
-    width: 20px;
-    position: relative;
-    border-radius: 4px;
-    box-shadow: inset 0px 1px 1px rgba(0,0,0,0.5), 0px 1px 0px rgba(255,255,255,.4);
-    background: $teal;
-    // visibility: hidden;
-    opacity: 0;
-    &:before {
-      content: '';
-      width: 9px;
-      height: 5px;
-      position: absolute;
-      top: 4px;
-      left: 4px;
-      border: 3px solid #fcfff4;
-      border-top: none;
-      border-right: none;
-      background: transparent;
-      // opacity: 0;
-      // transform: rotate(-45deg);
-    }
-    &:after {
-        content:'\2713';
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        color: white;
-    }
-}
-.checkbox-text {
-    display: inline-block;
-    padding-left: 10px;
-}
-/*
-label {
-    width: 20px;
-    height: 20px;
-    cursor: pointer;
-    position: absolute;
-    top: 0;
-    left: 0;
-    // background: linear-gradient(top, #222 0%, #45484d 100%);
-    border-radius: 4px;
-    box-shadow: inset 0px 1px 1px rgba(0,0,0,0.5), 0px 1px 0px rgba(255,255,255,.4);
-    
-    &:hover::after {
-      opacity: 0.3;
-  }
-}
-input[type=checkbox] {
-    visibility: hidden;
-    &:checked + label:after {
-      opacity: 1;
-  }    
-}*/

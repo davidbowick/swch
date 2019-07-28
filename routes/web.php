@@ -40,6 +40,15 @@ Route::get('/search','SearchController@search');
 Route::get('/prompts/{param}','PromptController@showSingle');
 // Route::get('/prompt/{param}','PromptController@showSingle');
 
+# Suggestions
+Route::group(['middleware' => ['auth']], function () { 
+	Route::get('/suggestions','PromptSubmissionsController@create');
+	Route::post('/suggestions','PromptSubmissionsController@store');
+});
+Route::get('/suggestions/pick','PromptSubmissionsController@pick')
+	->middleware('is_admin')
+	->name('admin');
+
 # Posts
 Route::get('/play/{id}','PostsController@increasePlayCount');
 Route::get('/next/{id}','PostsController@getNextSong');

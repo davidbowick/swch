@@ -32,5 +32,7 @@
 	</div>
 	@endif
 </div>
-
+@endsection
+@section('scripts')
+@include('snippets.playlist-script');
 @endsection

@@ -10,11 +10,11 @@ require('./leaflet.js');
 require('./cookies.min.js');
 
 function isMobile() {
-   if(window.innerWidth <= 600) {
-     return true;
-   } else {
-     return false;
-   }
+	if(window.innerWidth <= 600) {
+		return true;
+	} else {
+		return false;
+	}
 }
 
 $.easing.custom = function (x, t, b, c, d) {
@@ -72,56 +72,56 @@ var NowPlaying = {
 // console.log(NowPlaying.isPlaying);
 
 var AUDIO_PLAYING = false,
-	CURRENT_SONG = false,
+CURRENT_SONG = false,
 	// VOLUME = Cookies.get('volume') ? Cookies.get('volume') : 1,
 	SOMETHING = true;
 
 
-$(function() {
-	fadeInElements();
-	if(isMobile()){
-		$(document).on('click','.main-nav__user-link',function(e) {
+	$(function() {
+		fadeInElements();
+		if(isMobile()){
+			$(document).on('click','.main-nav__user-link',function(e) {
+				e.preventDefault();
+				$('.user-drop-wrap').toggleClass('show');
+			});
+		}
+		/* Show lyrics on click */
+		$(document).on('click','.show-lyrics',function(e) {
+			console.log('boo');
 			e.preventDefault();
-			$('.user-drop-wrap').toggleClass('show');
+			$(this).closest('.post').find('.post__lyrics').slideToggle();
 		});
-	}
-	/* Show lyrics on click */
-	$(document).on('click','.show-lyrics',function(e) {
-		console.log('boo');
-		e.preventDefault();
-		$(this).closest('.post').find('.post__lyrics').slideToggle();
-	});
-	/* Show comments on click */
-	$(document).on('click','.post__comment-link',function(e) {
-		e.preventDefault();
-		var $this = $(this);
-		$this.closest('.post').find('.post__comments').slideToggle('fast',function() {
-			if($(this).is(':visible')) {
-				$(this).find('input[name="comment"]').focus();
-			}
+		/* Show comments on click */
+		$(document).on('click','.post__comment-link',function(e) {
+			e.preventDefault();
+			var $this = $(this);
+			$this.closest('.post').find('.post__comments').slideToggle('fast',function() {
+				if($(this).is(':visible')) {
+					$(this).find('input[name="comment"]').focus();
+				}
+			});
 		});
-	});
-	$(document).on('click', '.post .play-pause-btn', function(e) {
-		e.preventDefault();
-		var $this = $(this);
-		var $item = $this.closest('.post'),
-		$mainPlayer = $('.main-player'),
-		$songId = $item.data('song-id');
-		$btn = $item.find('.play-pause-btn i'),
-		$mainBtn = $mainPlayer.find('.play-pause-btn i'),
-		$thebtn = $btn.parent(),
-		$loadingIndicator = $mainPlayer.find('.main-player__playbar--loading'),
-		$progress = $mainPlayer.find('.main-player__playbar--progress'),
-		$seek = $item.find('.seek'),
-		$mainProgress = '.main-player__playbar--progress',
-		mainTitle = '.main-player__title',
-		sID = $item.parent().parent().data('song-id');
-		prompt = $item.data('prompt-title'),
-		promptSlug = $item.data('prompt-slug'),
-		userLink = $item.find('.post_artist').html(),
-		postLink = $item.find('.share').attr('href'),
-		liked = $item.find('.like').hasClass('liked'),
-		$mainPlayer.attr('data-song-id',$songId);
+		$(document).on('click', '.post .play-pause-btn', function(e) {
+			e.preventDefault();
+			var $this = $(this);
+			var $item = $this.closest('.post'),
+			$mainPlayer = $('.main-player'),
+			$songId = $item.data('song-id');
+			$btn = $item.find('.play-pause-btn i'),
+			$mainBtn = $mainPlayer.find('.play-pause-btn i'),
+			$thebtn = $btn.parent(),
+			$loadingIndicator = $mainPlayer.find('.main-player__playbar--loading'),
+			$progress = $mainPlayer.find('.main-player__playbar--progress'),
+			$seek = $item.find('.seek'),
+			$mainProgress = '.main-player__playbar--progress',
+			mainTitle = '.main-player__title',
+			sID = $item.parent().parent().data('song-id');
+			prompt = $item.data('prompt-title'),
+			promptSlug = $item.data('prompt-slug'),
+			userLink = $item.find('.post_artist').html(),
+			postLink = $item.find('.share').attr('href'),
+			liked = $item.find('.like').hasClass('liked'),
+			$mainPlayer.attr('data-song-id',$songId);
 
 		// Nothing is Playing
 		if(NowPlaying.currentPostId != $songId) {
@@ -143,10 +143,10 @@ $(function() {
 		setTimeout(function() {
 			$('.main-player .play-pause-btn').trigger('click');
 		},250);
-	   
-	    $btn.attr('class', $item.hasClass('is-playing') ? 'fa fa-pause' : 'fa fa-play');
-	    $mainBtn.attr('class', $item.hasClass('is-playing') ? 'fa fa-pause' : 'fa fa-play');
-	    
+
+		$btn.attr('class', $item.hasClass('is-playing') ? 'fa fa-pause' : 'fa fa-play');
+		$mainBtn.attr('class', $item.hasClass('is-playing') ? 'fa fa-pause' : 'fa fa-play');
+
 	});
     /*
 	$(document).on('click','.main-player__volume-wrapper',function(e) {
@@ -176,9 +176,9 @@ $(function() {
 	*/
 
 	var mainAudio = '.main-player__audio',
-		loadingIndicator = '.main-player__playbar--loading',
-		progressIndicator = '.main-player__playbar--progress',
-		mainAudioPlayer = $(mainAudio).get(0);
+	loadingIndicator = '.main-player__playbar--loading',
+	progressIndicator = '.main-player__playbar--progress',
+	mainAudioPlayer = $(mainAudio).get(0);
 
 		/*var promise = mainAudioPlayer.play();
 
@@ -186,22 +186,22 @@ $(function() {
 
 		}*/
 
-	if (($(mainAudio).buffered != undefined) && ($(mainAudio).buffered.length != 0)) {
-		mainAudioPlayer.bind('progress', function() {
-			var loaded = parseInt((($(mainAudio).buffered.end(0) / $(mainAudio).duration) * 100), 10);
-			$(loadingIndicator).css({width: loaded + '%'});
+		if (($(mainAudio).buffered != undefined) && ($(mainAudio).buffered.length != 0)) {
+			mainAudioPlayer.bind('progress', function() {
+				var loaded = parseInt((($(mainAudio).buffered.end(0) / $(mainAudio).duration) * 100), 10);
+				$(loadingIndicator).css({width: loaded + '%'});
+			});
+		} else {
+			$(loadingIndicator).css({width: '100%'});
+		}
+		var pos = 0;
+		var countedMe = false;
+		$(mainAudioPlayer).on("loadeddata", function() {
+			console.log('loaded');
+			audioFunctions();
 		});
-	} else {
-		$(loadingIndicator).css({width: '100%'});
-	}
-	var pos = 0;
-	var countedMe = false;
-	$(mainAudioPlayer).on("loadeddata", function() {
-		console.log('loaded');
-		audioFunctions();
-	});
-	function audioFunctions() {
-		$(mainAudioPlayer).bind('timeupdate',function() {
+		function audioFunctions() {
+			$(mainAudioPlayer).bind('timeupdate',function() {
 		// console.log(mainAudioPlayer.currentTime);
 		// AUDIO_PLAYING = true;
 		// NowPlaying.isPlaying = true
@@ -260,40 +260,40 @@ $(function() {
 		}
 	});
 }
-	function nextSong(s) {
-		var mainAudio = '.main-player__audio';
-		$(mainAudio).attr('src','/storage/uploads/mp3s/'+s.filename);
-		$(mainAudio).get(0).load();
-		var promise = $(mainAudio).get(0).play();
-		if (promise) {
-		    promise.catch(function(error) { console.error(error); });
-		}
-		NowPlaying.isPlaying = true;
-		$('.main-player__title').html('<b><a href="/'+s.user.username+'">'+s.user.name+'</b><br/><a href="/'+s.user.username+'/'+s.slug+'">'+s.title+'</a>');
-		$('.main-player__image img').attr('src','/storage/uploads/avatars/'+s.user.avatar);
-		$('.main-player__prompt').attr('href','/prompts/'+s.prompt.slug);
-		$('.main-player__prompt-name').text(s.prompt.title);
-		$('.play-pause-btn i').removeClass('fa-pause').addClass('fa-play');
-		$('.main-player__transport .play-pause-btn i').removeClass('fa-play').addClass('fa-pause');
-		NowPlaying.currentPostId = s.id;
-		$('.main-player').attr('data-song-id',s.id);
-		console.log(NowPlaying.currentPostId);
-		var iLike = s.likes.findIndex(x => x.id === currentUser);
-		(iLike > -1) ? $('.main-player__like').addClass('liked') : $('.main-player__like').removeClass('liked');
-		
+function nextSong(s) {
+	var mainAudio = '.main-player__audio';
+	$(mainAudio).attr('src','/storage/uploads/mp3s/'+s.filename);
+	$(mainAudio).get(0).load();
+	var promise = $(mainAudio).get(0).play();
+	if (promise) {
+		promise.catch(function(error) { console.error(error); });
+	}
+	NowPlaying.isPlaying = true;
+	$('.main-player__title').html('<b><a href="/'+s.user.username+'">'+s.user.name+'</b><br/><a href="/'+s.user.username+'/'+s.slug+'">'+s.title+'</a>');
+	$('.main-player__image img').attr('src','/storage/uploads/avatars/'+s.user.avatar);
+	$('.main-player__prompt').attr('href','/prompts/'+s.prompt.slug);
+	$('.main-player__prompt-name').text(s.prompt.title);
+	$('.play-pause-btn i').removeClass('fa-pause').addClass('fa-play');
+	$('.main-player__transport .play-pause-btn i').removeClass('fa-play').addClass('fa-pause');
+	NowPlaying.currentPostId = s.id;
+	$('.main-player').attr('data-song-id',s.id);
+	console.log(NowPlaying.currentPostId);
+	var iLike = s.likes.findIndex(x => x.id === currentUser);
+	(iLike > -1) ? $('.main-player__like').addClass('liked') : $('.main-player__like').removeClass('liked');
+
 		// console.log(myIndex);
 		// if(s.likes)
 		
 		$('.post[data-song-id="'+NowPlaying.currentPostId+'"').find('.play-pause-btn i').removeClass('.fa-play').addClass('fa-pause');
-
+		$('.post[data-song-id="'+NowPlaying.currentPostId+'"').find('.bars').fadeIn();
 	}
 	
 
 	$(document).on('click','.main-player .play-pause-btn',function(e) {
 		e.preventDefault();
 		var $this = $(this),
-			btn = $this.find('i');
-			songId = $('.main-player').attr('data-song-id');
+		btn = $this.find('i');
+		songId = $('.main-player').attr('data-song-id');
 
 		if(NowPlaying.isPlaying) {
 			$('.main-player__audio').get(0).pause();
@@ -314,11 +314,11 @@ $(function() {
 	$(document).on('click','.main-player__like',function(e) {
 		e.preventDefault();
 		var $this = $(this),
-			n = NowPlaying.currentPostId,
-			posts = $('.post[data-song-id="'+n+'"]');
-			$(this).attr('href','/post/like/'+n);
+		n = NowPlaying.currentPostId,
+		posts = $('.post[data-song-id="'+n+'"]');
+		$(this).attr('href','/post/like/'+n);
 
-			getLike(n);
+		getLike(n);
 	});
 
 	function pausePlayAllInstances(n) {
@@ -328,10 +328,10 @@ $(function() {
 
 		if(NowPlaying.isPlaying && NowPlaying.currentPostId == n) {
 			posts.addClass('is-playing')
-				.find('.play-pause-btn i').removeClass('fa-play').addClass('fa-pause');
+			.find('.play-pause-btn i').removeClass('fa-play').addClass('fa-pause');
 		} else {
 			posts.removeClass('is-playing')
-				.find('.play-pause-btn i').removeClass('fa-pause').addClass('fa-play');
+			.find('.play-pause-btn i').removeClass('fa-pause').addClass('fa-play');
 		}
 		
 	}
@@ -366,7 +366,7 @@ $(function() {
 	$(document).on('change','.ajax-active input',function(e) {
 		e.preventDefault();
 		var $this = $(this),
-			form = $this.closest('form');
+		form = $this.closest('form');
 		// $(this).closest('form').submit();
 		$.ajax({
 			url: form.attr('action'),
@@ -379,6 +379,59 @@ $(function() {
 			error: function(e) {
 				console.log('boo hissss!');
 			}
+		});
+	});
+	$(document).on('submit','.suggestion-form',function(e) {
+		e.preventDefault();
+		var $this = $(this);
+		$this.find('.btn .spinner').fadeIn();
+		$this.find('.btn').attr('disabled',true);
+		$.ajax({
+			url: $this.attr('action'),
+			type: 'post',
+			data: $this.serialize(),
+			success: function (r) {
+				$.get('/suggestion',function() {
+					$('#main-content').html($(r).find('#main-content').html());
+				});
+			},
+			error: function(e) {
+				console.log(e);
+			}
+		});
+	});
+	function showPick(n,all,picks) {
+		var time = 50;
+		var div = (n === 1) ? '.results-1' : '.results-2';
+		var firstPick = picks[0].title;
+		var secondPick = picks[1].title;
+		$.each(all,function(i,v) {
+			setTimeout( function(){ 
+				$(div).text(v.title);
+			}, time*i);
+		});
+		
+		if(n===1) {
+			setTimeout(function() {
+				$(div).text(firstPick);
+				showPick(2,all,picks);
+			}, time*all.length);
+		} else {
+			setTimeout(function() {
+				$(div).text(secondPick);
+				// showPick(2,all,picks);
+			}, time*all.length);
+		}
+	}
+	$(document).on('click','.hat-draw',function(e) {
+		e.preventDefault();
+		$.get('/suggestions/pick',function(data) {
+			var all = data.all,
+			picks = data.picks;
+			var newAll = $.merge( all, all );
+
+			showPick(1,newAll,picks);
+			
 		});
 	});
 	$(document).on('submit','.comment-form',function(e) {
@@ -465,7 +518,7 @@ $(function() {
  	var CURRENT_QUERY = '';
  	$("#ts").keyup(debounce(function(){
  		var keyword = $("#ts").val(),
- 			tsr = '#top-search-results';
+ 		tsr = '#top-search-results';
  		if (keyword.length >= MIN_LENGTH && CURRENT_QUERY != keyword) {
  			CURRENT_QUERY = keyword;
  			$.get( "/search", { q: keyword } )
@@ -498,7 +551,7 @@ $(function() {
  	},500));
  	$('.top-search-wrapper').mouseleave(function() {
  		var $this = $(this),
- 			tsr = '#top-search-results';
+ 		tsr = '#top-search-results';
 
  		$(tsr).fadeOut('fast',function() {
  			$(tsr).empty();
@@ -508,7 +561,7 @@ $(function() {
 
  	$("#registration-form #name").keyup(debounce(function(){
  		var keyword = $(this).val(),
- 			usernameInput = '#username';
+ 		usernameInput = '#username';
  		if (keyword.length >= MIN_LENGTH && CURRENT_QUERY != keyword) {
  			CURRENT_QUERY = keyword;
  			var generateUsername = keyword.replace(/[^a-z0-9\s]/gi, '').replace(/[_\s]/g, '').toLowerCase();
@@ -517,13 +570,13 @@ $(function() {
  	},500));
 
  	var siteURL = "http://" + top.location.host.toString();
-	var $internalLinks = $("a[href^='"+siteURL+"'], a[href^='/'], a[href^='./'], a[href^='../']");
+ 	var $internalLinks = $("a[href^='"+siteURL+"'], a[href^='/'], a[href^='./'], a[href^='../']");
 	// $("a[href^=something]").not("[href=#]")
 
 	$(document).on('click','a:not(.no-link)',function(e) {
 		var $this = $(this),
-			myHref = $this.attr('href'),
-			mainContent = '#main-content';
+		myHref = $this.attr('href'),
+		mainContent = '#main-content';
 
 		if(myHref != '#') {
 			e.preventDefault();		
@@ -535,7 +588,7 @@ $(function() {
 				// document.title = $(data).pageTitle;
 				// console.log($(data).find('title').text());
 				window.history.pushState({"html":newHtml,"pageTitle":''},"", myHref);
-		
+
 				window.scrollTo(0, 0);
 				fadeInElements();
 				if(NowPlaying.isPlaying) {
@@ -576,52 +629,52 @@ $(function() {
 
 	/* Volume Slider */
 	var dragItem = $('.volume__sliderHandle');
-    var dragContainer = $('.volume__sliderInner');
-    var e = document.querySelector('.volume-slider-con');
-    var eInner = document.querySelector('.volume-slider');
-    var audio = $('.main-player__audio').get(0);
-    var drag = false;
-    dragItem.on('mousedown',function(ev){
-    	drag = true;
-    	updateBar(ev.clientY);
-    });
-    dragItem.on('mousemove',function(ev){
-    	if(drag){
-    		updateBar(ev.clientY);
-    	}
-    });
-    dragItem.on('mouseup',function(ev){
-    	drag = false;
-    });
-    var updateBar = function (y, vol) {
-    	var volume = dragItem;
-    	var percentage;
+	var dragContainer = $('.volume__sliderInner');
+	var e = document.querySelector('.volume-slider-con');
+	var eInner = document.querySelector('.volume-slider');
+	var audio = $('.main-player__audio').get(0);
+	var drag = false;
+	dragItem.on('mousedown',function(ev){
+		drag = true;
+		updateBar(ev.clientY);
+	});
+	dragItem.on('mousemove',function(ev){
+		if(drag){
+			updateBar(ev.clientY);
+		}
+	});
+	dragItem.on('mouseup',function(ev){
+		drag = false;
+	});
+	var updateBar = function (y, vol) {
+		var volume = dragItem;
+		var percentage;
         //if only volume have specificed
         //then direct update volume
         console.log('boo');
         if (vol) {
-            percentage = vol * 100;
+        	percentage = vol * 100;
         } else {
-            var position = y + volume.offset().top;
-            percentage = 100 * position / volume.height();
+        	var position = y + volume.offset().top;
+        	percentage = 100 * position / volume.height();
         }
         console.log(percentage);
 
         if (percentage > 100) {
-            percentage = 100;
+        	percentage = 100;
         }
         if (percentage < 0) {
-            percentage = 0;
+        	percentage = 0;
         }
 
         //update volume bar and video volume
         // eInner.style.width = percentage +'%';
         $('.volume__sliderProgress').css('height', percentage +'%');
         // audio.volume = percentage / 100;
-	};
+    };
     
 
- });
+});
 
 function fadeInElements() {
 	var win = $(window);
@@ -646,11 +699,11 @@ function fadeInElements() {
 }
 
 window.onpopstate = function(e){
-    if(e.state){
-        document.getElementById("main-content").innerHTML = e.state.html;
-        document.title = e.state.pageTitle;
-        fadeInElements();
-    }
+	if(e.state){
+		document.getElementById("main-content").innerHTML = e.state.html;
+		document.title = e.state.pageTitle;
+		fadeInElements();
+	}
 };
 
 

@@ -28,3 +28,7 @@
   <script>window.location = "/";</script>
 @endif
 @endsection
+@section('scripts')
+{{ $posts = $user->posts }}
+@include('snippets.playlist-script');
+@endsection
