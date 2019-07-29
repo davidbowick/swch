@@ -16,8 +16,11 @@ class DatabaseSeeder extends Seeder
         $this->call(ShowcasesTableSeeder::class);
         $this->call(ProfilesTableSeeder::class);
         $this->call(PostsTableSeeder::class);
-        $this->call(LikeablesTableSeeder::class);
         $this->call(FaqTableSeeder::class);
+        factory(App\User::class, 10)->create()->each(function ($user) {
+        	$user->posts()->save(factory(App\Post::class)->make());
+        });
+        $this->call(LikeablesTableSeeder::class);
     }
 }
 class UsersTableSeeder extends Seeder 
@@ -143,6 +146,23 @@ class LikeablesTableSeeder extends Seeder
 			'likeable_id'=>1,
 			'likeable_type'=>'App\User'
 		]);
+		App\Like::create([
+			'user_id'=>2,
+			'likeable_id'=>1,
+			'likeable_type'=>'App\User'
+		]);
+		foreach(range(3, 10) as $index) {
+            App\Like::create([
+                'user_id'     => 1,
+                'likeable_id'   => $index,
+                'likeable_type'=>'App\User'
+            ]);
+            App\Like::create([
+            	'user_id'     => $index,
+                'likeable_id'   => 1,
+                'likeable_type'=>'App\User'
+            ]);
+        }
 	}
 }
 class FaqTableSeeder extends Seeder 

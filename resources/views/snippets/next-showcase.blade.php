@@ -13,7 +13,7 @@
     <br/><br/>
     {{-- <a class="is-link" href="/showcase/{{ $showcase->id }}">View More</a> --}}
     @if ($users_attending)
-    <p class="grey"><a href="/showcase/{{$showcase->id}}">{{$users_attending}} user{{ $users_attending > 1 ? 's' : '' }} attending</a></p>
+    <p class="grey"><a class="total-attendees" href="/showcase/{{$showcase->id}}">{{$users_attending}} user{{ $users_attending > 1 ? 's' : '' }} attending</a></p>
     @endif
 
 </div>

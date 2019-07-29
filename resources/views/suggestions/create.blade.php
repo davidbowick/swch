@@ -8,27 +8,26 @@
 	@php 
 		$io = $i - 1;
 	@endphp
-	<form class="suggestion-form" id="suggestion-{{$i}}" method="POST" action="/suggestion">
+	<form class="suggestion-form" id="suggestion-{{$i}}" method="POST" action="/suggestions">
 		@csrf
 		<div class="field">
 			<label for="title">Suggestion #{{$i}}</label>
-			<input id="title" type="text" name="title" placeholder="Title"
-				@if (isset($userSubmissions[$io])) 
-				value="{{$userSubmissions[$io]->title}}"
-				disabled="true"
-				@endif
-			>
+			<div class="flex small--flex-wrap">
+				<input id="title" type="text" name="title" placeholder="Title"
+					@if (isset($userSubmissions[$io])) 
+					value="{{$userSubmissions[$io]->title}}"
+					disabled="true"
+					@endif
+				>
+			@if (!isset($userSubmissions[$io]))
+				<button type="submit" class="btn btn--dark small--one-whole">Submit</button>
+			@endif
 		</div>
 		@if (Auth::user())
 		<input type="hidden" name="user_id" value="{{ Auth::user()->id }}" >
 		@endif 
 		@if ($showcase)
 		<input type="hidden" name="showcase_id" value="{{ $showcase->id }}" >
-		@endif
-		@if (!isset($userSubmissions[$io]))
-		<div class="field">
-			<button type="submit" class="btn btn--primary">Suggest Prompt</button>
-		</div>
 		@endif
 		<hr class="hr--invisible">
 		<hr class="hr--invisible">

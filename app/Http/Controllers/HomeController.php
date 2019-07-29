@@ -36,8 +36,11 @@ class HomeController extends Controller
         $top_posts = Post::withCount('likes')->orderByDesc('likes_count')->get();
         if(Auth::user()) {
            $user = Auth::user();
-           $userIds = Like::where('user_id',Auth::id())->get()->toArray();
+           $userIds = Like::where('user_id',Auth::id())->where('likeable_type','App\User')->get('likeable_id')->toArray();
+            // dd($userIds);
            $posts = Post::whereIn('user_id',$userIds)->get();
+           // $posts = $top_posts;
+           // dd($posts);
            return view('home',compact('posts','prompts','showcase','users_attending','user','top_posts'));
         } else {
             return view('welcome');

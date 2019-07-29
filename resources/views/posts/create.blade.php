@@ -25,27 +25,30 @@
 				<label for="prompt">Prompt <small>(make this ajax searchable later)</small></label>
 				<select name="prompt_id">
 					@foreach ($prompts as $prompt)
-					<option value="{{ $prompt->id }}">{{ $prompt->title }}</option>
+					<option {{ (old('prompt_id') == $prompt->id) ? 'selected="selected"' : '' }}  value="{{ $prompt->id }}">{{ $prompt->title }}</option>
 					@endforeach
 				</select>
 			</div>
 			<div class="field">
 				<label for="title">Title</label>
-				<input id="title" type="text" name="title" placeholder="Title">
+				<input id="title" type="text" name="title" placeholder="Title" value="{{ old('title') }}">
 				@error('title')
 				<div class="alert alert-danger" role="alert">{{ $message }}</div>
 				@enderror
 			</div>
 			<div class="field">
 				<label for="filename">Song File <i>(mp3 only)</i></label>
-				<input id="filename" type="file" name="filename">
+				<input id="filename" type="file" name="filename" {{ old('filename') }}>
 				@error('filename')
 				<div class="alert alert-danger" role="alert">{{ $message }}</div>
 				@enderror
 			</div>
 			<div class="field">
 				<label for="lyrics">Lyrics</label>
-				<textarea id="lyrics" name="lyrics" placeholder="Lyrics"></textarea>
+				<textarea id="lyrics" name="lyrics" placeholder="Lyrics">{{ old('lyrics') }}</textarea>
+				@error('lyrics')
+				<div class="alert alert-danger" role="alert">{{ $message }}</div>
+				@enderror
 			</div>
 			<div class="field">
 				<button type="submit" class="btn btn--primary">Submit</button>
@@ -53,5 +56,5 @@
 		</form>
 	</div>
 </div>
-@include('errors')
+{{-- @include('errors') --}}
 @endsection

@@ -1,7 +1,7 @@
 <?php
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
-use App\User;
+use App\Post;
 use Illuminate\Support\Str;
 use Faker\Generator as Faker;
 
@@ -16,13 +16,14 @@ use Faker\Generator as Faker;
 |
 */
 
-$factory->define(User::class, function (Faker $faker) {
+$factory->define(Post::class, function (Faker $faker) {
+	$random_files = ['ham.mp3','woo_vu_luvub_dub_dub.mp3','Show_me_what_you_got!.mp3'];
     return [
-        'name' => $faker->name,
-        'username' => str_slug($faker->name,'-'),
-        'email' => $faker->unique()->safeEmail,
-        'email_verified_at' => now(),
-        'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
-        'remember_token' => Str::random(10),
+        'title' => $faker->sentence(3),
+        'slug' => str_slug($faker->name,'-'),
+        'user_id' => rand(1,10),
+        'lyrics' => $faker->paragraph(3),
+        'filename' => $random_files[array_rand($random_files)],
+        'prompt_id' => rand(1, 2),
     ];
 });

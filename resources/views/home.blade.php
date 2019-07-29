@@ -43,5 +43,5 @@
 
 
 @section('scripts')
-@include('snippets.playlist-script');
+@include('snippets.playlist-script')
 @endsection

@@ -6,13 +6,13 @@
 	<div class="sidebar">
 		<div class="sidebar__inner" data-sticky="true">
 			<h1>{{$showcase->venue}}</h1>
-			<time datetime="{{ $showcase->date_time->format('Y-m-d') }}" class="icon">
+			{{-- <time datetime="{{ $showcase->date_time->format('Y-m-d') }}" class="icon">
 				<em>{{ $showcase->date_time->format('l') }}</em>
 				<strong>{{ $showcase->date_time->format('F') }}</strong>
 				<span>{{ $showcase->date_time->format('j') }}</span>
-			</time>
+			</time> --}}
 			<h4 class="h4">
-				{{-- {{ $showcase->date_time->format('M j, Y | ga') }} --}}
+				{{ $showcase->date_time->format('M j, Y | ga') }}
 				<br/>
 				{{ $showcase->address}}
 			</h4>

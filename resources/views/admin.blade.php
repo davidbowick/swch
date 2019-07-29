@@ -6,12 +6,12 @@
 	<div class="anim-in grid__item rte small--one-whole">
 		<h4>Prompts</h4>
 		@if ($prompts->count())
-		<div class="current-prompts current-prompts__admin">
-            <h2>Current Prompts</h2>
+		<div class="current-prompts__admin">
+            <h4>Current Prompts</h4>
             @foreach ($prompts as $prompt)
             <div class="prompt">
-                <h3 class="gm current-prompt"><a data-prompt-id="{{ $prompt->id }}" href="/prompts/{{ $prompt->slug }}">{{ $prompt->title }}</a>
-                </h3>
+                <b class="gm current-prompt"><a data-prompt-id="{{ $prompt->id }}" href="/admin/prompts/{{ $prompt->id }}/edit">{{ $prompt->title }}</a>
+                </b>
             </div>
             @endforeach
         </div>

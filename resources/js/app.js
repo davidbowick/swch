@@ -73,55 +73,55 @@ var NowPlaying = {
 
 var AUDIO_PLAYING = false,
 CURRENT_SONG = false,
-	// VOLUME = Cookies.get('volume') ? Cookies.get('volume') : 1,
-	SOMETHING = true;
+SOMETHING = true;
 
 
-	$(function() {
-		fadeInElements();
-		if(isMobile()){
-			$(document).on('click','.main-nav__user-link',function(e) {
-				e.preventDefault();
-				$('.user-drop-wrap').toggleClass('show');
-			});
-		}
-		/* Show lyrics on click */
-		$(document).on('click','.show-lyrics',function(e) {
-			console.log('boo');
+$(function() {
+	fadeInElements();
+	stickySidebar();
+	if(isMobile()){
+		$(document).on('click','.main-nav__user-link',function(e) {
 			e.preventDefault();
-			$(this).closest('.post').find('.post__lyrics').slideToggle();
+			$('.user-drop-wrap').toggleClass('show');
 		});
-		/* Show comments on click */
-		$(document).on('click','.post__comment-link',function(e) {
-			e.preventDefault();
-			var $this = $(this);
-			$this.closest('.post').find('.post__comments').slideToggle('fast',function() {
-				if($(this).is(':visible')) {
-					$(this).find('input[name="comment"]').focus();
-				}
-			});
+	}
+	/* Show lyrics on click */
+	$(document).on('click','.show-lyrics',function(e) {
+		console.log('boo');
+		e.preventDefault();
+		$(this).closest('.post').find('.post__lyrics').slideToggle();
+	});
+	/* Show comments on click */
+	$(document).on('click','.post__comment-link',function(e) {
+		e.preventDefault();
+		var $this = $(this);
+		$this.closest('.post').find('.post__comments').slideToggle('fast',function() {
+			if($(this).is(':visible')) {
+				$(this).find('input[name="comment"]').focus();
+			}
 		});
-		$(document).on('click', '.post .play-pause-btn', function(e) {
-			e.preventDefault();
-			var $this = $(this);
-			var $item = $this.closest('.post'),
-			$mainPlayer = $('.main-player'),
-			$songId = $item.data('song-id');
-			$btn = $item.find('.play-pause-btn i'),
-			$mainBtn = $mainPlayer.find('.play-pause-btn i'),
-			$thebtn = $btn.parent(),
-			$loadingIndicator = $mainPlayer.find('.main-player__playbar--loading'),
-			$progress = $mainPlayer.find('.main-player__playbar--progress'),
-			$seek = $item.find('.seek'),
-			$mainProgress = '.main-player__playbar--progress',
-			mainTitle = '.main-player__title',
-			sID = $item.parent().parent().data('song-id');
-			prompt = $item.data('prompt-title'),
-			promptSlug = $item.data('prompt-slug'),
-			userLink = $item.find('.post_artist').html(),
-			postLink = $item.find('.share').attr('href'),
-			liked = $item.find('.like').hasClass('liked'),
-			$mainPlayer.attr('data-song-id',$songId);
+	});
+	$(document).on('click', '.post .play-pause-btn', function(e) {
+		e.preventDefault();
+		var $this = $(this);
+		var $item = $this.closest('.post'),
+		$mainPlayer = $('.main-player'),
+		$songId = $item.data('song-id');
+		$btn = $item.find('.play-pause-btn i'),
+		$mainBtn = $mainPlayer.find('.play-pause-btn i'),
+		$thebtn = $btn.parent(),
+		$loadingIndicator = $mainPlayer.find('.main-player__playbar--loading'),
+		$progress = $mainPlayer.find('.main-player__playbar--progress'),
+		$seek = $item.find('.seek'),
+		$mainProgress = '.main-player__playbar--progress',
+		mainTitle = '.main-player__title',
+		sID = $item.parent().parent().data('song-id');
+		prompt = $item.data('prompt-title'),
+		promptSlug = $item.data('prompt-slug'),
+		userLink = $item.find('.post_artist').html(),
+		postLink = $item.find('.share').attr('href'),
+		liked = $item.find('.like').hasClass('liked'),
+		$mainPlayer.attr('data-song-id',$songId);
 
 		// Nothing is Playing
 		if(NowPlaying.currentPostId != $songId) {
@@ -248,17 +248,23 @@ CURRENT_SONG = false,
 
 		countedMe = false;
 		NowPlaying.isPlaying = false;
-		if(playlist.songs.length) {
-			var myIndex = playlist.songs.findIndex(x => x.id === NowPlaying.currentPostId);
+		var myIndex = playlist.songs.findIndex(x => x.id === NowPlaying.currentPostId);
+		console.log(playlist.songs.length,(myIndex+1));
+		if(playlist.songs.length > (myIndex+1)) {
 			var nextIndex = playlist.songs[myIndex+1].id;
 			if(nextIndex) {
 				$.get('/next/'+nextIndex,function(data) {
-					console.log(data);
 					nextSong(data);
 				});
 			}
+		} else {
+			//hidePlayer();
+			$('.post .bars').fadeOut();
 		}
 	});
+}
+function hidePlayer() {
+	$('.main-player').fadeOut();
 }
 function nextSong(s) {
 	var mainAudio = '.main-player__audio';
@@ -268,6 +274,7 @@ function nextSong(s) {
 	if (promise) {
 		promise.catch(function(error) { console.error(error); });
 	}
+	$('.post[data-song-id="'+NowPlaying.currentPostId+'"').find('.bars').fadeOut();
 	NowPlaying.isPlaying = true;
 	$('.main-player__title').html('<b><a href="/'+s.user.username+'">'+s.user.name+'</b><br/><a href="/'+s.user.username+'/'+s.slug+'">'+s.title+'</a>');
 	$('.main-player__image img').attr('src','/storage/uploads/avatars/'+s.user.avatar);
@@ -281,26 +288,23 @@ function nextSong(s) {
 	var iLike = s.likes.findIndex(x => x.id === currentUser);
 	(iLike > -1) ? $('.main-player__like').addClass('liked') : $('.main-player__like').removeClass('liked');
 
-		// console.log(myIndex);
-		// if(s.likes)
-		
-		$('.post[data-song-id="'+NowPlaying.currentPostId+'"').find('.play-pause-btn i').removeClass('.fa-play').addClass('fa-pause');
-		$('.post[data-song-id="'+NowPlaying.currentPostId+'"').find('.bars').fadeIn();
-	}
-	
+	$('.post[data-song-id="'+NowPlaying.currentPostId+'"').find('.play-pause-btn i').removeClass('.fa-play').addClass('fa-pause');
+	$('.post[data-song-id="'+NowPlaying.currentPostId+'"').find('.bars').fadeIn();
+}
 
-	$(document).on('click','.main-player .play-pause-btn',function(e) {
-		e.preventDefault();
-		var $this = $(this),
-		btn = $this.find('i');
-		songId = $('.main-player').attr('data-song-id');
 
-		if(NowPlaying.isPlaying) {
-			$('.main-player__audio').get(0).pause();
-			btn.removeClass('fa-pause').addClass('fa-play');
-			NowPlaying.isPlaying = false;
-		} else {
-			var promise = $('.main-player__audio').get(0).play();
+$(document).on('click','.main-player .play-pause-btn',function(e) {
+	e.preventDefault();
+	var $this = $(this),
+	btn = $this.find('i');
+	songId = $('.main-player').attr('data-song-id');
+
+	if(NowPlaying.isPlaying) {
+		$('.main-player__audio').get(0).pause();
+		btn.removeClass('fa-pause').addClass('fa-play');
+		NowPlaying.isPlaying = false;
+	} else {
+		var promise = $('.main-player__audio').get(0).play();
 			// var promise = $(mainAudio).get(0).play();
 			if (promise) {
 				promise.catch(function(error) { console.error(error); });
@@ -311,62 +315,62 @@ function nextSong(s) {
 		pausePlayAllInstances(songId);
 		console.log(NowPlaying.isPlaying);
 	});
-	$(document).on('click','.main-player__like',function(e) {
-		e.preventDefault();
-		var $this = $(this),
-		n = NowPlaying.currentPostId,
-		posts = $('.post[data-song-id="'+n+'"]');
-		$(this).attr('href','/post/like/'+n);
+$(document).on('click','.main-player__like',function(e) {
+	e.preventDefault();
+	var $this = $(this),
+	n = NowPlaying.currentPostId,
+	posts = $('.post[data-song-id="'+n+'"]');
+	$(this).attr('href','/post/like/'+n);
 
-		getLike(n);
-	});
+	getLike(n);
+});
 
-	function pausePlayAllInstances(n) {
-		console.log(n);
-		var posts = $('.post[data-song-id="'+n+'"]');
-		console.log(posts.length, NowPlaying.isPlaying, NowPlaying.currentPostId);
+function pausePlayAllInstances(n) {
+	console.log(n);
+	var posts = $('.post[data-song-id="'+n+'"]');
+	console.log(posts.length, NowPlaying.isPlaying, NowPlaying.currentPostId);
 
-		if(NowPlaying.isPlaying && NowPlaying.currentPostId == n) {
-			posts.addClass('is-playing')
-			.find('.play-pause-btn i').removeClass('fa-play').addClass('fa-pause');
-		} else {
-			posts.removeClass('is-playing')
-			.find('.play-pause-btn i').removeClass('fa-pause').addClass('fa-play');
-		}
-		
+	if(NowPlaying.isPlaying && NowPlaying.currentPostId == n) {
+		posts.addClass('is-playing')
+		.find('.play-pause-btn i').removeClass('fa-play').addClass('fa-pause');
+	} else {
+		posts.removeClass('is-playing')
+		.find('.play-pause-btn i').removeClass('fa-pause').addClass('fa-play');
 	}
 
-	function getLike(l) {
-		$.get('/post/like/'+l,function(r)  {
-			var posts = $('.post[data-song-id="'+l+'"]');
-			if(r.success == true) {
-				posts.find('.like').addClass('liked');
-				if(NowPlaying.currentPostId == l) {
-					$('.main-player__like').addClass('liked');
-				}
-			} else {
-				posts.find('.like').removeClass('liked');
-				if(NowPlaying.currentPostId == l) {
-					$('.main-player__like').removeClass('liked');
-				}
+}
+
+function getLike(l) {
+	$.get('/post/like/'+l,function(r)  {
+		var posts = $('.post[data-song-id="'+l+'"]');
+		if(r.success == true) {
+			posts.find('.like').addClass('liked');
+			if(NowPlaying.currentPostId == l) {
+				$('.main-player__like').addClass('liked');
 			}
+		} else {
+			posts.find('.like').removeClass('liked');
+			if(NowPlaying.currentPostId == l) {
+				$('.main-player__like').removeClass('liked');
+			}
+		}
 			// r.success ?  : 
 			posts.find('.like-count').text(r.total_likes);
 			
 		});
-	}
+}
 
-	$(document).on('click','.post .like',function(e) {
-		e.preventDefault();
-		var $this = $(this),
-		postID = $(this).data('song-id');
+$(document).on('click','.post .like',function(e) {
+	e.preventDefault();
+	var $this = $(this),
+	postID = $(this).data('song-id');
 
-		getLike(postID);
-	});
-	$(document).on('change','.ajax-active input',function(e) {
-		e.preventDefault();
-		var $this = $(this),
-		form = $this.closest('form');
+	getLike(postID);
+});
+$(document).on('change','.ajax-active input',function(e) {
+	e.preventDefault();
+	var $this = $(this),
+	form = $this.closest('form');
 		// $(this).closest('form').submit();
 		$.ajax({
 			url: form.attr('action'),
@@ -381,61 +385,61 @@ function nextSong(s) {
 			}
 		});
 	});
-	$(document).on('submit','.suggestion-form',function(e) {
-		e.preventDefault();
-		var $this = $(this);
-		$this.find('.btn .spinner').fadeIn();
-		$this.find('.btn').attr('disabled',true);
-		$.ajax({
-			url: $this.attr('action'),
-			type: 'post',
-			data: $this.serialize(),
-			success: function (r) {
-				$.get('/suggestion',function() {
-					$('#main-content').html($(r).find('#main-content').html());
-				});
-			},
-			error: function(e) {
-				console.log(e);
-			}
-		});
+$(document).on('submit','.suggestion-form',function(e) {
+	e.preventDefault();
+	var $this = $(this);
+	$this.find('.btn .spinner').fadeIn();
+	$this.find('.btn').attr('disabled',true);
+	$.ajax({
+		url: $this.attr('action'),
+		type: 'post',
+		data: $this.serialize(),
+		success: function (r) {
+			$.get('/suggestion',function() {
+				$('#main-content').html($(r).find('#main-content').html());
+			});
+		},
+		error: function(e) {
+			console.log(e);
+		}
 	});
-	function showPick(n,all,picks) {
-		var time = 50;
-		var div = (n === 1) ? '.results-1' : '.results-2';
-		var firstPick = picks[0].title;
-		var secondPick = picks[1].title;
-		$.each(all,function(i,v) {
-			setTimeout( function(){ 
-				$(div).text(v.title);
-			}, time*i);
-		});
-		
-		if(n===1) {
-			setTimeout(function() {
-				$(div).text(firstPick);
-				showPick(2,all,picks);
-			}, time*all.length);
-		} else {
-			setTimeout(function() {
-				$(div).text(secondPick);
+});
+function showPick(n,all,picks) {
+	var time = 50;
+	var div = (n === 1) ? '.results-1' : '.results-2';
+	var firstPick = picks[0].title;
+	var secondPick = picks[1].title;
+	$.each(all,function(i,v) {
+		setTimeout( function(){ 
+			$(div).text(v.title);
+		}, time*i);
+	});
+
+	if(n===1) {
+		setTimeout(function() {
+			$(div).text(firstPick);
+			showPick(2,all,picks);
+		}, time*all.length);
+	} else {
+		setTimeout(function() {
+			$(div).text(secondPick);
 				// showPick(2,all,picks);
 			}, time*all.length);
-		}
 	}
-	$(document).on('click','.hat-draw',function(e) {
-		e.preventDefault();
-		$.get('/suggestions/pick',function(data) {
-			var all = data.all,
-			picks = data.picks;
-			var newAll = $.merge( all, all );
+}
+$(document).on('click','.hat-draw',function(e) {
+	e.preventDefault();
+	$.get('/suggestions/pick',function(data) {
+		var all = data.all,
+		picks = data.picks;
+		var newAll = $.merge( all, all );
 
-			showPick(1,newAll,picks);
-			
-		});
+		showPick(1,newAll,picks);
+
 	});
-	$(document).on('submit','.comment-form',function(e) {
-		e.preventDefault();
+});
+$(document).on('submit','.comment-form',function(e) {
+	e.preventDefault();
 	// $('.comment-form').submit(function(e) {
 		var $this = $(this);
 		$.ajax({
@@ -455,32 +459,35 @@ function nextSong(s) {
  		});
 		return false;
 	})
-	$(document).on('click','.im-going',function(e) {
-		e.preventDefault();
-		var $this = $(this),
-		showcaseID = $(this).data('event-id');
-		$.get('/showcase/like/'+showcaseID,function(r)  {
-			console.log(r);
-			if(r.success) {
-				$this.addClass('liked');
-				$this.find('.icon i').attr('class','fa fa-thumbs-up');
-				$this.find('.button-text').text('I\'ll Be There!');
-			} else {
-				$this.removeClass('liked');	
-				$this.find('.icon i').attr('class','fa fa-question');
-				$this.find('.button-text').text('Be There?');
-			}
-		});
-	});
+$(document).on('click','.im-going',function(e) {
+	e.preventDefault();
+	var $this = $(this),
+	showcaseID = $(this).data('event-id');
+	$.get('/showcase/like/'+showcaseID,function(r)  {
+		console.log(r);
+		if(r.success) {
+			$this.addClass('liked');
+			$this.find('.icon i').attr('class','fa fa-thumbs-up');
+			$this.find('.button-text').text('I\'ll Be There!');
+		} else {
+			$this.removeClass('liked');	
+			$this.find('.icon i').attr('class','fa fa-question');
+			$this.find('.button-text').text('Be There?');
+		}
 
-	$(document).on('click','.follow-btn',function(e) {
-		e.preventDefault();
-		var $this = $(this),
-		request = $this.attr('href'),
-		el = $this[0];
-		$.get(request,function(r) {
-			if(r.success) {
-				$this.addClass('liked').find('.like-text').text('Following');
+		var totalText = (r.total_likes === 1) ? ' user attending' : ' users attending';
+		$('.total-attendees').text(r.total_likes + totalText);
+	});
+});
+
+$(document).on('click','.follow-btn',function(e) {
+	e.preventDefault();
+	var $this = $(this),
+	request = $this.attr('href'),
+	el = $this[0];
+	$.get(request,function(r) {
+		if(r.success) {
+			$this.addClass('liked').find('.like-text').text('Following');
  				// $this.find('i').addClass('star-spin');
  				setTimeout(function() {
  					$this.find('i').toggleClass('star-spin');
@@ -494,51 +501,54 @@ function nextSong(s) {
  			// r.success ?  : ;
  			$this.next().text('Followers: '+r.total_likes);
  		});
-	});
+});
 
 
-	
 
-	$(document).on('change keyup keydown paste cut','textarea',function() {
-		$(this).height(0).height(this.scrollHeight);
-	});
 
- 	// console.log($('.sidebar__inner').data('sticky'));
- 	if($('.sidebar__inner').data('sticky') === true && isMobile() === false ) {
- 		console.log('sticky sidebar');
- 		var sidebar = new StickySidebar('.sidebar', {
- 			containerSelector: '#page-content',
- 			innerWrapperSelector: '.sidebar__inner',
- 			topSpacing: 50,
- 			bottomSpacing: 50
- 		});
- 	}
+$(document).on('change keyup keydown paste cut','textarea',function() {
+	$(this).height(0).height(this.scrollHeight);
+});
 
- 	var MIN_LENGTH = 3;
- 	var CURRENT_QUERY = '';
- 	$("#ts").keyup(debounce(function(){
- 		var keyword = $("#ts").val(),
- 		tsr = '#top-search-results';
- 		if (keyword.length >= MIN_LENGTH && CURRENT_QUERY != keyword) {
- 			CURRENT_QUERY = keyword;
- 			$.get( "/search", { q: keyword } )
- 			.done(function( data ) {
- 				console.log(data);
- 				$(tsr).empty();
- 				if(data.users.length) {
- 					$(tsr).append('<h4>Users</h4>');
- 					var users = '.tsr__users';
- 					$(tsr).append('<ul class="tsr__users"></ul>');
- 					$(data.users).each(function(i,v) {
- 						if(i<5) {
- 							var userItem = '<li class="tsr__user"><a href="/'+v.username+'"><img src="/storage/uploads/avatars/'+v.avatar+'" width="20">'+v.name+'</a></li>';
- 							$(users).append(userItem);
- 						}
- 						if(i==5) {
- 							$(users).append('<li class="tsr__more"><a href="/search?q='+keyword+'</a></li>');
- 						}
- 					});
- 				}
+function stickySidebar() {
+	if($('.sidebar__inner').data('sticky') === true && isMobile() === false ) {
+		console.log('sticky sidebar');
+		var sidebar = new StickySidebar('.sidebar', {
+			containerSelector: '#page-content',
+			innerWrapperSelector: '.sidebar__inner',
+			topSpacing: 50,
+			bottomSpacing: 50
+		});
+	}
+}
+
+
+
+var MIN_LENGTH = 3;
+var CURRENT_QUERY = '';
+$("#ts").keyup(debounce(function(){
+	var keyword = $("#ts").val(),
+	tsr = '#top-search-results';
+	if (keyword.length >= MIN_LENGTH && CURRENT_QUERY != keyword) {
+		CURRENT_QUERY = keyword;
+		$.get( "/search", { q: keyword } )
+		.done(function( data ) {
+			console.log(data);
+			$(tsr).empty();
+			if(data.users.length) {
+				$(tsr).append('<h4>Users</h4>');
+				var users = '.tsr__users';
+				$(tsr).append('<ul class="tsr__users"></ul>');
+				$(data.users).each(function(i,v) {
+					if(i<5) {
+						var userItem = '<li class="tsr__user"><a href="/'+v.username+'"><img src="/storage/uploads/avatars/'+v.avatar+'" width="20">'+v.name+'</a></li>';
+						$(users).append(userItem);
+					}
+					if(i==5) {
+						$(users).append('<li class="tsr__more"><a href="/search?q='+keyword+'</a></li>');
+					}
+				});
+			}
  				// if(data.posts.length) {
 
  				// }
@@ -547,108 +557,104 @@ function nextSong(s) {
  				// }
  				$(tsr).fadeIn();
  			});
- 		}
- 	},500));
- 	$('.top-search-wrapper').mouseleave(function() {
- 		var $this = $(this),
- 		tsr = '#top-search-results';
+	}
+},500));
+$('.top-search-wrapper').mouseleave(function() {
+	var $this = $(this),
+	tsr = '#top-search-results';
 
- 		$(tsr).fadeOut('fast',function() {
- 			$(tsr).empty();
- 		}); 
- 	});
+	$(tsr).fadeOut('fast',function() {
+		$(tsr).empty();
+	}); 
+});
 
 
- 	$("#registration-form #name").keyup(debounce(function(){
- 		var keyword = $(this).val(),
- 		usernameInput = '#username';
- 		if (keyword.length >= MIN_LENGTH && CURRENT_QUERY != keyword) {
- 			CURRENT_QUERY = keyword;
- 			var generateUsername = keyword.replace(/[^a-z0-9\s]/gi, '').replace(/[_\s]/g, '').toLowerCase();
- 			$(usernameInput).val(generateUsername);
- 		}
- 	},500));
+$("#registration-form #name").keyup(debounce(function(){
+	var keyword = $(this).val(),
+	usernameInput = '#username';
+	if (keyword.length >= MIN_LENGTH && CURRENT_QUERY != keyword) {
+		CURRENT_QUERY = keyword;
+		var generateUsername = keyword.replace(/[^a-z0-9\s]/gi, '').replace(/[_\s]/g, '').toLowerCase();
+		$(usernameInput).val(generateUsername);
+	}
+},500));
 
- 	var siteURL = "http://" + top.location.host.toString();
- 	var $internalLinks = $("a[href^='"+siteURL+"'], a[href^='/'], a[href^='./'], a[href^='../']");
-	// $("a[href^=something]").not("[href=#]")
+var siteURL = "http://" + top.location.host.toString();
+var $internalLinks = $("a[href^='"+siteURL+"'], a[href^='/'], a[href^='./'], a[href^='../']");
 
-	$(document).on('click','a:not(.no-link)',function(e) {
-		var $this = $(this),
-		myHref = $this.attr('href'),
-		mainContent = '#main-content';
 
-		if(myHref != '#') {
-			e.preventDefault();		
-			$.get(myHref,function(data) {
-				$(mainContent).empty();
-				var newHtml = $(data).find(mainContent).html();
-				$(mainContent).html(newHtml);
-				// document.getElementById("content").innerHTML = response.html;
-				// document.title = $(data).pageTitle;
-				// console.log($(data).find('title').text());
+$(document).on('click','a:not(.no-link)',function(e) {
+	var $this = $(this),
+	myHref = $this.attr('href'),
+	mainContent = '#main-content';
+	if(myHref != '#') {
+		e.preventDefault();		
+		$.get(myHref,function(data) {
+			$(mainContent).empty();
+			var newHtml = $(data).find(mainContent).html();
+			$(mainContent).html(newHtml);
 				window.history.pushState({"html":newHtml,"pageTitle":''},"", myHref);
-
 				window.scrollTo(0, 0);
 				fadeInElements();
+				stickySidebar();
 				if(NowPlaying.isPlaying) {
 					pausePlayAllInstances(NowPlaying.currentPostId);
 				}
 			});
-		}
-	});
+	}
+});
 
-	$('.footer-signup').submit(function(e) {
-		e.preventDefault();
-		var $this = $(this);
-		$this.find('.btn').text('Sending...');
-		$.ajax({
-			type: $this.attr('method'),
-			url: $this.attr('action'),
-			data: $this.serialize(),
-			cache: false,
-			dataType: 'json',
-			contentType: 'application/json; charset=utf-8',
-			error: function (err) { alert('Could not connect to the registration server. Please try again later.') },
-			success: function (data) {
-				$this.find('.btn').text('submit');
-				if (data.result === 'success') {
-					console.log(data.msg)
-					$('#mce-EMAIL').removeClass('error');
-					$('#mce-responses').text('Thank you for subscribing. We have sent you a confirmation email.').addClass('alert-success');
-					$('#mce-EMAIL').val('')
-				} else {
-					console.log(data.msg)
+$('.footer-signup').submit(function(e) {
+	e.preventDefault();
+	var $this = $(this);
+	$this.find('.btn').text('Sending...');
+	$.ajax({
+		type: $this.attr('method'),
+		url: $this.attr('action'),
+		data: $this.serialize(),
+		cache: false,
+		dataType: 'json',
+		contentType: 'application/json; charset=utf-8',
+		error: function (err) { alert('Could not connect to the registration server. Please try again later.') },
+		success: function (data) {
+			$this.find('.btn').text('submit');
+			if (data.result === 'success') {
+				console.log(data.msg)
+				$('#mce-EMAIL').removeClass('error');
+				$('#mce-responses').text('Thank you for subscribing. We have sent you a confirmation email.').addClass('alert-success');
+				$('#mce-EMAIL').val('')
+			} else {
+				console.log(data.msg)
 					// $('#mce-EMAIL').css('borderColor', '#721c24')
 					$('#mce-EMAIL').addClass('error');
 					$('#mce-responses').text(data.msg.substring(4)).addClass('alert-danger');
 				}
 			}
 		})
-	});	
+});	
 
-	/* Volume Slider */
-	var dragItem = $('.volume__sliderHandle');
-	var dragContainer = $('.volume__sliderInner');
-	var e = document.querySelector('.volume-slider-con');
-	var eInner = document.querySelector('.volume-slider');
-	var audio = $('.main-player__audio').get(0);
-	var drag = false;
-	dragItem.on('mousedown',function(ev){
-		drag = true;
+/* Volume Slider */
+var dragItem = $('.volume__sliderHandle');
+var dragContainer = $('.volume__sliderInner');
+var e = document.querySelector('.volume-slider-con');
+var eInner = document.querySelector('.volume-slider');
+var audio = $('.main-player__audio').get(0);
+var drag = false;
+dragItem.on('mousedown',function(ev){
+	drag = true;
+	updateBar(ev.clientY);
+});
+dragItem.on('mousemove',function(ev){
+	if(drag){
 		updateBar(ev.clientY);
-	});
-	dragItem.on('mousemove',function(ev){
-		if(drag){
-			updateBar(ev.clientY);
-		}
-	});
-	dragItem.on('mouseup',function(ev){
-		drag = false;
-	});
-	var updateBar = function (y, vol) {
-		var volume = dragItem;
-		var percentage;
+	}
+});
+dragItem.on('mouseup',function(ev){
+	drag = false;
+});
+var updateBar = function (y, vol) {
+	var volume = dragItem;
+	var percentage;
         //if only volume have specificed
         //then direct update volume
         console.log('boo');

@@ -1,5 +1,5 @@
 @if ($posts->count())
-<script>
+<script type="text/javascript">
     var playlist = {};
     playlist.songs = [];
     @foreach ($posts as $post)
@@ -12,6 +12,5 @@
         });
         @endif
     @endforeach
-    console.log(playlist);
 </script>
 @endif

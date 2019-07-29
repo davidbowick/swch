@@ -40,7 +40,7 @@ class PostsController extends Controller
             'slug' => 'required',
             'prompt_id' => 'required',
             'filename' => 'nullable|mimes:audio/mp3,mpga,mp3|max:12000',
-            'lyrics' => 'nullable|regex:[A-Za-z1-9]'
+            'lyrics' => 'nullable'
         ]);
         if($request->filename) {
             // dd($request->filename);
