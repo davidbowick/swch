@@ -69,7 +69,6 @@ var NowPlaying = {
 	currentUserName: false,
 	currentUserImage: false
 };
-// console.log(NowPlaying.isPlaying);
 
 var AUDIO_PLAYING = false,
 CURRENT_SONG = false,
@@ -87,7 +86,6 @@ $(function() {
 	}
 	/* Show lyrics on click */
 	$(document).on('click','.show-lyrics',function(e) {
-		console.log('boo');
 		e.preventDefault();
 		$(this).closest('.post').find('.post__lyrics').slideToggle();
 	});
@@ -197,46 +195,42 @@ $(function() {
 		var pos = 0;
 		var countedMe = false;
 		$(mainAudioPlayer).on("loadeddata", function() {
-			console.log('loaded');
 			audioFunctions();
 		});
 		function audioFunctions() {
 			$(mainAudioPlayer).bind('timeupdate',function() {
-		// console.log(mainAudioPlayer.currentTime);
-		// AUDIO_PLAYING = true;
-		// NowPlaying.isPlaying = true
-		var rem = parseInt(mainAudioPlayer.duration - mainAudioPlayer.currentTime, 10),
-		mins = Math.floor(rem/60,10),
-		secs = rem - mins*60; 
-		pos = (mainAudioPlayer.currentTime / mainAudioPlayer.duration) * 100;
-		$(progressIndicator).css({width: pos + '%'});
 
-		var minutesElapsed = parseInt(mainAudioPlayer.currentTime / 60, 10);
-		minutesElapsed = (minutesElapsed < 10 ? "0" : "") + minutesElapsed;
+				var rem = parseInt(mainAudioPlayer.duration - mainAudioPlayer.currentTime, 10),
+				mins = Math.floor(rem/60,10),
+				secs = rem - mins*60; 
+				pos = (mainAudioPlayer.currentTime / mainAudioPlayer.duration) * 100;
+				$(progressIndicator).css({width: pos + '%'});
 
-		var secondsElapsed = parseInt(mainAudioPlayer.currentTime % 60, 10);
-		secondsElapsed = (secondsElapsed < 10 ? "0" : "") + secondsElapsed;
+				var minutesElapsed = parseInt(mainAudioPlayer.currentTime / 60, 10);
+				minutesElapsed = (minutesElapsed < 10 ? "0" : "") + minutesElapsed;
 
-		var minutesTotal = parseInt(mainAudioPlayer.duration / 60, 10);
-		minutesTotal = (minutesTotal < 10 ? "0" : "") + minutesTotal;
+				var secondsElapsed = parseInt(mainAudioPlayer.currentTime % 60, 10);
+				secondsElapsed = (secondsElapsed < 10 ? "0" : "") + secondsElapsed;
 
-		var secondsTotal = parseInt(mainAudioPlayer.duration % 60, 10);
-		secondsTotal = (secondsTotal < 10 ? "0" : "") + secondsTotal;
+				var minutesTotal = parseInt(mainAudioPlayer.duration / 60, 10);
+				minutesTotal = (minutesTotal < 10 ? "0" : "") + minutesTotal;
 
-		if($.isNumeric(mainAudioPlayer.duration)) {
-			$('.main-player__current-time').text(minutesElapsed+':'+secondsElapsed);
-			$('.main-player__total-time').text(minutesTotal+':'+secondsTotal);
-		}
-		$(progressIndicator).css({width: pos + '%'});
-		// Update for all iterations on page.
-		if(!countedMe && pos >= 50) {
-			countedMe = true;
-			var myHref = '/play/'+NowPlaying.currentPostId;
-			$.get(myHref,function(n) {
-				$('.post[data-song-id="'+NowPlaying.currentPostId+'"').find('.play-count').text(n);
+				var secondsTotal = parseInt(mainAudioPlayer.duration % 60, 10);
+				secondsTotal = (secondsTotal < 10 ? "0" : "") + secondsTotal;
+
+				if($.isNumeric(mainAudioPlayer.duration)) {
+					$('.main-player__current-time').text(minutesElapsed+':'+secondsElapsed);
+					$('.main-player__total-time').text(minutesTotal+':'+secondsTotal);
+				}
+				$(progressIndicator).css({width: pos + '%'});
+				if(!countedMe && pos >= 50) {
+					countedMe = true;
+					var myHref = '/play/'+NowPlaying.currentPostId;
+					$.get(myHref,function(n) {
+						$('.post[data-song-id="'+NowPlaying.currentPostId+'"').find('.play-count').text(n);
+					});
+				}
 			});
-		}
-	});
 	// Update for all iterations on page
 	$(mainAudioPlayer).bind('ended',function() {
 		mainAudioPlayer.currentTime = 0;
@@ -249,7 +243,7 @@ $(function() {
 		countedMe = false;
 		NowPlaying.isPlaying = false;
 		var myIndex = playlist.songs.findIndex(x => x.id === NowPlaying.currentPostId);
-		console.log(playlist.songs.length,(myIndex+1));
+		// console.log(playlist.songs.length,(myIndex+1));
 		if(playlist.songs.length > (myIndex+1)) {
 			var nextIndex = playlist.songs[myIndex+1].id;
 			if(nextIndex) {
@@ -271,25 +265,30 @@ function nextSong(s) {
 	$(mainAudio).attr('src','/storage/uploads/mp3s/'+s.filename);
 	$(mainAudio).get(0).load();
 	var promise = $(mainAudio).get(0).play();
-	if (promise) {
-		promise.catch(function(error) { console.error(error); });
-	}
-	$('.post[data-song-id="'+NowPlaying.currentPostId+'"').find('.bars').fadeOut();
-	NowPlaying.isPlaying = true;
-	$('.main-player__title').html('<b><a href="/'+s.user.username+'">'+s.user.name+'</b><br/><a href="/'+s.user.username+'/'+s.slug+'">'+s.title+'</a>');
-	$('.main-player__image img').attr('src','/storage/uploads/avatars/'+s.user.avatar);
-	$('.main-player__prompt').attr('href','/prompts/'+s.prompt.slug);
-	$('.main-player__prompt-name').text(s.prompt.title);
-	$('.play-pause-btn i').removeClass('fa-pause').addClass('fa-play');
-	$('.main-player__transport .play-pause-btn i').removeClass('fa-play').addClass('fa-pause');
-	NowPlaying.currentPostId = s.id;
-	$('.main-player').attr('data-song-id',s.id);
-	console.log(NowPlaying.currentPostId);
-	var iLike = s.likes.findIndex(x => x.id === currentUser);
-	(iLike > -1) ? $('.main-player__like').addClass('liked') : $('.main-player__like').removeClass('liked');
+	if (promise !== undefined) {
+		promise.then(function() {
+			$('.post[data-song-id="'+NowPlaying.currentPostId+'"').find('.bars').fadeOut();
+			NowPlaying.isPlaying = true;
+			$('.main-player__title').html('<b><a href="/'+s.user.username+'">'+s.user.name+'</b><br/><a href="/'+s.user.username+'/'+s.slug+'">'+s.title+'</a>');
+			$('.main-player__image img').attr('src','/storage/uploads/avatars/'+s.user.avatar);
+			$('.main-player__prompt').attr('href','/prompts/'+s.prompt.slug);
+			$('.main-player__prompt-name').text(s.prompt.title);
+			$('.play-pause-btn i').removeClass('fa-pause').addClass('fa-play');
+			$('.main-player__transport .play-pause-btn i').removeClass('fa-play').addClass('fa-pause');
+			NowPlaying.currentPostId = s.id;
+			$('.main-player').attr('data-song-id',s.id);
+			// console.log(NowPlaying.currentPostId);
+			var iLike = s.likes.findIndex(x => x.id === currentUser);
+			(iLike > -1) ? $('.main-player__like').addClass('liked') : $('.main-player__like').removeClass('liked');
 
-	$('.post[data-song-id="'+NowPlaying.currentPostId+'"').find('.play-pause-btn i').removeClass('.fa-play').addClass('fa-pause');
-	$('.post[data-song-id="'+NowPlaying.currentPostId+'"').find('.bars').fadeIn();
+			$('.post[data-song-id="'+NowPlaying.currentPostId+'"').find('.play-pause-btn i').removeClass('.fa-play').addClass('fa-pause');
+			$('.post[data-song-id="'+NowPlaying.currentPostId+'"').find('.bars').fadeIn();
+		})
+		.catch(function(error) { 
+			// console.error(error); 
+		});
+	}
+	
 }
 
 
@@ -306,14 +305,19 @@ $(document).on('click','.main-player .play-pause-btn',function(e) {
 	} else {
 		var promise = $('.main-player__audio').get(0).play();
 			// var promise = $(mainAudio).get(0).play();
-			if (promise) {
-				promise.catch(function(error) { console.error(error); });
+			if (promise !== undefined) {
+				promise.then(function() {
+					// console.error(error); 
+					btn.removeClass('fa-play').addClass('fa-pause');
+					NowPlaying.isPlaying = true;
+					pausePlayAllInstances(songId);
+				})
+				.catch(function(error) { 
+					console.log(error);
+				});
 			}
-			btn.removeClass('fa-play').addClass('fa-pause');
-			NowPlaying.isPlaying = true;
 		}
-		pausePlayAllInstances(songId);
-		console.log(NowPlaying.isPlaying);
+		// console.log(NowPlaying.isPlaying);
 	});
 $(document).on('click','.main-player__like',function(e) {
 	e.preventDefault();
@@ -326,10 +330,9 @@ $(document).on('click','.main-player__like',function(e) {
 });
 
 function pausePlayAllInstances(n) {
-	console.log(n);
+	// console.log(n);
 	var posts = $('.post[data-song-id="'+n+'"]');
-	console.log(posts.length, NowPlaying.isPlaying, NowPlaying.currentPostId);
-
+	// console.log(posts.length, NowPlaying.isPlaying, NowPlaying.currentPostId);
 	if(NowPlaying.isPlaying && NowPlaying.currentPostId == n) {
 		posts.addClass('is-playing')
 		.find('.play-pause-btn i').removeClass('fa-play').addClass('fa-pause');
@@ -378,10 +381,10 @@ $(document).on('change','.ajax-active input',function(e) {
 			data: form.serialize(),
 			dataType: 'json',
 			success: function(r) {
-				console.log('success!');
+				// console.log('success!');
 			},
 			error: function(e) {
-				console.log('boo hissss!');
+				// console.log('boo hissss!');
 			}
 		});
 	});
@@ -400,7 +403,7 @@ $(document).on('submit','.suggestion-form',function(e) {
 			});
 		},
 		error: function(e) {
-			console.log(e);
+			// console.log(e);
 		}
 	});
 });
@@ -448,7 +451,7 @@ $(document).on('submit','.comment-form',function(e) {
 			data: $this.serialize(),
 			dataType: 'json',
 			success: function (r) {
-				console.log(r);
+				// console.log(r);
 				var newComment = '<div class="post__comment anim-in come-in flex flex--align-center"><div class="post__comment--user"><a href="'+r.user.username+'"><img src="/storage/uploads/avatars/'+r.user.avatar+'" width="20" /></a></div><div class="post__comment--text">'+r.comment+'</div></div>';
 				$(newComment).insertBefore('.comment-form');
 				$this.find('input[name="comment"]').val('');
@@ -464,7 +467,7 @@ $(document).on('click','.im-going',function(e) {
 	var $this = $(this),
 	showcaseID = $(this).data('event-id');
 	$.get('/showcase/like/'+showcaseID,function(r)  {
-		console.log(r);
+		// console.log(r);
 		if(r.success) {
 			$this.addClass('liked');
 			$this.find('.icon i').attr('class','fa fa-thumbs-up');
@@ -512,7 +515,7 @@ $(document).on('change keyup keydown paste cut','textarea',function() {
 
 function stickySidebar() {
 	if($('.sidebar__inner').data('sticky') === true && isMobile() === false ) {
-		console.log('sticky sidebar');
+		// console.log('sticky sidebar');
 		var sidebar = new StickySidebar('.sidebar', {
 			containerSelector: '#page-content',
 			innerWrapperSelector: '.sidebar__inner',
@@ -533,7 +536,7 @@ $("#ts").keyup(debounce(function(){
 		CURRENT_QUERY = keyword;
 		$.get( "/search", { q: keyword } )
 		.done(function( data ) {
-			console.log(data);
+			// console.log(data);
 			$(tsr).empty();
 			if(data.users.length) {
 				$(tsr).append('<h4>Users</h4>');
@@ -593,14 +596,14 @@ $(document).on('click','a:not(.no-link)',function(e) {
 			$(mainContent).empty();
 			var newHtml = $(data).find(mainContent).html();
 			$(mainContent).html(newHtml);
-				window.history.pushState({"html":newHtml,"pageTitle":''},"", myHref);
-				window.scrollTo(0, 0);
-				fadeInElements();
-				stickySidebar();
-				if(NowPlaying.isPlaying) {
-					pausePlayAllInstances(NowPlaying.currentPostId);
-				}
-			});
+			window.history.pushState({"html":newHtml,"pageTitle":''},"", myHref);
+			window.scrollTo(0, 0);
+			fadeInElements();
+			stickySidebar();
+			if(NowPlaying.isPlaying) {
+				pausePlayAllInstances(NowPlaying.currentPostId);
+			}
+		});
 	}
 });
 
@@ -619,18 +622,18 @@ $('.footer-signup').submit(function(e) {
 		success: function (data) {
 			$this.find('.btn').text('submit');
 			if (data.result === 'success') {
-				console.log(data.msg)
+				// console.log(data.msg)
 				$('#mce-EMAIL').removeClass('error');
 				$('#mce-responses').text('Thank you for subscribing. We have sent you a confirmation email.').addClass('alert-success');
 				$('#mce-EMAIL').val('')
 			} else {
-				console.log(data.msg)
+				// console.log(data.msg)
 					// $('#mce-EMAIL').css('borderColor', '#721c24')
 					$('#mce-EMAIL').addClass('error');
 					$('#mce-responses').text(data.msg.substring(4)).addClass('alert-danger');
 				}
 			}
-		})
+		});
 });	
 
 /* Volume Slider */
@@ -657,26 +660,19 @@ var updateBar = function (y, vol) {
 	var percentage;
         //if only volume have specificed
         //then direct update volume
-        console.log('boo');
         if (vol) {
         	percentage = vol * 100;
         } else {
         	var position = y + volume.offset().top;
         	percentage = 100 * position / volume.height();
         }
-        console.log(percentage);
-
         if (percentage > 100) {
         	percentage = 100;
         }
         if (percentage < 0) {
         	percentage = 0;
         }
-
-        //update volume bar and video volume
-        // eInner.style.width = percentage +'%';
         $('.volume__sliderProgress').css('height', percentage +'%');
-        // audio.volume = percentage / 100;
     };
     
 

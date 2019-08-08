@@ -4,6 +4,7 @@
 <div class="container--tiny">
 	<h1 class="title">Contact</h1>
 	<form action="/contact" method="POST">
+		@csrf
 		<div class="field">
 			<label for="name">Name</label>
 			<input id="name" type="text" name="name" value="{{ Auth::user() ? Auth::user()->name : '' }}">

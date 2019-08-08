@@ -18,6 +18,7 @@ Route::get('/','HomeController@index', function () {
 Route::get('/welcome','HomeController@welcome');
 
 Route::get('/contact','PageController@contact');
+Route::post('/contact','PageController@contactSubmit');
 
 Auth::routes();
 Route::get('/logout', '\App\Http\Controllers\Auth\LoginController@logout');

@@ -583,7 +583,7 @@ select {
     @include desktop {
         width: 114%;
         margin-left: -7%;
-        margin-top: -7%;
+        margin-top: 0;
         border: 5px solid white;
         -webkit-box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.75);
         -moz-box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.75);
@@ -649,7 +649,7 @@ select {
         top: 55px;
     }
     .sidebar__inner{
-        padding: $gutter-site 0;
+        padding: ($gutter-site / 2) 0;
         @include phone {
             padding: $gutter-site-mobile 0;
         }
@@ -679,7 +679,7 @@ select {
     width: 80%;
     @include desktop {
         padding-right: 250px;
-        padding-top: $gutter-site;
+        padding-top: $gutter-site / 2;
         padding-left: 75px;
     }
     &.no-right-padding {
@@ -714,9 +714,8 @@ body.no-user .main {
 }
 @include desktop {
     .submit-song__wrapper {
-
         position: absolute;
-        top: $gutter-site;
+        top: $gutter-site / 2;
         right: 200px;
         .submit-song {
             width: 200px;
@@ -1382,7 +1381,7 @@ $spacing: 15px;
     bottom: 0;
     left: 0;
     width: 100%;
-    padding: $spacing;
+    padding: $spacing 0;
     background: #f0f0f0;
     box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.2);
 }

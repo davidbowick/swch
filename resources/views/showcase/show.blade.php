@@ -1,9 +1,8 @@
 @extends('layouts.app')
 @section('content')
 
-<div id="page-content" class="flex">
-
-	<div class="sidebar">
+<div id="page-content" class="flex small--flex-wrap">
+	<div class="sidebar small--one-whole">
 		<div class="sidebar__inner" data-sticky="true">
 			<h1>{{$showcase->venue}}</h1>
 			{{-- <time datetime="{{ $showcase->date_time->format('Y-m-d') }}" class="icon">
@@ -11,11 +10,17 @@
 				<strong>{{ $showcase->date_time->format('F') }}</strong>
 				<span>{{ $showcase->date_time->format('j') }}</span>
 			</time> --}}
-			<h4 class="h4">
+			<p class="large-text">
 				{{ $showcase->date_time->format('M j, Y | ga') }}
 				<br/>
 				{{ $showcase->address}}
-			</h4>
+			</p>
+			<button data-event-id="{{ $showcase->id }}" data-user-id="{{ Auth::id() }}" class="im-going {{ $showcase->isLiked ? 'liked' : '' }}">
+				<span class="icon"><i class="fa fa-{{ $showcase->isLiked ? 'thumbs-up' : 'question' }}"></i></span>
+				<span class="button-text">{{ $showcase->isLiked ? 'I\'ll Be There!' : 'Be there?' }}</span>
+			</button>
+			<hr class="hr--invisible">
+			<hr class="hr--invisible">
 			<h3>Prompts</h3>
 			<ul>
 				@foreach($showcase->prompts as $prompt)
@@ -24,7 +29,7 @@
 			</ul>
 		</div>
 	</div>
-	<div class="main no-right-padding no-top-padding">
+	<div class="main no-right-padding no-top-padding small--one-whole">
 		<div id="showcase-map"></div>
 		<hr class="hr--invisible">
 		<h3>{{ $users_attending->count() }} Users {{ $showcase->isUpcoming() ? 'Attending' : 'Attended' }}</h3>
