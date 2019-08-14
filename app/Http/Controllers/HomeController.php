@@ -61,7 +61,7 @@ class HomeController extends Controller
            $userIds = Like::where('user_id',$user->id)->get()->toArray();
            // dd($userIds);
            $posts = Post::whereIn('user_id',$userIds)->get();
-           dd($posts);
+           // dd($posts);
            return view('newcomer',compact('posts','prompts','showcase','users_attending','user','top_posts'));
         } else {
             return redirect('/');

@@ -3,7 +3,7 @@
 @section('content')
 <hr class="hr--invisible">
 <div class="container--tiny">
-	<h1 class="title flex flex--align-center flex--justify-space-between"><span>New Prompt Ideas</span> <small>Everyone gets Two</small></h1>
+	<h1 class="title flex flex--align-center flex--justify-space-between"><span>New Prompt Ideas</span> <small>Everyone gets two per showcase</small></h1>
 	@for ( $i=1; $i<3; $i++) 
 	@php 
 		$io = $i - 1;
@@ -41,7 +41,7 @@
 	@if(Auth::user()->type == 'admin')
 	<hr>
 	<h1>Pick out of the hat</h1>
-	<a class="hat-draw btn btn--primary no-link">Pick!</a>
+	<a data-pick-number="1" class="hat-draw btn btn--primary no-link">Pick!</a>
 	<hr class="hr--invisible">
 	<h2 class="results-1"></h2>
 	<h2 class="results-2"></h2>

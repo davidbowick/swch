@@ -72,7 +72,8 @@ var NowPlaying = {
 
 var AUDIO_PLAYING = false,
 CURRENT_SONG = false,
-SOMETHING = true;
+SOMETHING = true,
+USE_PLAYLIST = false;
 
 
 $(function() {
@@ -135,7 +136,8 @@ $(function() {
 			NowPlaying.currentPrompt = prompt;
 			$('.main-player__prompt-name').text(prompt);
 			$('.main-player__prompt ').attr('href','/prompts/'+promptSlug);
-			liked ? $('.main-player__like').addClass('liked') : '' ;
+			liked ? $('.main-player__like').addClass('liked') : $('.main-player__like').removeClass('liked') ;
+
 		}
 		
 		setTimeout(function() {
@@ -146,43 +148,12 @@ $(function() {
 		$mainBtn.attr('class', $item.hasClass('is-playing') ? 'fa fa-pause' : 'fa fa-play');
 
 	});
-    /*
-	$(document).on('click','.main-player__volume-wrapper',function(e) {
-		e.preventDefault();
-		var myIcon = $(this).find('i'),
-			mainAudio = '.main-player__audio';
-
-		if(myIcon.hasClass('fa-volume-up')) {
-			$(mainAudio).prop("volume", 0.0);
-			VOLUME = 0;
-			myIcon.removeClass('fa-volume-up').addClass('fa-volume-off');
-			// Cookies.set('volume', 0);
-		} else 
-		if(myIcon.hasClass('fa-volume-off')) {
-			$(mainAudio).prop("volume", 0.5);
-			VOLUME = .5;
-			myIcon.removeClass('fa-volume-off').addClass('fa-volume-down');
-			// Cookies.set('volume', .5);
-		} else 
-		if(myIcon.hasClass('fa-volume-down')) {
-			$(mainAudio).prop("volume", 1);
-			VOLUME = 1;
-			myIcon.removeClass('fa-volume-down').addClass('fa-volume-up');
-			// Cookies.set('volume', 1);
-		}
-	});
-	*/
+   
 
 	var mainAudio = '.main-player__audio',
 	loadingIndicator = '.main-player__playbar--loading',
 	progressIndicator = '.main-player__playbar--progress',
 	mainAudioPlayer = $(mainAudio).get(0);
-
-		/*var promise = mainAudioPlayer.play();
-
-		if (promise !== undefined) {
-
-		}*/
 
 		if (($(mainAudio).buffered != undefined) && ($(mainAudio).buffered.length != 0)) {
 			mainAudioPlayer.bind('progress', function() {
@@ -244,7 +215,7 @@ $(function() {
 		NowPlaying.isPlaying = false;
 		var myIndex = playlist.songs.findIndex(x => x.id === NowPlaying.currentPostId);
 		// console.log(playlist.songs.length,(myIndex+1));
-		if(playlist.songs.length > (myIndex+1)) {
+		if(playlist.songs.length > (myIndex+1) && USE_PLAYLIST) {
 			var nextIndex = playlist.songs[myIndex+1].id;
 			if(nextIndex) {
 				$.get('/next/'+nextIndex,function(data) {
@@ -410,18 +381,23 @@ $(document).on('submit','.suggestion-form',function(e) {
 function showPick(n,all,picks) {
 	var time = 50;
 	var div = (n === 1) ? '.results-1' : '.results-2';
-	var firstPick = picks[0].title;
+
+	var pick = picks[0].title;
 	var secondPick = picks[1].title;
 	$.each(all,function(i,v) {
 		setTimeout( function(){ 
 			$(div).text(v.title);
 		}, time*i);
 	});
+	setTimeout(function() {
+		$(div).text(pick);
+	}, time*all.length);
 
+	/*
 	if(n===1) {
 		setTimeout(function() {
 			$(div).text(firstPick);
-			showPick(2,all,picks);
+			//showPick(2,all,picks);
 		}, time*all.length);
 	} else {
 		setTimeout(function() {
@@ -429,17 +405,21 @@ function showPick(n,all,picks) {
 				// showPick(2,all,picks);
 			}, time*all.length);
 	}
+	*/
 }
 $(document).on('click','.hat-draw',function(e) {
 	e.preventDefault();
+	var $this = $(this);
+	var n = parseInt($this.attr('data-pick-number'));
+	console.log(n);
 	$.get('/suggestions/pick',function(data) {
 		var all = data.all,
 		picks = data.picks;
 		var newAll = $.merge( all, all );
-
-		showPick(1,newAll,picks);
-
+		showPick(n,newAll,picks);
+		$this.attr('data-pick-number','2');
 	});
+	
 });
 $(document).on('submit','.comment-form',function(e) {
 	e.preventDefault();

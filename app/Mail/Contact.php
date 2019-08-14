@@ -3,6 +3,7 @@
 namespace App\Mail;
 
 use Illuminate\Bus\Queueable;
+use Illuminate\Http\Request;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -10,15 +11,11 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 class Contact extends Mailable
 {
     use Queueable, SerializesModels;
+    public $email;
 
-    /**
-     * Create a new message instance.
-     *
-     * @return void
-     */
-    public function __construct()
+    public function __construct(Request $request)
     {
-        //
+        $this->email = $request;
     }
 
     /**
@@ -28,6 +25,9 @@ class Contact extends Mailable
      */
     public function build()
     {
-        return $this->view('emails.contact');
+        return $this->subject('SWCH Contact Form Submission')
+                    ->from($this->email->email,$this->email->name)
+                    ->to('swch.board@gmail.com')
+                    ->view('emails.contact');
     }
 }

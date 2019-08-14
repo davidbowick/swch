@@ -87,8 +87,10 @@ hr {
 .container--thin {
     max-width: 900px;
     margin: 0px auto;
+    //width: 90%;
 }
 .container--tiny {
+    // width: 90%;
     max-width: 600px;
     margin: 0px auto;
 }
@@ -1279,7 +1281,16 @@ time.icon span {
         display: none;
     }
 }
-@include phone {
+@include tablet {
+    .medium--hide {
+        display: none;
+    }
+    .medium--one-whole {
+        width: 100%;
+        max-width: 100%;
+    }
+}
+@include tablet {
     .small--hide {
         display: none;
     }
@@ -1591,4 +1602,7 @@ input[type=checkbox] {
     transform: rotate(45deg);
     @include transition();
   }
+}
+.special-field {
+    display: none;
 }

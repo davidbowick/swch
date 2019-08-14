@@ -60,6 +60,46 @@ class PostsController extends Controller
     
         return redirect('/'.Auth::user()->username);
     }
+
+    public function edit(Post $post)
+    {
+        $prompts = Prompt::all();
+        return view('posts.edit',compact('post','prompts'));   
+
+    }
+
+    public function update(Request $request, Post $post)
+    {
+        $request = request();
+        $request->validate([
+            'title' => 'required|min:3|max:255',
+            'user_id' => 'required',
+            'slug' => 'required',
+            'prompt_id' => 'required',
+            'filename' => 'nullable|mimes:audio/mp3,mpga,mp3|max:12000',
+            'lyrics' => 'nullable'
+        ]);
+    
+        if($request->filename) {
+            // $request = request();
+            
+            // dd($request->filename);
+            $fileName = $post->user->id.''.$request->slug.'.'.$request->filename->getClientOriginalExtension();
+            $request->filename->storeAs('uploads/mp3s',$fileName);
+            // $request->avatar->storeAs('uploads/avatars',$avatarName);
+            $request->filename = $fileName;
+            $post->update([
+                'filename' => $fileName
+            ]);
+        }
+        $request->merge([
+                'slug' => str_slug(request()->get('title'))
+            ]);
+        $post->update($request(['title','prompt_id','lyrics']));
+        // return redirect('/posts/'.$post->id.'/edit');
+        // dd($post->user->username)
+        return redirect('/'.$post->user->username.'/'.$post->slug);
+    }
     public function increasePlayCount($id) {
         $post = Post::where('id',$id)->firstOrFail();
         $post->increment('play_count');

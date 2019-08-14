@@ -43,9 +43,10 @@
                                     <ul>
                                         <li><a href="/{{ Auth::user()->username }}">View Profile</a></li>
                                         <li><a href="/posts/create">Submit a Song</a></li>
+                                        {{-- <li><a href="/suggestions">Submit a Prompt</a></li> --}}
                                         <li><a href="/{{ Auth::user()->username }}/edit">Edit Profile</a></li>
                                         <li><a href="/search">Search</a></li>
-                                        <li><a href="/logout">Log Out</a></li>
+                                        <li><a class="no-link" href="/logout">Log Out</a></li>
                                     </ul>
                                 </div>
                             </div>
@@ -152,10 +153,12 @@
   </div>
   <!-- Scripts -->
   @if (Auth::user())
-  <script>var currentUser = {{Auth::user()->id}};</script>
+  <script type="text/javascript">
+    var currentUser = {{Auth::user()->id}};
+  </script>
   @endif
   @yield('scripts')
-  <script src="{{ asset('js/jquery-3.4.1.min.js') }}"></script>
-  <script src="{{ asset('js/app.js') }}"></script>
+  <script type="text/javascript" src="{{ asset('js/jquery-3.4.1.min.js') }}"></script>
+  <script type="text/javascript" src="{{ asset('js/app.js') }}"></script>
 </body>
 </html>

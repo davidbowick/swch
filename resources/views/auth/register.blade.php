@@ -8,7 +8,10 @@
     <div class="card-body">
         <form id="registration-form" method="POST" action="{{ route('register') }}">
             @csrf
-
+            <div class="special-field">
+                <label for="birthday">Birthday</label>
+                <input type="text" id="birthday" name="birthday" value="">
+            </div>
             <div class="field row">
                 <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Name') }}</label>
                 <div class="col-md-6">

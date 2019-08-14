@@ -8,6 +8,9 @@
 	</div>
 	<div class="main small--one-whole">
 		@include('snippets.post')
+		@if (Auth::id() == $post->user_id) 
+		<a class="btn" href="/posts/{{$post->id}}/edit">Edit Song</a>
+		@endif
 	</div>
 	@if (Auth::user())
 	<div class="submit-song__wrapper">

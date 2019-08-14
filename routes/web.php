@@ -10,17 +10,25 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::get('/verify-notification',function() {
+	$user = App\User::find(1);
+	$verifyNotification = new Illuminate\Auth\Notifications\VerifyEmail();
+	$mailMessage = $verifyNotification->toMail($user);
+	$markdown = new Illuminate\Mail\Markdown(view(),config('mail.markdown'));
+	return $markdown->render('vendor.notifications.email',$mailMessage->toArray());
+});
 
 Route::get('/','HomeController@index', function () {
     return redirect()->intended('home');
-});
+})->middleware('verified');
 
 Route::get('/welcome','HomeController@welcome');
 
 Route::get('/contact','PageController@contact');
 Route::post('/contact','PageController@contactSubmit');
 
-Auth::routes();
+Auth::routes(['verify'=>true]);
+
 Route::get('/logout', '\App\Http\Controllers\Auth\LoginController@logout');
 
 Route::get('/admin','AdminController@admin')
@@ -53,7 +61,7 @@ Route::get('/suggestions/pick','PromptSubmissionsController@pick')
 # Posts
 Route::get('/play/{id}','PostsController@increasePlayCount');
 Route::get('/next/{id}','PostsController@getNextSong');
-Route::resource('/posts','PostsController');
+Route::resource('/posts','PostsController')->middleware('verified');
 Route::get('/post/like/{id}',['as' => 'post.like', 'uses' => 'LikeController@likePost']);
 
 # RSVP
@@ -72,5 +80,6 @@ Route::get('/{username}/edit','ProfilesController@edit');
 Route::post('/update-profile/{username}','ProfilesController@update');
 Route::get('/{username}/{param}','ProfilesController@showSinglePost');
 Route::get('/user/like/{id}',['as' => 'user.like', 'uses' => 'LikeController@likeUser']);
+
 
 Route::post('/deploy','DeployController@deploy');
