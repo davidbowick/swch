@@ -28,6 +28,7 @@ class Contact extends Mailable
         return $this->subject('SWCH Contact Form Submission')
                     ->from($this->email->email,$this->email->name)
                     ->to('swch.board@gmail.com')
+                    ->line($this->email->message)
                     ->view('emails.contact');
     }
 }
