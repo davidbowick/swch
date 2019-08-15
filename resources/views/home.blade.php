@@ -38,10 +38,7 @@
         <a href="/posts/create" class="btn submit-song btn--primary">Submit a Song</a>
     </div>
     @endif
+    @include('snippets.playlist-script')
 </div>
 @endsection
 
-
-@section('scripts')
-@include('snippets.playlist-script')
-@endsection

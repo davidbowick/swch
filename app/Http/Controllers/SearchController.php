@@ -27,17 +27,20 @@ class SearchController extends Controller
         $posts->count() ? $total_results += $posts->count() : '';
         $users->count() ? $total_results += $users->count() : '';
         $prompts->count() ? $total_results += $prompts->count() : '';
-        
-        if($request->ajax())
-        {
+        // dd($request);
+        if($request->ajax()) {
             // return view('search.autocomplete',compact('users','posts','prompts'));
-            return Response::json([
-                'query' => $query,
-                'total_results' => $total_results,
-                'posts' => $posts->toArray(),
-                'users' => $users->toArray(),
-                'prompts' => $prompts->toArray()
-            ]);
+            if($query) {
+                return Response::json([
+                    'query' => $query,
+                    'total_results' => $total_results,
+                    'posts' => $posts->toArray(),
+                    'users' => $users->toArray(),
+                    'prompts' => $prompts->toArray()
+                ]);
+            } else {
+                return view('search.search',compact('users','query','posts','prompts','total_results'));    
+            }
         } else {
             return view('search.search',compact('users','query','posts','prompts','total_results'));
         }

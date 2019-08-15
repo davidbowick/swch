@@ -100,6 +100,10 @@ $(function() {
 			}
 		});
 	});
+	$(document).on('click', '.play-all',function(e) {
+		USE_PLAYLIST = true;
+		$('.post').eq(0).find('.play-pause-btn').eq(0).trigger('click');
+	});
 	$(document).on('click', '.post .play-pause-btn', function(e) {
 		e.preventDefault();
 		var $this = $(this);
@@ -213,18 +217,21 @@ $(function() {
 
 		countedMe = false;
 		NowPlaying.isPlaying = false;
-		var myIndex = playlist.songs.findIndex(x => x.id === NowPlaying.currentPostId);
-		// console.log(playlist.songs.length,(myIndex+1));
-		if(playlist.songs.length > (myIndex+1) && USE_PLAYLIST) {
-			var nextIndex = playlist.songs[myIndex+1].id;
-			if(nextIndex) {
-				$.get('/next/'+nextIndex,function(data) {
-					nextSong(data);
-				});
+		if(USE_PLAYLIST) {
+			var myIndex = playlist.songs.findIndex(x => x.id === NowPlaying.currentPostId);
+			// console.log(playlist.songs.length,(myIndex+1));
+			if(playlist.songs.length > (myIndex+1) && USE_PLAYLIST) {
+				var nextIndex = playlist.songs[myIndex+1].id;
+				if(nextIndex) {
+					$.get('/next/'+nextIndex,function(data) {
+						nextSong(data);
+					});
+				}
+			} else {
+				//hidePlayer();
+				USE_PLAYLIST = false;
+				$('.post .bars').fadeOut();
 			}
-		} else {
-			//hidePlayer();
-			$('.post .bars').fadeOut();
 		}
 	});
 }
