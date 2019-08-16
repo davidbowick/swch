@@ -35,7 +35,7 @@ class PostsController extends Controller
             'slug' => str_slug(request()->get('title'))
         ]);
         $request->validate([
-            'title' => 'required|min:3|max:255|regex:/(^[A-Za-z0-9 ]+$)+/',
+            'title' => 'required|min:3|max:255',
             'user_id' => 'required',
             'slug' => 'required',
             'prompt_id' => 'required',
