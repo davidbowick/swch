@@ -51,7 +51,7 @@
 	</div>
 	@endif 
 
-	@if ($submissions)
+	@if ($posts)
 	<div class="anim-in grid__item rte small--one-whole">
 		<h4>Submissions</h4>
 		<ul class="admin-list__submissions">
