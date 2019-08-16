@@ -126,6 +126,13 @@ $(function() {
 
 		// Nothing is Playing
 		if(NowPlaying.currentPostId != $songId) {
+			if($('.post.is-playing').length) {
+				$('.post.is-playing').eq(0).find('.play-pause-btn').eq(0).trigger('click');
+				$('.post[data-song-id="'+NowPlaying.currentPostId+'"').removeClass('is-playing');
+				$('.post[data-song-id="'+$songId+'"').addClass('is-playing').find('.play-pause-btn i').removeClass('fa-play').addClass('fa-pause');
+
+			}
+			// $this.find('.play-pau')
 			$('.main-player__image').empty();	
 			var mainTitles = '<b><a href="'+postLink+'">"'+$item.data('title')+'"</a></b>' + '<br/>' + userLink;
 			$(mainTitle).html(mainTitles);
@@ -139,7 +146,6 @@ $(function() {
 			$('.main-player__prompt-name').text(prompt);
 			$('.main-player__prompt ').attr('href','/prompts/'+promptSlug);
 			liked ? $('.main-player__like').addClass('liked') : $('.main-player__like').removeClass('liked') ;
-
 		}
 		
 		setTimeout(function() {
@@ -584,6 +590,7 @@ $(document).on('click','a:not(.no-link)',function(e) {
 	}
 	if(myHref != '#') {
 		e.preventDefault();		
+
 		$.get(myHref,function(data) {
 			$(mainContent).empty();
 			var newHtml = $(data).find(mainContent).html();

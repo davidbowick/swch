@@ -18,6 +18,8 @@
     <br/>
     @if ($users_attending)
     <p class="grey"><a class="total-attendees" href="/showcase/{{$showcase->id}}">{{$users_attending}} user{{ $users_attending > 1 ? 's' : '' }} attending</a></p>
+    @else 
+    <br>
     @endif
     <a class="is-link btn" href="/showcase/{{ $showcase->id }}">View More</a>
 
