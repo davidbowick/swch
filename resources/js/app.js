@@ -599,8 +599,14 @@ $(document).on('click','a:not(.no-link)',function(e) {
 				window.scrollTo(0, 0);
 				// $('.main-preloader').stop().fadeOut('fast');
 				fadeInElements();
-				stickySidebar();
-				$(window).resize();
+				$('img').one('load',function() {
+					stickySidebar();
+					$(window).resize();
+				}).each(function() {
+					if(this.complete) {
+						$(this).trigger('load');
+					}
+				});
 				$(mainContent).fadeTo('fast',1);
 				if(NowPlaying.isPlaying) {
 					pausePlayAllInstances(NowPlaying.currentPostId);
@@ -747,6 +753,7 @@ $(function() {
 			}
 			if(data.success) {
 				$(successText).html('<div class="alert alert-success">Great success!</div>');
+				window.location.href = $(this).closest('form').data('return-url');
 			}
 		}
 	});

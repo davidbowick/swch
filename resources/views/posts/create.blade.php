@@ -18,7 +18,7 @@
 	</div>
 	<div class="main small--one-whole">
 		<h1 class="title">Submit New Song</h1>
-		<form id="post-form" enctype="multipart/form-data" method="POST" action="/posts">
+		<form id="post-form" enctype="multipart/form-data" method="POST" action="/posts" data-return-url="/{{Auth::user()->username}}">
 			@csrf
 			<input type="hidden" name="user_id" value="{{ Auth::user()->id }}">
 			<div class="field">

@@ -15,7 +15,10 @@
 		<i class='fa fa-star'></i>
 		<span class="like-text">{{ $user->isLiked ? 'Following' : 'Follow' }}</span>
 	</a>
-	<a href="/{{$user->username}}/followers"><small class="grey">Followers: {{ $user->likes->count() }}</small></a>
+	<div>
+		<a href="/{{$user->username}}/followers"><small class="grey">Followers: {{ $user->likes->count() }}</small></a><br/>
+	</div>
+
 </div>
 <div class="flex flex--wrap user--followers-list">
 	@foreach($user->likes as $follower)
@@ -58,5 +61,6 @@
 	@if ($user->posts->count())
 	<p><b>Songs Contributed:</b> {{ $user->posts->count() }}</p>
 	@endif 
+	<p><b>Member since:</b> {{$user->created_at->format('M Y') }}</p>
 </div>
 @endif
