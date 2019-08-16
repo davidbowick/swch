@@ -598,10 +598,11 @@ $(document).on('click','a:not(.no-link)',function(e) {
 				$(mainContent).html(newHtml);
 				window.history.pushState({"html":newHtml,"pageTitle":''},"", myHref);
 				window.scrollTo(0, 0);
-				$(mainContent).fadeTo('fast',1);
 				// $('.main-preloader').stop().fadeOut('fast');
 				fadeInElements();
 				stickySidebar();
+				$(window).resize();
+				$(mainContent).fadeTo('fast',1);
 				if(NowPlaying.isPlaying) {
 					pausePlayAllInstances(NowPlaying.currentPostId);
 				}
