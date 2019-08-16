@@ -162,7 +162,8 @@
   </script>
   @endif
   @yield('scripts')
-  <script type="text/javascript" src="{{ asset('js/jquery-3.4.1.min.js') }}"></script>
-  <script type="text/javascript" src="{{ asset('js/app.js') }}"></script>
+  <script type="text/javascript" src="{{ asset('js/jquery-3.4.1.min.js') }}" defer></script>
+  <script type="text/javascript" src="{{ asset('js/jquery.form.min.js') }}" defer></script>
+  <script type="text/javascript" src="{{ asset('js/app.js') }}" defer></script>
 </body>
 </html>

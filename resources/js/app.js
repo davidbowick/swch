@@ -3,11 +3,10 @@
  * includes Vue and other libraries. It is a great starting point when
  * building robust, powerful web applications using Vue and Laravel.
  */
-// require('./jquery-3.4.1.min.js');
+// require('./jquery.form.min.js');
 require('./sticky-sidebar.min.js');
-// require('./datepicker.min.js');
-// require('./leaflet.js');
 require('./cookies.min.js');
+
 
 
 function isMobile() {
@@ -727,3 +726,28 @@ window.onpopstate = function(e){
 		fadeInElements();
 	}
 };
+
+var progressText = '.progress-text',
+		progressBar = '.progress-bar',
+		successText = '#success';
+$(function() {
+	$('#post-form').ajaxForm({
+		beforeSend:function() {
+			$(successText).empty();
+		},
+		uploadProgress: function(event,position,total,percentComplete) {
+			$(progressText).text(percentComplete + '%');
+			$(progressBar).css('width',percentComplete + '%');
+		},
+		success:function(data) {
+			if(data.errors) {
+				$(progressText).text('0%');
+				$(progressBar).css('width','0%');
+				$(successText).html('<div class="alert alert-danger">'+data.errors+'</div>');
+			}
+			if(data.success) {
+				$(successText).html('<div class="alert alert-success">Great success!</div>');
+			}
+		}
+	});
+});

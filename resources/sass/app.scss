@@ -1705,3 +1705,12 @@ input[type=checkbox] {
         margin-right: -15px;
     }
 }
+#post-form {
+    .progress-text {
+        
+    }
+    .progress-bar {
+        height: 5px;
+        background: $teal;
+    }
+}

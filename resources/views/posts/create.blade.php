@@ -18,7 +18,7 @@
 	</div>
 	<div class="main small--one-whole">
 		<h1 class="title">Submit New Song</h1>
-		<form enctype="multipart/form-data" method="POST" action="/posts">
+		<form id="post-form" enctype="multipart/form-data" method="POST" action="/posts">
 			@csrf
 			<input type="hidden" name="user_id" value="{{ Auth::user()->id }}">
 			<div class="field">
@@ -42,6 +42,11 @@
 				@error('filename')
 				<div class="alert alert-danger" role="alert">{{ $message }}</div>
 				@enderror
+				<div class="progress">
+					<div class="progress-bar" role="progressbar" aria-valuenow="" aria-valuemin="0" aria-valuemax="100%" style="width: 0%;"></div>
+					<div class="progress-text"></div>
+				</div>
+				<div id="success"></div>
 			</div>
 			<div class="field">
 				<label for="lyrics">Lyrics</label>
