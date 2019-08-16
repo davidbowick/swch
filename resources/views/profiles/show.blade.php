@@ -19,7 +19,7 @@
 		@include('snippets.please-login')
 	</div>
 	@if (Auth::id() == $user->id)
-	<div class="submit-song__wrapper">
+	<div class="submit-song__wrapper small--hide">
 		<a href="/posts/create" class="btn submit-song btn--primary">Submit a Song</a>
 	</div>
 	@endif
@@ -27,8 +27,4 @@
 @else
   <script>window.location = "/";</script>
 @endif
-@endsection
-@section('scripts')
-{{ $posts = $user->posts }}
-@include('snippets.playlist-script');
 @endsection

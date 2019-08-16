@@ -1,4 +1,4 @@
-@if ($posts->count())
+@if ($posts)
 <script type="text/javascript">
     var playlist = {};
     playlist.songs = [];

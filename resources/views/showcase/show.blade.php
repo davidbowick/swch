@@ -30,7 +30,8 @@
 		</div>
 	</div>
 	<div class="main no-right-padding no-top-padding small--one-whole">
-		<div id="showcase-map"></div>
+		<div class="gmap_canvas"><iframe width="100%" height="300" id="gmap_canvas" src="https://maps.google.com/maps?q={{urlencode($showcase->address)}}&t=&z=13&ie=UTF8&iwloc=&output=embed" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe></div>
+
 		<hr class="hr--invisible">
 		<h3>{{ $users_attending->count() }} Users {{ $showcase->isUpcoming() ? 'Attending' : 'Attended' }}</h3>
 		@foreach($showcase->users as $user)
@@ -38,7 +39,8 @@
 		@endforeach
 	</div>
 </div>
-<script src="//unpkg.com/leaflet@1.5.1/dist/leaflet.js" integrity="sha512-GffPMF3RvMeYyc1LWMHtK8EbPv0iNZ8/oTtHPx9/cc2ILxQ+u905qIwdpULaqDkyBKgOaB57QTMg7ztg8Jm2Og==" crossorigin=""></script>
+
+{{-- <script src="//unpkg.com/leaflet@1.5.1/dist/leaflet.js" integrity="sha512-GffPMF3RvMeYyc1LWMHtK8EbPv0iNZ8/oTtHPx9/cc2ILxQ+u905qIwdpULaqDkyBKgOaB57QTMg7ztg8Jm2Og==" crossorigin=""></script>
 <script>
 	var showcaseLat = {{$showcase->lat}};
 	var showcaseLng = {{$showcase->lng}};
@@ -47,5 +49,5 @@
 	var myDataPoint = L.marker([showcaseLat, showcaseLng]).addTo(map);
 	myDataPoint.bindPopup("{{$showcase->venue}}<br/>{{$showcase->address}}");
 
-</script>
+</script> --}}
 @endsection

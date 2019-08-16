@@ -20,7 +20,7 @@
     </div>
     <div class="main small--one-whole">
         @if ($posts->count())
-        <h2>Current Submissions <small><a href="#" class="play-all">Play All</a></small></h2>
+        <h2 class="flex flex--align-center">Current Submissions <small class="float-right"><a href="#" class="play-all"><i class="fa fa-play"></i> Play All</a></small></h2>
         @foreach ($posts as $post)
             @include('snippets.post')
         @endforeach

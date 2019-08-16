@@ -1,5 +1,10 @@
 <div class="next-showcase">
-    <h4 class="grey">Next Showcase</h4>
+    <h4 class="grey">
+        Next Showcase
+        @if(Auth::user()->type == 'admin')
+        <a class="btn btn--small float-right" href="/admin/showcases/{{$showcase->id}}/edit">Edit</a>
+        @endif 
+    </h4>
     <h3>
         <a href="/showcase/{{$showcase->id}}">
             {{ $showcase->venue }}<br>
@@ -10,10 +15,10 @@
         <span class="icon"><i class="fa fa-{{ $showcase->isLiked ? 'thumbs-up' : 'question' }}"></i></span>
         <span class="button-text">{{ $showcase->isLiked ? 'I\'ll Be There!' : 'Be there?' }}</span>
     </button>
-    <br/><br/>
-    {{-- <a class="is-link" href="/showcase/{{ $showcase->id }}">View More</a> --}}
+    <br/>
     @if ($users_attending)
     <p class="grey"><a class="total-attendees" href="/showcase/{{$showcase->id}}">{{$users_attending}} user{{ $users_attending > 1 ? 's' : '' }} attending</a></p>
     @endif
+    <a class="is-link btn" href="/showcase/{{ $showcase->id }}">View More</a>
 
 </div>

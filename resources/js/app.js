@@ -1,4 +1,4 @@
-/**
+/*
  * First we will load all of this project's JavaScript dependencies which
  * includes Vue and other libraries. It is a great starting point when
  * building robust, powerful web applications using Vue and Laravel.
@@ -6,15 +6,17 @@
 // require('./jquery-3.4.1.min.js');
 require('./sticky-sidebar.min.js');
 // require('./datepicker.min.js');
-require('./leaflet.js');
+// require('./leaflet.js');
 require('./cookies.min.js');
 
+
 function isMobile() {
-	if(window.innerWidth <= 600) {
+	var win = window.matchMedia("(max-width: 768px)");
+	if(win.matches) {
 		return true;
 	} else {
 		return false;
-	}
+	}    
 }
 
 $.easing.custom = function (x, t, b, c, d) {
@@ -79,12 +81,7 @@ USE_PLAYLIST = false;
 $(function() {
 	fadeInElements();
 	stickySidebar();
-	if(isMobile()){
-		$(document).on('click','.main-nav__user-link',function(e) {
-			e.preventDefault();
-			$('.user-drop-wrap').toggleClass('show');
-		});
-	}
+
 	/* Show lyrics on click */
 	$(document).on('click','.show-lyrics',function(e) {
 		e.preventDefault();
@@ -101,6 +98,7 @@ $(function() {
 		});
 	});
 	$(document).on('click', '.play-all',function(e) {
+		e.preventDefault();
 		USE_PLAYLIST = true;
 		$('.post').eq(0).find('.play-pause-btn').eq(0).trigger('click');
 	});
@@ -501,7 +499,7 @@ $(document).on('change keyup keydown paste cut','textarea',function() {
 });
 
 function stickySidebar() {
-	if($('.sidebar__inner').data('sticky') === true && isMobile() === false ) {
+	if($('.sidebar__inner').data('sticky') === true && isMobile() == false ) {
 		// console.log('sticky sidebar');
 		var sidebar = new StickySidebar('.sidebar', {
 			containerSelector: '#page-content',
@@ -573,10 +571,17 @@ var siteURL = "http://" + top.location.host.toString();
 var $internalLinks = $("a[href^='"+siteURL+"'], a[href^='/'], a[href^='./'], a[href^='../']");
 
 
-$(document).on('click','a:not(.no-link)',function(e) {
+$(document).on('click','a:not(.no-link)',function(e) {	
 	var $this = $(this),
 	myHref = $this.attr('href'),
 	mainContent = '#main-content';
+	if(isMobile() && $this.hasClass('main-nav__user-link')) {
+		return false;
+	}
+
+	if(myHref == window.location.pathname) {
+		return false;
+	}
 	if(myHref != '#') {
 		e.preventDefault();		
 		$.get(myHref,function(data) {
@@ -593,6 +598,22 @@ $(document).on('click','a:not(.no-link)',function(e) {
 		});
 	}
 });
+
+if(isMobile()) {
+	var userDropWrap = '.user-drop-wrap';
+	$(document).on('click','.main-nav__user-link',function(e) {
+		e.preventDefault();
+		$(userDropWrap).toggleClass('show');
+	});
+	$(document).on('click','.user-drop a',function(e) {
+		$(userDropWrap).toggleClass('show');
+	});
+	$(document).on('click', function (e) {
+		if ($(e.target).closest(userDropWrap).length === 0) {
+			$(userDropWrap).removeClass('show');
+		}
+	});
+}
 
 $('.footer-signup').submit(function(e) {
 	e.preventDefault();
@@ -694,33 +715,3 @@ window.onpopstate = function(e){
 		fadeInElements();
 	}
 };
-
-
-
-// require('./bootstrap');
-
-// window.Vue = require('vue');
-
-/**
- * The following block of code may be used to automatically register your
- * Vue components. It will recursively scan this directory for the Vue
- * components and automatically register them with their "basename".
- *
- * Eg. ./components/ExampleComponent.vue -> <example-component></example-component>
- */
-
-// const files = require.context('./', true, /\.vue$/i);
-// files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default));
-
-// Vue.component('example-component', require('./components/ExampleComponent.vue').default);
-
-/**
- * Next, we will create a fresh Vue application instance and attach it to
- * the page. Then, you may begin adding components to this application
- * or customize the JavaScript scaffolding to fit your unique needs.
- */
-/*
-const app = new Vue({
-    el: '#app',
-});
-*/

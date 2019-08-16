@@ -3,7 +3,7 @@
 @section('content')
 <hr class="hr--invisible" >
 <div class="grid grid--double-gutters grid--uniform flex small--flex-wrap">
-	<div class="anim-in grid__item rte small--one-whole">
+	<div class="anim-in grid__item small--one-half">
 		<h4>Prompts</h4>
 		@if ($prompts->count())
 		<div class="current-prompts__admin">
@@ -17,13 +17,13 @@
         </div>
 		@endif
 		<p>
-			<a class="btn" href="/admin/prompts/create">Add New</a>
+			<a class="btn btn--dark" href="/admin/prompts/create">Add New</a>
 		</p>
 		<a class="link--small" href="/admin/prompts">All Prompts</a>
 		<hr class="hr--invisible">
 	</div>
 	
-	<div class="anim-in grid__item small--one-whole">
+	<div class="anim-in grid__item small--one-half">
 		<h4>Showcases</h4>
 		@if ($showcase)
 			<a class="no-underline" href="/admin/showcases/{{$showcase->id}}/edit">
@@ -31,7 +31,7 @@
 			</a>
 		@endif 
 		<p>
-			<a class="btn" href="/admin/showcases/create">Add New</a>
+			<a class="btn btn--dark" href="/admin/showcases/create">Add New</a>
 		</p>
 		<a class="link--small" href="/admin/showcases">All Showcases</a>
 		<hr class="hr--invisible">

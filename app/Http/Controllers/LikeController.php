@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Auth;
+use App\User;
+use App\Notifications\LikeNotification;
 use App\Like;
 // use SoftDeletes;
 
@@ -33,6 +35,7 @@ class LikeController extends Controller
     			'likeable_id'	=> $id,
     			'likeable_type' => $type
     		]);
+            User::find($id)->notify(new LikeNotification);
             $liked = true;
     	} else {
     		if(is_null($existing_like->deleted_at)) {
@@ -40,7 +43,9 @@ class LikeController extends Controller
                 $liked = false;
     		} else {
     			$existing_like->restore();
+                User::find($id)->notify(new LikeNotification);
                 $liked = true;
+
     		}
     	}
         $total_likes = Like::whereLikeableType($type)->whereLikeableId($id)->count();

@@ -7,7 +7,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="icon" type="image/png" href="{{ asset('images/favicon.png') }}" >
-    <title>[SW/CH] | The Songwriting Challenge</title>
+    <title>SW/CH - The Songwriting Challenge</title>
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>
@@ -26,17 +26,18 @@
                         @endif 
                         <div class="top-search-wrapper small--hide">
                             <form method="GET" action="/search" id="top-search">                               
-                                <input id="ts" type="text" placeholder="Search" name="q" value="" autocomplete="off"> 
+                                <input id="ts" type="text" placeholder="Search" name="q" value="" autocomplete="off">
                                 <input class="hidden" type="submit" value="Submit"> 
                             </form> 
-                            <div id="top-search-results">
-
-                            </div>
+                            <div id="top-search-results"></div>
                         </div>
                         <div class="main-nav__user-wrapper flex">
                             <a class="main-nav__user-link" href="/{{ Auth::user()->username }}">
                                 <img class="tiny-profile-pic" src="/storage/uploads/avatars/{{ Auth::user()->avatar }}" >
                                 {{ Auth::user()->getFirstName() }}
+                                {{-- @if ($user->unreadNotifications->count() > 0)
+                                 <span class="has-notifications">{{$user->unreadNotifications->count()}}
+                                @endif --}}
                             </a>
                             <div class="user-drop-wrap">
                                 <div class="user-drop">

@@ -21,7 +21,10 @@ class SearchController extends Controller
         $total_results = 0;
         $query = $request->q;
         $posts = Post::where('title','LIKE','%'.$query.'%')->get();
-        $users = User::with('posts')->where('name','LIKE','%'.$query.'%')->orWhere('email','LIKE','%'.$query.'%')->get();
+        $users = User::with('posts')
+                ->where('name','LIKE','%'.$query.'%')
+                ->orWhere('email','LIKE','%'.$query.'%')
+                ->get();
         $prompts = Prompt::where('title','LIKE','%'.$query.'%')->get();
         # Count 'em up!
         $posts->count() ? $total_results += $posts->count() : '';

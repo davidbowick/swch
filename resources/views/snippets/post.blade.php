@@ -12,7 +12,7 @@
 			</div>
 			<div class="post__detail">
 				<h4 class="post_title h3"><a href="/{{$post->user->username}}/{{ $post->slug }}">{{ $post->title }}"</a></h4>
-				<b class="post_artist"><a href="/{{$post->user->username}}/">{{ $post->user->name}}</a></b>
+				<b class="post_artist"><a href="/{{$post->user->username}}">{{ $post->user->name}}</a></b>
 				<a href="/prompts/{{ $post->prompt->slug }}" class="the-tag--mobile medium-up--hide">
 					<i class="fa fa-tag"></i> 
 					{{ $post->prompt->title }}
