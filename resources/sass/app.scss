@@ -1325,6 +1325,9 @@ time.icon span {
     .small--flex-wrap {
         @include flex-wrap(wrap);
     }
+    .small--flex--justify-center {
+        @include justify-content(center);
+    }
     .small--one-whole {
         width: 100%;
         max-width: 100%;
@@ -1426,6 +1429,16 @@ $spacing: 15px;
     padding: $spacing 0;
     background: #f0f0f0;
     box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.2);
+    @include tablet {
+        .play-pause-btn {
+            position: absolute;
+            left: 15px;    
+        }
+        .main-player__like {
+            position: absolute;
+            right: 15px;
+        }
+    }
 }
 .main-player__volume-wrapper {
     position: relative;
@@ -1433,6 +1446,7 @@ $spacing: 15px;
     cursor: pointer;
     margin-top: -$spacing;
     margin-bottom: -$spacing;
+    display: none;
 }
 .main-player__volume-slider {
     display: none;
@@ -1535,11 +1549,20 @@ $spacing: 15px;
     flex-grow: 1;
     font-size: 11px;
     padding-right: $spacing;
+    @include tablet {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        padding-right: 0;
+    }
 }
 .main-player__playbar{
     flex-grow: 1;
     position: relative;
-    margin: 0 $spacing;
+    @include desktop {
+        margin: 0 $spacing;    
+    }
 }
 .main-player__playbar--loading {
     background: #ccc;
@@ -1554,6 +1577,7 @@ $spacing: 15px;
     position: absolute;
 }
 .main-player__like {
+    margin-left: 10px;
     &.liked {
         color: $teal;
     }

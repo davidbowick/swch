@@ -114,21 +114,19 @@
     </div>
     <div class="main-player" data-song-id="0">
         <div class="container">
-            <div class="flex flex--align-center">
-            </div>
-            <div class="flex flex--align-center">
+            <div class="flex flex--align-center small--flex--justify-center">
                 <audio class="main-player__audio" src=""></audio>
-                <div class="main-player__image"></div>
+                <div class="main-player__image small--hide"></div>
                 <div class="main-player__title"></div>
                 <a class="main-player__prompt" href="/prompts/etc"><i class="fa fa-tag"></i> <span class="main-player__prompt-name"></span></a>
                 
                 <div class="main-player__playbar-wrapper flex flex--align-center">
-                    <span class="main-player__current-time"></span>
+                    <span class="main-player__current-time small--hide"></span>
                     <div class="main-player__playbar">
                         <div class="main-player__playbar--loading"></div>
                         <div class="main-player__playbar--progress"></div>
                     </div>
-                    <span class="main-player__total-time"></span>
+                    <span class="main-player__total-time small--hide"></span>
                 </div>
                 <div class="main-player__transport flex flex--align-center">
                     <a href="#" class="play-pause-btn no-link">
