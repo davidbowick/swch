@@ -20,7 +20,7 @@ Route::get('/verify-notification',function() {
 
 Route::get('/','HomeController@index', function () {
     return redirect()->intended('home');
-})->middleware('verified');
+});
 
 Route::get('/welcome','HomeController@welcome');
 
