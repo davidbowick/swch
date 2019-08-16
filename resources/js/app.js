@@ -608,7 +608,7 @@ if(isMobile()) {
 	$(document).on('click','.user-drop a',function(e) {
 		$(userDropWrap).toggleClass('show');
 	});
-	$(document).on('click', function (e) {
+	$(document).on('touchend', function (e) {
 		if ($(e.target).closest(userDropWrap).length === 0) {
 			$(userDropWrap).removeClass('show');
 		}

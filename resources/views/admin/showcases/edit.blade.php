@@ -21,8 +21,8 @@
 		<input id="address" type="text" name="address" placeholder="Address" value="{{ $showcase->address }}">
 	</div>
 	<div class="field">
+		<input id="is-active" type="checkbox" name="active[]" value="{{ $showcase->active }}" {{ $showcase->active ? 'checked' : '' }}>
 		<label for="is-active">
-			<input id="is-active" type="checkbox" name="active[]" value="{{ $showcase->active }}" {{ $showcase->active ? 'checked' : '' }}>
 			Active
 		</label>
 		
