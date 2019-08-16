@@ -3,6 +3,7 @@
 @section('content')
 <hr class="hr--invisible" >
 <div class="grid grid--double-gutters grid--uniform flex small--flex-wrap">
+	@if ($prompts)
 	<div class="anim-in grid__item small--one-half">
 		<h4>Prompts</h4>
 		@if ($prompts->count())
@@ -22,7 +23,9 @@
 		<a class="link--small" href="/admin/prompts">All Prompts</a>
 		<hr class="hr--invisible">
 	</div>
+	@endif
 	
+	@if ($showcase)
 	<div class="anim-in grid__item small--one-half">
 		<h4>Showcases</h4>
 		@if ($showcase)
@@ -36,6 +39,9 @@
 		<a class="link--small" href="/admin/showcases">All Showcases</a>
 		<hr class="hr--invisible">
 	</div>
+	@endif 
+
+	@if ($users)
 	<div class="anim-in grid__item rte small--one-whole">
 		<h4>Users</h4>
 		@foreach ($users as $user)
@@ -43,6 +49,9 @@
 		@endforeach
 		<hr class="hr--invisible">
 	</div>
+	@endif 
+
+	@if ($submissions)
 	<div class="anim-in grid__item rte small--one-whole">
 		<h4>Submissions</h4>
 		<ul class="admin-list__submissions">
@@ -58,5 +67,6 @@
 		</ul>
 		<hr class="hr--invisible">
 	</div>
+	@endif
 </div>
 @endsection
