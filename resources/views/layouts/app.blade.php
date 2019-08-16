@@ -65,7 +65,12 @@
             <div class="container">
                 @yield('content')
             </div>
+
         </main>
+        <div class="main-preloader" style="display: none;">
+            <svg width="30px"  height="30px"  xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid" class="lds-rolling" style="background: none;"><circle cx="50" cy="50" fill="none" stroke="#000000" stroke-width="10" r="25" stroke-dasharray="117.80972450961724 41.269908169872416" transform="rotate(41.2639 50 50)"><animateTransform attributeName="transform" type="rotate" calcMode="linear" values="0 50 50;360 50 50" keyTimes="0;1" dur="1s" begin="0s" repeatCount="indefinite"></animateTransform></circle>
+            </svg>
+        </div>
         <footer class="main-footer clearfix">
             <div class="container">
                 <div class="even-columns small--flex-wrap small--text-center">

@@ -589,19 +589,23 @@ $(document).on('click','a:not(.no-link)',function(e) {
 		return false;
 	}
 	if(myHref != '#') {
-		e.preventDefault();		
-
-		$.get(myHref,function(data) {
-			$(mainContent).empty();
-			var newHtml = $(data).find(mainContent).html();
-			$(mainContent).html(newHtml);
-			window.history.pushState({"html":newHtml,"pageTitle":''},"", myHref);
-			window.scrollTo(0, 0);
-			fadeInElements();
-			stickySidebar();
-			if(NowPlaying.isPlaying) {
-				pausePlayAllInstances(NowPlaying.currentPostId);
-			}
+		e.preventDefault();
+		// $('.main-preloader').fadeIn('slow');
+		$(mainContent).fadeTo('fast',0,function() {
+			$.get(myHref,function(data) {
+				// $(mainContent).empty();
+				var newHtml = $(data).find(mainContent).html();
+				$(mainContent).html(newHtml);
+				window.history.pushState({"html":newHtml,"pageTitle":''},"", myHref);
+				window.scrollTo(0, 0);
+				$(mainContent).fadeTo('fast',1);
+				// $('.main-preloader').stop().fadeOut('fast');
+				fadeInElements();
+				stickySidebar();
+				if(NowPlaying.isPlaying) {
+					pausePlayAllInstances(NowPlaying.currentPostId);
+				}
+			});
 		});
 	}
 });
