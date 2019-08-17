@@ -56,6 +56,18 @@
 				@enderror
 			</div>
 			<div class="field">
+				<label for="type">Type</label>
+				<select name="type" id="type">
+					<option value="">Demo/Mix/Master?</option>
+					@foreach ($types as $type)
+					<option value="{{ $type }}">{{ $type }}</option>
+					@endforeach
+				</select>
+				@error('type')
+				<div class="alert alert-danger" role="alert">{{ $message }}</div>
+				@enderror
+			</div>
+			<div class="field">
 				<button type="submit" class="btn btn--primary">Submit</button>
 			</div>
 		</form>

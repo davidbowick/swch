@@ -11,7 +11,7 @@ class Post extends Model
 {
     protected $table = 'posts';
 	protected $fillable = [
-        'title','lyrics','filename','user_id','prompt_id','slug','play_count'
+        'title','lyrics','filename','user_id','prompt_id','slug','play_count','type'
     ];
     public function user() 
     {

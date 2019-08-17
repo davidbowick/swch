@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Symfony\Component\Process\Process;
 
 class DeployController extends Controller
 {
@@ -19,7 +20,6 @@ class DeployController extends Controller
     		$process = new Process('cd ' . $root_path . '; ./deploy.sh');
     		$process->run(function ($type, $buffer) {
     			echo $buffer;
-                echo 'working?';
     		});
     	}
     }

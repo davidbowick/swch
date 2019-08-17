@@ -12,7 +12,8 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 
 class PostsController extends Controller
 {
-	protected $fillable = ['title','lyrics','filename','slug'];
+	protected $fillable = ['title','lyrics','filename','slug','type'];
+
     public function show($param) 
     {
         $post = Post::where('id', $param)
@@ -22,8 +23,9 @@ class PostsController extends Controller
 	public function create()
     {
     	// $user = Auth::user();
-    	$prompts = Prompt::all();
-        return view('posts.create', compact('prompts'));
+    	$prompts = Prompt::all()->reverse();
+        $types = ['Demo','Rough Mix','Mix','Master'];
+        return view('posts.create', compact('prompts','types'));
     }
     public function store(Post $post)
     {
@@ -38,6 +40,7 @@ class PostsController extends Controller
             'title' => 'required|min:3|max:255',
             'user_id' => 'required',
             'slug' => 'required',
+            'type' => 'nullable',
             'prompt_id' => 'required',
             'filename' => 'nullable|mimes:audio/mp3,mpga,mp3|max:12000',
             'lyrics' => 'nullable'
@@ -48,6 +51,8 @@ class PostsController extends Controller
             $request->filename->storeAs('uploads/mp3s',$fileName);
             // $request->avatar->storeAs('uploads/avatars',$avatarName);
             $request->filename = $fileName;
+        } else {
+            $fileName = '';
         }
         Post::create([
             'title' => request('title'),
@@ -55,6 +60,7 @@ class PostsController extends Controller
             'slug' => str_slug(request()->get('title')),
             'prompt_id' => request('prompt_id'),
             'filename' => $fileName,
+            'type' => request('type'),
             'lyrics' => request('lyrics')
         ]);
     
@@ -63,41 +69,38 @@ class PostsController extends Controller
 
     public function edit(Post $post)
     {
-        $prompts = Prompt::all();
-        return view('posts.edit',compact('post','prompts'));   
-
+        $prompts = Prompt::all()->reverse();
+        $types = ['Phone','Demo','Rough Mix','Mix','Master'];
+        return view('posts.edit',compact('post','prompts','types'));   
     }
 
     public function update(Request $request, Post $post)
     {
-        $request = request();
-        $request->validate([
+        // dd($request['type']);
+        // $request = request();
+        $request->merge([
+            'slug' => str_slug(request()->get('title'))
+        ]);
+        $validated = $request->validate([
             'title' => 'required|min:3|max:255',
             'user_id' => 'required',
             'slug' => 'required',
+            'type' => 'nullable',
             'prompt_id' => 'required',
             'filename' => 'nullable|mimes:audio/mp3,mpga,mp3|max:12000',
             'lyrics' => 'nullable'
         ]);
-    
+
         if($request->filename) {
-            // $request = request();
-            
-            // dd($request->filename);
             $fileName = $post->user->id.''.$request->slug.'.'.$request->filename->getClientOriginalExtension();
             $request->filename->storeAs('uploads/mp3s',$fileName);
-            // $request->avatar->storeAs('uploads/avatars',$avatarName);
             $request->filename = $fileName;
             $post->update([
                 'filename' => $fileName
             ]);
-        }
-        $request->merge([
-                'slug' => str_slug(request()->get('title'))
-            ]);
-        $post->update($request(['title','prompt_id','lyrics']));
-        // return redirect('/posts/'.$post->id.'/edit');
-        // dd($post->user->username)
+        } 
+        // dd($validated);
+        $post->update($validated);
         return redirect('/'.$post->user->username.'/'.$post->slug);
     }
     public function increasePlayCount($id) {

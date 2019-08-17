@@ -20,7 +20,7 @@
 		<h1 class="title">Edit Song</h1>
 		<form enctype="multipart/form-data" method="POST" action="/posts/{{$post->id}}">
 			@csrf
-			{{ method_field('PATCH') }}
+			@method('PATCH')
 			<input type="hidden" name="user_id" value="{{ Auth::user()->id }}">
 			<div class="field">
 				<label for="prompt">Prompt <small>(make this ajax searchable later)</small></label>
@@ -48,6 +48,18 @@
 				<label for="lyrics">Lyrics</label>
 				<textarea id="lyrics" name="lyrics" placeholder="Lyrics">{{ $post->lyrics }}</textarea>
 				@error('lyrics')
+				<div class="alert alert-danger" role="alert">{{ $message }}</div>
+				@enderror
+			</div>
+			<div class="field">
+				<label for="type">Type</label>
+				<select name="type" id="type">
+					<option value="">Demo/Mix/Master?</option>
+					@foreach ($types as $type)
+					<option {{ $post->type == $type ? 'selected="selected"' : '' }} value="{{ $type }}">{{ $type }}</option>
+					@endforeach
+				</select>
+				@error('type')
 				<div class="alert alert-danger" role="alert">{{ $message }}</div>
 				@enderror
 			</div>

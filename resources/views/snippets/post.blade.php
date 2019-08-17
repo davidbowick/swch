@@ -52,6 +52,10 @@
 					@if ($post->lyrics)
 					<a href="#" class="show-lyrics no-link">LYRICS</a>
 					@endif
+					@if ($post->type) 
+					<a href="#" class="post-type no-link">{{ $post->type }}</a>
+					@endif
+
 				</div>
 				<div class="bars" style="display: none;">
 					<img src="https://s3.amazonaws.com/songwritingchallenge/images/audio-playing.gif">

@@ -736,25 +736,34 @@ window.onpopstate = function(e){
 var progressText = '.progress-text',
 		progressBar = '.progress-bar',
 		successText = '#success';
+		
 $(function() {
-	$('#post-form').ajaxForm({
-		beforeSend:function() {
-			$(successText).empty();
-		},
-		uploadProgress: function(event,position,total,percentComplete) {
-			$(progressText).text(percentComplete + '%');
-			$(progressBar).css('width',percentComplete + '%');
-		},
-		success:function(data) {
-			if(data.errors) {
-				$(progressText).text('0%');
-				$(progressBar).css('width','0%');
-				$(successText).html('<div class="alert alert-danger">'+data.errors+'</div>');
-			}
-			if(data.success) {
-				$(successText).html('<div class="alert alert-success">Great success!</div>');
-				window.location.href = $(this).closest('form').data('return-url');
-			}
+	console.log('on load');
+	$('#post-form').submit(function(e){
+		console.log('#post-form.submit');
+		var val = $("#filename").val();
+		if(val != ''){
+			e.preventDefault();
+			$('#post-form').ajaxForm({
+				beforeSend:function() {
+					$(successText).empty();
+				},
+				uploadProgress: function(event,position,total,percentComplete) {
+					$(progressText).text(percentComplete + '%');
+					$(progressBar).css('width',percentComplete + '%');
+				},
+				success:function(data) {
+					if(data.errors) {
+						$(progressText).text('0%');
+						$(progressBar).css('width','0%');
+						$(successText).html('<div class="alert alert-danger">'+data.errors+'</div>');
+					}
+					if(data.success) {
+						$(successText).html('<div class="alert alert-success">Great success!</div>');
+						window.location.href = $(this).closest('form').data('return-url');
+					}
+				}
+			});
 		}
 	});
 });
