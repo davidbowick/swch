@@ -84,7 +84,12 @@ $(function() {
 	/* Show lyrics on click */
 	$(document).on('click','.show-lyrics',function(e) {
 		e.preventDefault();
-		$(this).closest('.post').find('.post__lyrics').slideToggle();
+		var lyricsDiv = $(this).closest('.post').find('.post__lyrics');
+		/*var prompt = $(this).closest('.post').data('prompt-title');
+		var lyricsString = lyricsDiv.text();
+		var reg = new RegExp(prompt,'ig');
+		lyricsString.replace(reg,"<b>$1</b>");*/
+		lyricsDiv.slideToggle();
 	});
 	/* Show comments on click */
 	$(document).on('click','.post__comment-link',function(e) {

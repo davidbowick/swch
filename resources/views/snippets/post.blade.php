@@ -67,7 +67,8 @@
 		</div>
 		@if ($post->lyrics)
 		<div class="post__lyrics" style="display: none;">
-			<p>{!! str_ireplace($post->prompt->title,'<b><i>'.$post->prompt->title.'</i></b>',nl2br(e($post->lyrics))) !!}</p>
+			<p>{!! str_ireplace($post->prompt->title,'<b>'.$post->prompt->title.'</b>',nl2br(e($post->lyrics))) !!}</p>
+			{{-- <p>{!! nl2br(e($post->lyrics)) !!}</p> --}}
 		</div>
 		@endif
 		<div class="post__comments" style="display: none;">
