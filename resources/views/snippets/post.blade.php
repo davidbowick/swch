@@ -15,7 +15,8 @@
 				<b class="post_artist"><a href="/{{$post->user->username}}">{{ $post->user->name}}</a></b>
 				<a href="/prompts/{{ $post->prompt->slug }}" class="the-tag--mobile medium-up--hide">
 					<i class="fa fa-tag"></i> 
-					{{ $post->prompt->title }}
+					{{ str_limit($post->prompt->title, 20,'...') }}
+
 				</a>
 				@if ($post->filename)
 				<div class="loading"></div>
@@ -37,7 +38,8 @@
 					</a>
 					<a href="/prompts/{{ $post->prompt->slug }}" class="the-tag small--hide">
 						<i class="fa fa-tag"></i> 
-						{{ $post->prompt->title }}
+						{{-- {{ $post->prompt->title }} --}}
+						{{ str_limit($post->prompt->title, 20,'...') }}
 					</a>
 					<a href="#" class="post__comment-link no-link">
 						<i class="fa fa-comment"></i> 
