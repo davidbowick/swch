@@ -272,17 +272,29 @@ function nextSong(s) {
 	
 }
 
+function togglePlayPause(songId) {
+	var el = $('.post[data-song-id="'+songId+'"] .play-pause-btn i');
+	if(el.hasClass('fa-play')) {
+		el.removeClass('fa-play').addClass('fa-pause');
+	} else {
+		el.removeClass('fa-pause').addClass('fa-play');
+	}
+	if(el.closest('.post').length) {
+		el.closest('.post').find('.bars').fadeOut();
+	}
+}
 
 $(document).on('click','.main-player .play-pause-btn',function(e) {
 	e.preventDefault();
 	var $this = $(this),
 	btn = $this.find('i');
 	songId = $('.main-player').attr('data-song-id');
-
 	if(NowPlaying.isPlaying) {
 		$('.main-player__audio').get(0).pause();
 		btn.removeClass('fa-pause').addClass('fa-play');
 		NowPlaying.isPlaying = false;
+		pausePlayAllInstances(songId);
+		// $().removeClass('fa-pause').addClass('fa-play');
 	} else {
 		var promise = $('.main-player__audio').get(0).play();
 			// var promise = $(mainAudio).get(0).play();

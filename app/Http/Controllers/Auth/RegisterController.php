@@ -90,6 +90,8 @@ class RegisterController extends Controller
             'user_id' => $user->id
         ]);
 
+        $user->sendEmailVerificationNotification();
+
         return $user;
     }
 }
