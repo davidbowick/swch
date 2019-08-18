@@ -789,8 +789,15 @@ $(function() {
 });
 
 $(document).on('click','.mark-as-read',function(e) {
-	//e.preventDefault();
+	e.preventDefault();
 	$.get('/notifications/all-read',function() {
-		
+		// console.log('all read');
+		$.get('/notifications',function(data) {
+			// console.log('get new page stuff');
+			// console.log(data);
+			var newHtml = $(data).find('#main-content').html();
+			$('.main-nav__notifications').html($(data).find('.main-nav__notifications').html());
+			$('#main-content').html(newHtml);
+		});
 	});
 });
