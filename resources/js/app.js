@@ -613,6 +613,7 @@ $(document).on('click','a:not(.no-link)',function(e) {
 			$.get(myHref,function(data) {
 				// $(mainContent).empty();
 				var newHtml = $(data).find(mainContent).html();
+				$('.main-nav__notifications').html($(data).find('.main-nav__notifications').html());
 				$(mainContent).html(newHtml);
 				window.history.pushState({"html":newHtml,"pageTitle":''},"", myHref);
 				window.scrollTo(0, 0);
