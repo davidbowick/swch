@@ -5,7 +5,7 @@
 	@if($unreadNotifications->count() > 0)
 	<h1 class="title flex flex--align-center flex--justify-space-between">
 		<span>New Notifications</span>
-		<a href="/notifications/all-read" class="grey mark-as-read no-link"><small>Mark all as read</small></a></h1>
+		<a href="/notifications" class="grey mark-as-read no-link"><small>Mark all as read</small></a></h1>
 	<div class="rte new-notifications">
 		<ul>
 			@foreach ($unreadNotifications as $notification) 

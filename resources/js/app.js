@@ -787,3 +787,10 @@ $(function() {
 		}
 	});
 });
+
+$(document).on('click','.mark-as-read',function(e) {
+	//e.preventDefault();
+	$.get('/notifications/all-read',function() {
+		
+	});
+});
