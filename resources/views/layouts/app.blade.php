@@ -31,13 +31,21 @@
                             </form> 
                             <div id="top-search-results"></div>
                         </div>
+                        <div class="main-nav__notifications">
+                            <a class="main-nav__notifications-link" href="/notifications">
+                                <i class="fa fa-bell"></i>
+                                 @if (Auth::user()->unreadNotifications->count() > 0)
+                                 <span class="has-notifications">{{Auth::user()->unreadNotifications->count()}}
+                                @endif
+                            </a>    
+                            <div class="main-nav__notifications-dropdown">
+                            </div>
+                        </div>
+                        
                         <div class="main-nav__user-wrapper flex">
                             <a class="main-nav__user-link" href="/{{ Auth::user()->username }}">
                                 <img class="tiny-profile-pic" src="/storage/uploads/avatars/{{ Auth::user()->avatar }}" >
                                 {{ Auth::user()->getFirstName() }}
-                                {{-- @if ($user->unreadNotifications->count() > 0)
-                                 <span class="has-notifications">{{$user->unreadNotifications->count()}}
-                                @endif --}}
                             </a>
                             <div class="user-drop-wrap">
                                 <div class="user-drop">

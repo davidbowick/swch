@@ -18,11 +18,16 @@ class PageController extends Controller
       $success = "Thank you! Can't wait to hear what you have to say.";
       return redirect()->back()->with('message',$success);
     }
-    public function notifications() 
-    {
+    public function notifications() {
       if(Auth::user()) {
            $user = Auth::user();
+           $unreadNotifications = $user->unreadNotifications;
+           $readNotifications = $user->readNotifications;
       }
-      return view('pages.notifications',compact('user'));
+      return view('pages.notifications',compact('user','unreadNotifications','readNotifications'));
+    }
+    public function markAllRead() {
+      $user = Auth::user();
+      $user->unreadNotifications->markAsRead();
     }
 }

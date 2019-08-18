@@ -16,9 +16,9 @@ class CommentNotification extends Notification
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($comment_notification)
     {
-        //
+        $this->comment_notification = $comment_notification;
     }
 
     /**
@@ -29,7 +29,7 @@ class CommentNotification extends Notification
      */
     public function via($notifiable)
     {
-        return ['mail'];
+        return ['database'];
     }
 
     /**
@@ -54,8 +54,12 @@ class CommentNotification extends Notification
      */
     public function toArray($notifiable)
     {
+        // dd($notifiable);
         return [
-            //
+            'post' => $this->comment_notification['post'],
+            'post_user' => $this->comment_notification['post_user'],
+            'notified_by' => $this->comment_notification['notified_by'],
+            'comment' => $this->comment_notification['comment']
         ];
     }
 }

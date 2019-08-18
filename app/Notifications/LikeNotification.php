@@ -16,9 +16,9 @@ class LikeNotification extends Notification
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($like_notification)
     {
-        //
+        $this->like_notification = $like_notification;
     }
 
     /**
@@ -54,8 +54,14 @@ class LikeNotification extends Notification
      */
     public function toArray($notifiable)
     {
+        // dd($this);
         return [
-            //
+            'post' => $this->like_notification['post'],
+            'post_user' => $this->like_notification['post_user'],
+            'notified_by' => $this->like_notification['notified_by']
+            /*'post_id' => $this->like_notification['post_id'],
+            'user_id' => $this->like_notification['user_id'],
+            'liked_by' => $this->like_notification['liked_by']*/
         ];
     }
 }

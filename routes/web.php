@@ -18,6 +18,9 @@ Route::get('/verify-notification',function() {
 	return $markdown->render('vendor.notifications.email',$mailMessage->toArray());
 });
 
+
+
+
 Route::get('/','HomeController@index', function () {
     return redirect()->intended('home');
 });
@@ -25,6 +28,7 @@ Route::get('/','HomeController@index', function () {
 Route::get('/welcome','HomeController@welcome');
 
 Route::get('/notifications','PageController@notifications');
+Route::get('/notifications/all-read','PageController@markAllRead');
 
 Route::get('/contact','PageController@contact');
 Route::post('/contact','PageController@contactSubmit');

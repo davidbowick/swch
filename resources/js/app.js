@@ -334,9 +334,11 @@ function pausePlayAllInstances(n) {
 	if(NowPlaying.isPlaying && NowPlaying.currentPostId == n) {
 		posts.addClass('is-playing')
 		.find('.play-pause-btn i').removeClass('fa-play').addClass('fa-pause');
+		posts.find('.bars').fadeIn();
 	} else {
 		posts.removeClass('is-playing')
 		.find('.play-pause-btn i').removeClass('fa-pause').addClass('fa-play');
+		posts.find('.bars').fadeOut();
 	}
 
 }
