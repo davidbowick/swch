@@ -790,6 +790,7 @@ $(function() {
 
 $(document).on('click','.mark-as-read',function(e) {
 	e.preventDefault();
+	$('#main-content').fadeTo('fast',0);
 	$.get('/notifications/all-read',function() {
 		// console.log('all read');
 		$.get('/notifications',function(data) {
@@ -797,7 +798,7 @@ $(document).on('click','.mark-as-read',function(e) {
 			// console.log(data);
 			var newHtml = $(data).find('#main-content').html();
 			$('.main-nav__notifications').html($(data).find('.main-nav__notifications').html());
-			$('#main-content').html(newHtml);
+			$('#main-content').html(newHtml).fadeTo('fast',1);;
 		});
 	});
 });
