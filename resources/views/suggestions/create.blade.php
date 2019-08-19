@@ -3,7 +3,7 @@
 @section('content')
 <hr class="hr--invisible">
 <div class="container--tiny">
-	<h1 class="title flex flex--align-center flex--justify-space-between"><span>New Prompt Ideas</span> <small>Everyone gets two per showcase</small></h1>
+	<h1 class="title flex flex--align-center flex--justify-space-between small--flex-wrap"><span>New Prompt Ideas</span> <small>Everyone gets two per showcase</small></h1>
 	@for ( $i=1; $i<3; $i++) 
 	@php 
 		$io = $i - 1;
@@ -12,7 +12,7 @@
 		@csrf
 		<div class="field">
 			<label for="title">Suggestion #{{$i}}</label>
-			<div class="flex small--flex-wrap flex--align-center">
+			<div class="flex small--flex-wrap flex--align-center relative">
 				<input id="title" type="text" name="title" placeholder="Title"
 					@if (isset($userSubmissions[$io])) 
 					value="{{$userSubmissions[$io]->title}}"

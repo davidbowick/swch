@@ -15,7 +15,9 @@ html {
   -moz-box-sizing: inherit;
   box-sizing: inherit;
 }
-
+.relative {
+    position: relative;
+}
 // Bootstrap @import '~bootstrap/scss/bootstrap';
 .flex {
     @include flexbox;
@@ -1873,5 +1875,13 @@ input[type=checkbox] {
             opacity: 1;
             visibility: visible;
         }
+    }
+}
+@include tablet {
+    .delete-suggestion  {
+        padding: 10px;
+        position: absolute;
+        top: 0;
+        right: 0;
     }
 }
