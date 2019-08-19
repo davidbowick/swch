@@ -5,21 +5,23 @@
 <div class="grid grid--double-gutters grid--uniform flex small--flex-wrap">
 	@if ($prompts)
 	<div class="anim-in grid__item small--one-half">
-		<h4>Prompts</h4>
+		<h4>Current Prompts</h4>
 		@if ($prompts->count())
 		<div class="current-prompts__admin">
-            <h4>Current Prompts</h4>
-            @foreach ($prompts as $prompt)
-            <div class="prompt">
-                <b class="gm current-prompt"><a data-prompt-id="{{ $prompt->id }}" href="/admin/prompts/{{ $prompt->id }}/edit">{{ $prompt->title }}</a>
-                </b>
-            </div>
-            @endforeach
+			<ul>
+				@foreach ($prompts as $prompt)
+				<li>
+					<b class="gm current-prompt"><a data-prompt-id="{{ $prompt->id }}" href="/admin/prompts/{{ $prompt->id }}/edit">{{ $prompt->title }}</a>
+					</b>
+				</li>
+				@endforeach
+			</ul>
         </div>
 		@endif
 		<p>
 			<a class="btn btn--dark" href="/admin/prompts/create">Add New</a>
 		</p>
+		<hr>
 		<a class="link--small" href="/admin/prompts">All Prompts</a>
 		<hr class="hr--invisible">
 	</div>
@@ -36,6 +38,7 @@
 		<p>
 			<a class="btn btn--dark" href="/admin/showcases/create">Add New</a>
 		</p>
+		<hr>
 		<a class="link--small" href="/admin/showcases">All Showcases</a>
 		<hr class="hr--invisible">
 	</div>
@@ -61,6 +64,7 @@
 				<small class="grey">
 					<i class="fa fa-heart"></i> <span class="like-count">{{ $post->likes->count() }}</span>
 					<i class="fa fa-play"></i> <span class="play-count">{{$post->play_count}}</span>
+					<i class="fa fa-comment"></i> <span class="comment-count">{{ $post->comments->count() }}</span>
 				</small> 
 			</li>
 			@endforeach

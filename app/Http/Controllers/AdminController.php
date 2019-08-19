@@ -18,8 +18,8 @@ class AdminController extends Controller
     public function admin() {
     	$prompts = Prompt::where('active',1)->take(2)->get();
     	$showcase = Showcase::where('active',1)->firstOrFail();
-    	$users = User::all();
-    	$posts = Post::all();
+    	$users = User::latest()->take(20)->get();
+    	$posts = Post::latest()->take(20)->get();
         $users_attending = Like::where('likeable_id',$showcase->id)->where('likeable_type','App\Showcase')->count();
         // dd($showcase);
     	return view('admin', compact('prompts','showcase','users','users_attending','posts'));

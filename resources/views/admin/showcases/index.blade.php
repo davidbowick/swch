@@ -2,7 +2,7 @@
 
 @section('content')
 <hr class="hr--invisible">
-<a href="/admin"><i class="fa fa-chevron-left"></i> Back</a>
+<a class="back-btn" href="/admin"><i class="fa fa-chevron-left"></i> Back</a>
 <div class="container--thin">
 <h1 class="title">All Showcases</h1>
 @if ($showcases->count())

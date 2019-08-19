@@ -21,6 +21,6 @@
     @else 
     <br>
     @endif
-    <a class="is-link btn" href="/showcase/{{ $showcase->id }}">More Details</a>
+    <a class="is-link btn" href="/showcase/{{ $showcase->id }}"><i class="fa fa-info-circle"></i> More Details</a>
 
 </div>

@@ -17,7 +17,7 @@ class PromptController extends Controller
      */
     public function index()
     {
-        $prompts = Prompt::orderBy('id','desc')->get();
+        $prompts = Prompt::latest()->get();
         // $showcases = Showcase::orderBy('id','desc')->get();
         return view('admin.prompts.index',compact('prompts'));
     }
@@ -76,7 +76,7 @@ class PromptController extends Controller
     public function edit(Prompt $prompt)
     {
         // $showcases = Showcase::all();
-        $showcases = Showcase::orderBy('id','desc')->get();
+        $showcases = Showcase::latest()->get();
         return view('admin.prompts.edit',compact('prompt','showcases'));
     }
 

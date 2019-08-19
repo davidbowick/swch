@@ -2,7 +2,7 @@
 
 @section('content')
 <hr class="hr--invisible">
-<a href="/admin"><i class="fa fa-chevron-left"></i> Back</a>
+<a class="back-btn" href="/admin"><i class="fa fa-chevron-left"></i> Back</a>
 <div class="container--tiny">
 <h1 class="title flex flex--align-center flex--justify-space-between">
 	<span>Edit Showcase</span>

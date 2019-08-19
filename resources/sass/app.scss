@@ -71,7 +71,10 @@ html,body {
 hr {
     margin: 1em 0;
     border: 0;
-    border-bottom: 1px solid $grey;
+    // border-bottom: 1px solid $grey;
+    height: 1px;
+    background: #333;
+    background-image: linear-gradient(to right, #ebebeb, #f0f0f0);
 }
 .hr--double-margin {
     margin: 2em 0;
@@ -384,7 +387,7 @@ select {
     color: white;
     text-transform: none;
     font-size: 12px;
-    padding-top: 24px;
+    padding-top: 22px;
     padding-bottom: 50px;
     font-family: 'gm';
     h4 {
@@ -425,7 +428,7 @@ select {
             position: absolute;
             pointer-events: none;
             border-color: rgba(66, 69, 70, 0);
-            border-bottom-color: #424546;
+            border-bottom-color: #222526;
             border-width: 10px;
             margin-left: -10px;
         }
@@ -452,7 +455,7 @@ select {
 }
 .user-drop,
 .main-nav__notifications-dropdown__inner {
-    background: #424546;
+    background: #222526;
     color: white;
     display: block;
     position: relative;
@@ -477,7 +480,7 @@ select {
         position: absolute;
         pointer-events: none;
         border-color: rgba(66, 69, 70, 0);
-        border-bottom-color: #424546;
+        border-bottom-color: #222526;
         border-width: 10px;
         margin-left: -10px;
     }
@@ -489,8 +492,14 @@ select {
     @include transition();
     @include desktop {
         &:hover {
-            background: #222526;
+            background: #434546;
+            
         }
+    }
+}
+.user-drop {
+    li + li {
+        border-top: 1px solid #303030
     }
 }
 .tiny-profile-pic {
@@ -983,6 +992,7 @@ body.no-user .main {
     }
     h3 {
         margin-top: 0;
+        marign-bottom: .5em;
         line-height: .8em;
     }
     .next-showcase__venue {
@@ -1016,7 +1026,7 @@ body.no-user .main {
         position: absolute;
         top: 0;
         left: 0;
-        bottom: 0;
+        bottom: -1px;
         font-size: 17px;
         @include transition();
         i {
@@ -1208,6 +1218,7 @@ body.no-user .main {
     li {
         margin-left: 0;
     }   
+    font-size: 90%;
     a {
         text-decoration: none;
     }
@@ -1215,8 +1226,8 @@ body.no-user .main {
         font-size: 10px;
         margin-left: 10px;
     }
-    .like-count {
-        margin-right: 10px;
+    .like-count,.play-count {
+        margin-right: 5px;
     }
 }
 .follow-btn {
@@ -1853,6 +1864,10 @@ input[type=checkbox] {
     .main-nav__notification {
         padding: 5px 0;
         text-align: left;
+        text-transform: none;
+    }
+    .main-nav__notification + .main-nav__notification {
+        border-top: 1px solid #555;
     }
     .mark-as-read {
         // padding: 5px 0;
@@ -1883,5 +1898,14 @@ input[type=checkbox] {
         position: absolute;
         top: 0;
         right: 0;
+    }
+}
+
+.back-btn {
+    font-family: 'beebs', sans-serif;
+    font-size: 14px;
+    color: $grey;
+    i {
+        font-size: 90%;
     }
 }

@@ -2,7 +2,7 @@
 
 @section('content')
 <hr class="hr--invisible">
-<a href="/admin">&lt; Back</a>
+<a class="back-btn" href="/admin"><i class="fa fa-chevron-left"></i> Back</a>
 <div class="container--tiny">
 
 <h1 class="title">Edit Prompt</h1>
