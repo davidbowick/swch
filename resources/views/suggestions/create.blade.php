@@ -12,7 +12,7 @@
 		@csrf
 		<div class="field">
 			<label for="title">Suggestion #{{$i}}</label>
-			<div class="flex small--flex-wrap">
+			<div class="flex small--flex-wrap flex--align-center">
 				<input id="title" type="text" name="title" placeholder="Title"
 					@if (isset($userSubmissions[$io])) 
 					value="{{$userSubmissions[$io]->title}}"
@@ -21,7 +21,10 @@
 				>
 			@if (!isset($userSubmissions[$io]))
 				<button type="submit" class="btn btn--dark small--one-whole">Submit</button>
+			@else 
+				<a href="/delete-suggestion/{{ $userSubmissions[$io]->id }}" data-form="delete-suggestion-{{ $userSubmissions[$io]->id }}" class="delete-suggestion no-link">&times;</a>
 			@endif
+			</div>
 		</div>
 		@if (Auth::user())
 		<input type="hidden" name="user_id" value="{{ Auth::user()->id }}" >
@@ -46,22 +49,6 @@
 	<h2 class="results-1"></h2>
 	<h2 class="results-2"></h2>
 	@endif
-
-{{-- 
-	<form class="suggestion-form" id="suggestion-2" method="POST" action="/suggestion">
-		@csrf
-		<div class="field">
-			<label for="title">Title</label>
-			<input id="title" type="text" name="title" placeholder="Title">
-		</div>
-		<input type="hidden" name="user_id" value="{{ Auth::user()->id }}" >
-		@if ($showcase)
-		<input type="hidden" name="showcase_id" value="{{ $showcase->id }}" />
-		@endif
-		<div class="field">
-			<button type="submit" class="btn btn--primary">Suggest Prompt</button>
-		</div>
-	</form> --}}
 </div>
 @include('errors')
 @endsection

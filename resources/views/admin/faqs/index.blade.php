@@ -18,7 +18,7 @@
 		{{ $faq->question }}
 		@if(Auth::user())
 			@if(Auth::user()->type == 'admin')
-			<a href="/admin/faqs/{{$faq->id}}/edit" class="btn" style="float: right;">Edit</a>
+			<a href="/admin/faqs/{{$faq->id}}/edit" style="float: right;"><small><i class="fa fa-cog"></i></small></a>
 			@endif 
 		@endif
 	</h3>

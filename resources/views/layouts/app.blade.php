@@ -29,7 +29,9 @@
                                 <input id="ts" type="text" placeholder="Search" name="q" value="" autocomplete="off">
                                 <input class="hidden" type="submit" value="Submit"> 
                             </form> 
-                            <div id="top-search-results"></div>
+                            <div id="top-search-results">
+                                <div id="top-search-results__inner"></div>
+                            </div>
                         </div>
                         <div class="main-nav__notifications">
                             <a class="main-nav__notifications-link" href="/notifications">
@@ -38,8 +40,28 @@
                                  <span class="has-notifications">{{Auth::user()->unreadNotifications->count()}}
                                 @endif
                             </a>    
+                            @if (Auth::user()->unreadNotifications->count() > 0)
                             <div class="main-nav__notifications-dropdown">
+                                <div class="main-nav__notifications-dropdown__inner">
+                                    <a href="/notifications" class="mark-as-read no-link"><small>Mark all as read</small></a>
+                                    @foreach (Auth::user()->unreadNotifications as $notification) 
+                                    @php
+                                    $n = $notification['data'];
+                                    $post = $n['post'];
+                                    $post_user = $n['post_user'];
+                                    $notified_by = $n['notified_by'];
+                                    @endphp
+                                    <div class="main-nav__notification">
+                                        @if ($notification['type'] == 'App\Notifications\LikeNotification')
+                                        <a href="/{{ $notified_by['username'] }}">{{ $notified_by['name'] }}</a> liked <a href="/{{ $post_user['username'] }}/{{$post['slug']}}">{{$post['title']}}</a>
+                                        @else 
+                                        <a href="/{{ $post_user['username'] }}/{{$post['slug']}}/comments">{{ $notified_by['name'] }} commented on {{$post['title']}}</a>
+                                        @endif
+                                    </div>
+                                    @endforeach
+                                </div>
                             </div>
+                             @endif
                         </div>
                         
                         <div class="main-nav__user-wrapper flex">

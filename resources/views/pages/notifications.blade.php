@@ -19,7 +19,7 @@
 			@if ($notification['type'] == 'App\Notifications\LikeNotification')
 				<a href="/{{ $notified_by['username'] }}">{{ $notified_by['name'] }}</a> liked <a href="/{{ $post_user['username'] }}/{{$post['slug']}}">{{$post['title']}}</a>
 			@else 
-				<a href="/{{ $notified_by['username'] }}">{{ $notified_by['name'] }}</a> commented on <a href="/{{ $post_user['username'] }}/{{$post['slug']}}">{{$post['title']}}</a>
+				<a href="/{{ $notified_by['username'] }}">{{ $notified_by['name'] }}</a> commented on <a href="/{{ $post_user['username'] }}/{{$post['slug']}}/comments">{{$post['title']}}</a>
 				<div class="comment-notification-quote">{{$n['comment']}}</div>
 			@endif
 			

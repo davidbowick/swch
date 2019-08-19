@@ -2,7 +2,7 @@
 
 @section('content')
 <hr class="hr--invisible">
-<a href="/faq" class="btn admin--back">&lt; Back</a>
+<a href="/faq" class=""><i class="fa fa-chevron-left"></i> Back</a>
 <div class="container--tiny">
 <h1 class="title">Edit FAQ</h1>
 <form action="/admin/faqs/{{ $faq->id }}" method="POST">

@@ -12,7 +12,13 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 
 class PostsController extends Controller
 {
-	protected $fillable = ['title','lyrics','filename','slug','type'];
+	protected $fillable = ['title','lyrics','filename','slug','type']; 
+
+    private $types;
+
+    public function __construct() {
+        $this->types = ['Phone','Demo','Rough Mix','Mix','Master'];
+    }
 
     public function show($param) 
     {
@@ -22,16 +28,13 @@ class PostsController extends Controller
     }
 	public function create()
     {
-    	// $user = Auth::user();
     	$prompts = Prompt::all()->reverse();
-        $types = ['Demo','Rough Mix','Mix','Master'];
+        $types = $this->types;
         return view('posts.create', compact('prompts','types'));
     }
     public function store(Post $post)
     {
-    	// dd(request()->all());
         $user = Auth::user();
-        // setSlugAttribute
         $request = request();
         $request->merge([
             'slug' => str_slug(request()->get('title'))
@@ -46,10 +49,8 @@ class PostsController extends Controller
             'lyrics' => 'nullable'
         ]);
         if($request->filename) {
-            // dd($request->filename);
             $fileName = $user->id.''.$request->slug.'.'.$request->filename->getClientOriginalExtension();
             $request->filename->storeAs('uploads/mp3s',$fileName);
-            // $request->avatar->storeAs('uploads/avatars',$avatarName);
             $request->filename = $fileName;
         } else {
             $fileName = '';
@@ -63,21 +64,18 @@ class PostsController extends Controller
             'type' => request('type'),
             'lyrics' => request('lyrics')
         ]);
-    
         return redirect('/'.Auth::user()->username);
     }
 
     public function edit(Post $post)
     {
         $prompts = Prompt::all()->reverse();
-        $types = ['Phone','Demo','Rough Mix','Mix','Master'];
+        $types = $this->types;
         return view('posts.edit',compact('post','prompts','types'));   
     }
 
     public function update(Request $request, Post $post)
     {
-        // dd($request['type']);
-        // $request = request();
         $request->merge([
             'slug' => str_slug(request()->get('title'))
         ]);
@@ -99,7 +97,6 @@ class PostsController extends Controller
                 'filename' => $fileName
             ]);
         } 
-        // dd($validated);
         $post->update($validated);
         return redirect('/'.$post->user->username.'/'.$post->slug);
     }

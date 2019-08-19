@@ -162,60 +162,60 @@ $(function() {
 		$mainBtn.attr('class', $item.hasClass('is-playing') ? 'fa fa-pause' : 'fa fa-play');
 
 	});
-   
+
 
 	var mainAudio = '.main-player__audio',
 	loadingIndicator = '.main-player__playbar--loading',
 	progressIndicator = '.main-player__playbar--progress',
 	mainAudioPlayer = $(mainAudio).get(0);
 
-		if (($(mainAudio).buffered != undefined) && ($(mainAudio).buffered.length != 0)) {
-			mainAudioPlayer.bind('progress', function() {
-				var loaded = parseInt((($(mainAudio).buffered.end(0) / $(mainAudio).duration) * 100), 10);
-				$(loadingIndicator).css({width: loaded + '%'});
-			});
-		} else {
-			$(loadingIndicator).css({width: '100%'});
-		}
-		var pos = 0;
-		var countedMe = false;
-		$(mainAudioPlayer).on("loadeddata", function() {
-			audioFunctions();
+	if (($(mainAudio).buffered != undefined) && ($(mainAudio).buffered.length != 0)) {
+		mainAudioPlayer.bind('progress', function() {
+			var loaded = parseInt((($(mainAudio).buffered.end(0) / $(mainAudio).duration) * 100), 10);
+			$(loadingIndicator).css({width: loaded + '%'});
 		});
-		function audioFunctions() {
-			$(mainAudioPlayer).bind('timeupdate',function() {
+	} else {
+		$(loadingIndicator).css({width: '100%'});
+	}
+	var pos = 0;
+	var countedMe = false;
+	$(mainAudioPlayer).on("loadeddata", function() {
+		audioFunctions();
+	});
+	function audioFunctions() {
+		$(mainAudioPlayer).bind('timeupdate',function() {
 
-				var rem = parseInt(mainAudioPlayer.duration - mainAudioPlayer.currentTime, 10),
-				mins = Math.floor(rem/60,10),
-				secs = rem - mins*60; 
-				pos = (mainAudioPlayer.currentTime / mainAudioPlayer.duration) * 100;
-				$(progressIndicator).css({width: pos + '%'});
+			var rem = parseInt(mainAudioPlayer.duration - mainAudioPlayer.currentTime, 10),
+			mins = Math.floor(rem/60,10),
+			secs = rem - mins*60; 
+			pos = (mainAudioPlayer.currentTime / mainAudioPlayer.duration) * 100;
+			$(progressIndicator).css({width: pos + '%'});
 
-				var minutesElapsed = parseInt(mainAudioPlayer.currentTime / 60, 10);
-				minutesElapsed = (minutesElapsed < 10 ? "0" : "") + minutesElapsed;
+			var minutesElapsed = parseInt(mainAudioPlayer.currentTime / 60, 10);
+			minutesElapsed = (minutesElapsed < 10 ? "0" : "") + minutesElapsed;
 
-				var secondsElapsed = parseInt(mainAudioPlayer.currentTime % 60, 10);
-				secondsElapsed = (secondsElapsed < 10 ? "0" : "") + secondsElapsed;
+			var secondsElapsed = parseInt(mainAudioPlayer.currentTime % 60, 10);
+			secondsElapsed = (secondsElapsed < 10 ? "0" : "") + secondsElapsed;
 
-				var minutesTotal = parseInt(mainAudioPlayer.duration / 60, 10);
-				minutesTotal = (minutesTotal < 10 ? "0" : "") + minutesTotal;
+			var minutesTotal = parseInt(mainAudioPlayer.duration / 60, 10);
+			minutesTotal = (minutesTotal < 10 ? "0" : "") + minutesTotal;
 
-				var secondsTotal = parseInt(mainAudioPlayer.duration % 60, 10);
-				secondsTotal = (secondsTotal < 10 ? "0" : "") + secondsTotal;
+			var secondsTotal = parseInt(mainAudioPlayer.duration % 60, 10);
+			secondsTotal = (secondsTotal < 10 ? "0" : "") + secondsTotal;
 
-				if($.isNumeric(mainAudioPlayer.duration)) {
-					$('.main-player__current-time').text(minutesElapsed+':'+secondsElapsed);
-					$('.main-player__total-time').text(minutesTotal+':'+secondsTotal);
-				}
-				$(progressIndicator).css({width: pos + '%'});
-				if(!countedMe && pos >= 50) {
-					countedMe = true;
-					var myHref = '/play/'+NowPlaying.currentPostId;
-					$.get(myHref,function(n) {
-						$('.post[data-song-id="'+NowPlaying.currentPostId+'"').find('.play-count').text(n);
-					});
-				}
-			});
+			if($.isNumeric(mainAudioPlayer.duration)) {
+				$('.main-player__current-time').text(minutesElapsed+':'+secondsElapsed);
+				$('.main-player__total-time').text(minutesTotal+':'+secondsTotal);
+			}
+			$(progressIndicator).css({width: pos + '%'});
+			if(!countedMe && pos >= 50) {
+				countedMe = true;
+				var myHref = '/play/'+NowPlaying.currentPostId;
+				$.get(myHref,function(n) {
+					$('.post[data-song-id="'+NowPlaying.currentPostId+'"').find('.play-count').text(n);
+				});
+			}
+		});
 	// Update for all iterations on page
 	$(mainAudioPlayer).bind('ended',function() {
 		mainAudioPlayer.currentTime = 0;
@@ -456,6 +456,7 @@ $(document).on('submit','.comment-form',function(e) {
 	e.preventDefault();
 	// $('.comment-form').submit(function(e) {
 		var $this = $(this);
+		var myComments = $this.closest('.post__comments').find('.post__comments--inner');
 		$.ajax({
 			url: $this.attr('action'),
 			type: 'post',
@@ -464,7 +465,7 @@ $(document).on('submit','.comment-form',function(e) {
 			success: function (r) {
 				// console.log(r);
 				var newComment = '<div class="post__comment anim-in come-in flex flex--align-center"><div class="post__comment--user"><a href="'+r.user.username+'"><img src="/storage/uploads/avatars/'+r.user.avatar+'" width="20" /></a></div><div class="post__comment--text">'+r.comment+'</div></div>';
-				$(newComment).insertBefore('.comment-form');
+				$(newComment).appendTo(myComments);
 				$this.find('input[name="comment"]').val('');
 				var commentCount = parseInt($this.closest('.post_player').find('.comment-count').text()) + 1;
 				$this.closest('.post_player').find('.comment-count').text(commentCount);
@@ -536,13 +537,21 @@ function stickySidebar() {
 	}
 }
 
+var resizeTimer;
+$(window).on('resize',function(e) {
+	clearTimeout(resizeTimer);
+	resizeTimer = setTimeout(function() {
+		stickySidebar();
+	}, 250);
+});
+
 
 
 var MIN_LENGTH = 3;
 var CURRENT_QUERY = '';
 $("#ts").keyup(debounce(function(){
 	var keyword = $("#ts").val(),
-	tsr = '#top-search-results';
+	tsr = '#top-search-results__inner';
 	if (keyword.length >= MIN_LENGTH && CURRENT_QUERY != keyword) {
 		CURRENT_QUERY = keyword;
 		$.get( "/search", { q: keyword } )
@@ -563,22 +572,15 @@ $("#ts").keyup(debounce(function(){
 					}
 				});
 			}
- 				// if(data.posts.length) {
-
- 				// }
- 				// if(data.prompts.length) {
-
- 				// }
- 				$(tsr).fadeIn();
+ 			$(tsr).parent().fadeIn();
  			});
 	}
 },500));
-$('.top-search-wrapper').mouseleave(function() {
+$('.main-nav__user-links').mouseleave(function() {
 	var $this = $(this),
-	tsr = '#top-search-results';
-
-	$(tsr).fadeOut('fast',function() {
-		$(tsr).empty();
+	tsr = '#top-search-results__inner';
+	$(tsr).parent().fadeOut('fast',function() {
+		// $(tsr).empty();
 	}); 
 });
 
@@ -604,13 +606,21 @@ $(document).on('click','a:not(.no-link)',function(e) {
 	if(isMobile() && $this.hasClass('main-nav__user-link')) {
 		return false;
 	}
+	
 
 	if(myHref == window.location.pathname) {
 		return false;
 	}
 	if(myHref != '#') {
 		e.preventDefault();
-		// $('.main-preloader').fadeIn('slow');
+		var time = 0;
+		var timer = setInterval(function() {
+			if(time == 250) {
+				$('.main-preloader').fadeIn('fast');
+			} else {
+				time++;
+			}
+		});
 		$(mainContent).fadeTo('fast',0,function() {
 			$.get(myHref,function(data) {
 				// $(mainContent).empty();
@@ -619,7 +629,8 @@ $(document).on('click','a:not(.no-link)',function(e) {
 				$(mainContent).html(newHtml);
 				window.history.pushState({"html":newHtml,"pageTitle":''},"", myHref);
 				window.scrollTo(0, 0);
-				// $('.main-preloader').stop().fadeOut('fast');
+				clearInterval(timer);
+				$('.main-preloader').stop().fadeOut('fast');
 				fadeInElements();
 				$('img').one('load',function() {
 					stickySidebar();
@@ -756,9 +767,9 @@ window.onpopstate = function(e){
 };
 
 var progressText = '.progress-text',
-		progressBar = '.progress-bar',
-		successText = '#success';
-		
+progressBar = '.progress-bar',
+successText = '#success';
+
 $(function() {
 	console.log('on load');
 	$('#post-form').submit(function(e){
@@ -794,16 +805,25 @@ $(document).on('click','.mark-as-read',function(e) {
 	e.preventDefault();
 	$('#main-content').fadeTo('fast',0);
 	$.get('/notifications/all-read',function() {
-		// console.log('all read');
 		$.get('/notifications',function(data) {
-			// console.log('get new page stuff');
-			// console.log(data);
 			var newHtml = $(data).find('#main-content').html();
 			$('.main-nav__notifications').html($(data).find('.main-nav__notifications').html());
 			$('#main-content').html(newHtml).fadeTo('fast',1);;
 		});
 	});
 });
+
+ $(document).on('click','.delete-suggestion',function(e) {
+ 	e.preventDefault();
+ 	var path = $(this).attr('href');
+ 	$.get(path,function(d) {	
+ 		$.get('/suggestions',function(data) {
+ 			$('#main-content').html($(data).find('#main-content').html());	
+ 		});
+ 	});
+ 	return false;
+
+ });
 
  // Enable pusher logging - don't include this in production
  Pusher.logToConsole = false;
@@ -817,3 +837,4 @@ $(document).on('click','.mark-as-read',function(e) {
  channel.bind('status-liked', function(data) {
  	alert(JSON.stringify(data));
  });
+

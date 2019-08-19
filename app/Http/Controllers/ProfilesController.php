@@ -38,10 +38,20 @@ class ProfilesController extends Controller
     public function showSinglePost($username,$param) 
     {
         $user = User::with('profile')->where('username',$username)->firstOrFail();
+        $showComments = false;
         $post = Post::where('id', $param)
                 ->orWhere('slug', $param)
                 ->firstOrFail();
-        return view('posts.show',compact('user','post'));
+        return view('posts.show',compact('user','post','showComments'));
+    }
+    public function showSinglePostWithComments($username,$param) 
+    {
+        $user = User::with('profile')->where('username',$username)->firstOrFail();
+        $showComments = true;
+        $post = Post::where('id', $param)
+                ->orWhere('slug', $param)
+                ->firstOrFail();
+        return view('posts.show',compact('user','post','showComments'));
     }
     public function edit($username) 
     {

@@ -45,19 +45,19 @@
 						<i class="fa fa-comment"></i> 
 						<span class="comment-count">{{ $post->comments->count() }}</span>
 					</a>
-					<a 	href="/{{$post->user->username}}/{{$post->slug}}" 
+
+					{{-- <a 	href="/{{$post->user->username}}/{{$post->slug}}" 
 						class="share" 
 						data-song-link="/{{$post->user->username}}/{{$post->slug}}" data-song-name="{{$post->title}}" 
 						data-song-id="{{$post->id}}">
 						<i class="fa fa-share"></i>
-					</a>
+					</a> --}}
 					@if ($post->lyrics)
 					<a href="#" class="show-lyrics no-link">LYRICS</a>
 					@endif
 					{{-- @if ($post->type) 
 					<a href="#" class="post-type no-link">{{ $post->type }}</a>
 					@endif --}}
-
 				</div>
 				<div class="bars" style="display: none;">
 					<img src="https://s3.amazonaws.com/songwritingchallenge/images/audio-playing.gif">
@@ -72,18 +72,20 @@
 		</div>
 		@endif
 		<div class="post__comments" style="display: none;">
-			@if ($post->comments->count())
-			@foreach ($post->comments as $comment)
-			<div class="post__comment flex flex--align-center {{ array('odd', 'even')[($loop->iteration)%2] }}">
-				<div class="post__comment--user">
-					<a href="/{{$post->user->username}}">
-						<img src="/storage/uploads/avatars/{{ $comment->user->avatar }}" width="20" />
-					</a>
+			<div class="post__comments--inner">
+				@if ($post->comments->count())
+				@foreach ($post->comments as $comment)
+				<div class="post__comment flex flex--align-center {{ array('odd', 'even')[($loop->iteration)%2] }}">
+					<div class="post__comment--user">
+						<a href="/{{$post->user->username}}">
+							<img src="/storage/uploads/avatars/{{ $comment->user->avatar }}" width="20" />
+						</a>
+					</div>
+					<div class="post__comment--text">{{ $comment->comment }}</div>
 				</div>
-				<div class="post__comment--text">{{ $comment->comment }}</div>
+				@endforeach
+				@endif
 			</div>
-			@endforeach
-			@endif
 			<form action="/posts/{{ $post->id }}/comments" method="POST" class="comment-form" autocomplete="off">
 				@csrf
 				<input name="comment" type="text" placeholder="What do you think?"></textarea>

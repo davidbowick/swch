@@ -2,13 +2,13 @@
     <h4 class="grey">
         Next Showcase
         @if(Auth::user()->type == 'admin')
-        <a class="btn btn--small float-right" href="/admin/showcases/{{$showcase->id}}/edit">Edit</a>
+        <a class="float-right" href="/admin/showcases/{{$showcase->id}}/edit"><i class="fa fa-cog"></i></a>
         @endif 
     </h4>
     <h3>
         <a href="/showcase/{{$showcase->id}}">
-            {{ $showcase->venue }}<br>
-            <span class="h4">{{ $showcase->date_time->format('M j, Y | ga') }}</span>
+            <span class="h3 next-showcase__venue">{{ $showcase->venue }}</span>
+            <span class="h4 next-showcase__datetime">{{ $showcase->date_time->format('M j, Y | ga') }}</span>
         </a>
     </h3>
     <button data-event-id="{{ $showcase->id }}" data-user-id="{{ Auth::id() }}" class="im-going {{ $showcase->isLiked ? 'liked' : '' }}">
@@ -21,6 +21,6 @@
     @else 
     <br>
     @endif
-    <a class="is-link btn" href="/showcase/{{ $showcase->id }}">View More</a>
+    <a class="is-link btn" href="/showcase/{{ $showcase->id }}">More Details</a>
 
 </div>

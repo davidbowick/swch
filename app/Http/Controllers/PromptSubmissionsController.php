@@ -23,17 +23,17 @@ class PromptSubmissionsController extends Controller
     public function pick()
     {
         $showcase = Showcase::where('active',1)->firstOrFail();
-        if(Auth::user()) {
-        $allSubmissions = PromptSubmissions::where('showcase_id',$showcase->id)->get(); 
-        $submissionPicks = PromptSubmissions::where('showcase_id',$showcase->id)->inRandomOrder()->take(2)->get(); 
+        if(Auth::user() and $showcase) {
+            $allSubmissions = PromptSubmissions::where('showcase_id',$showcase->id)->get(); 
+            $submissionPicks = PromptSubmissions::where('showcase_id',$showcase->id)->inRandomOrder()->take(2)->get(); 
         // User::inRandomOrder()->get();
         // return 
-        return response()->json([
-            'picks' => $submissionPicks,
-            'all' => $allSubmissions,
-        ]);
+            return response()->json([
+                'picks' => $submissionPicks,
+                'all' => $allSubmissions,
+            ]);
         // dd($submissionPicks->toArray());
-        };
+        }
     }
 
     /**
@@ -45,7 +45,7 @@ class PromptSubmissionsController extends Controller
     {
         $showcase = Showcase::where('active',1)->firstOrFail();
         if(Auth::user()) {
-        $userSubmissions = PromptSubmissions::where('user_id',Auth::user()->id)->where('showcase_id',$showcase->id)->get(); 
+            $userSubmissions = PromptSubmissions::where('user_id',Auth::user()->id)->where('showcase_id',$showcase->id)->get(); 
         }
         return view('suggestions.create',compact('showcase','userSubmissions'));
     }
@@ -111,8 +111,9 @@ class PromptSubmissionsController extends Controller
      * @param  \App\PromptSubmissions  $promptSubmissions
      * @return \Illuminate\Http\Response
      */
-    public function destroy(PromptSubmissions $promptSubmissions)
+    public function destroy($id)
     {
-        //
+        PromptSubmissions::find($id)->delete($id);
+        return redirect('/suggestions');
     }
 }

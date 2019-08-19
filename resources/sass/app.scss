@@ -118,12 +118,12 @@ h2,.h2 {
 h3,.h3 {
     font-size: 24px;
     font-family: 'beebs';
-    letter-spacing: .05em;
+    letter-spacing: .025em;
 }
 h4,.h4 {
     font-size: 18px;
     font-family: 'beebs';
-    letter-spacing: .05em;
+    letter-spacing: .025em;
 }
 label {
     font-weight: bold;
@@ -195,12 +195,16 @@ select {
     letter-spacing: 1px;
     text-decoration: none !important;
     color: #333;
+    @include transition();
     @include desktop {
         max-width: 200px;    
+        &:hover {
+            background: #cecece;
+        }
     }
-    -webkit-box-shadow: 0px 0px 5px 0px rgba(205,205,205,0.5);
-    -moz-box-shadow: 0px 0px 5px 0px rgba(205,205,205,0.5);
-    box-shadow: 0px 0px 5px 0px rgba(205,205,205,0.5);
+    -webkit-box-shadow: 0px 0px 5px 0px rgba(205,205,205,0.25);
+    -moz-box-shadow: 0px 0px 5px 0px rgba(205,205,205,0.25);
+    box-shadow: 0px 0px 5px 0px rgba(205,205,205,0.25);
     border-radius: 3px;
     cursor: pointer;
 }
@@ -232,9 +236,9 @@ select {
     background: linear-gradient(#222526,#000000) !important;
     //box-shadow: inset 0 1px 1px #dfdfdf !important;
     color: white;
-    -webkit-box-shadow: 0px 0px 5px 0px rgba(85,85,85,0.5);
-    -moz-box-shadow: 0px 0px 5px 0px rgba(85,85,85,0.5);
-    box-shadow: 0px 0px 5px 0px rgba(85,85,85,0.5);
+    -webkit-box-shadow: 0px 0px 5px 0px rgba(85,85,85,0.25);
+    -moz-box-shadow: 0px 0px 5px 0px rgba(85,85,85,0.25);
+    box-shadow: 0px 0px 5px 0px rgba(85,85,85,0.25);
     // border-color: #dfdfdf #dfdfdf #dfdfdf !important;
 }
 .btn--small {
@@ -375,11 +379,11 @@ select {
     left: -4%;
     width: 108%;
     display: none;
-    background: #222526;
     color: white;
-    padding: 1em 1em 0;
     text-transform: none;
     font-size: 12px;
+    padding-top: 24px;
+    padding-bottom: 50px;
     font-family: 'gm';
     h4 {
         margin-bottom: .25em;
@@ -388,17 +392,41 @@ select {
         vertical-align: middle;
         margin-right: 10px;
     }
-    li {
-        margin-bottom: 1em;
+    li + li{
+        margin-top: 1em;
     }
     .tsr__user {
-        margin-bottom: 1em;
         a {
             font-weight: bold;
         }
     }
+    .tsr__user + .tsr__user {
+        margin-top: 1em;
+    }
     .tsr__users {
         margin-bottom: 0;
+    }
+}
+#top-search-results__inner {
+    background: #222526;
+    padding: 1em;
+    position: relative;
+
+    @include desktop {
+        &:after {
+            bottom: 100%;
+            left: 50%;
+            border: solid transparent;
+            content: " ";
+            height: 0;
+            width: 0;
+            position: absolute;
+            pointer-events: none;
+            border-color: rgba(66, 69, 70, 0);
+            border-bottom-color: #424546;
+            border-width: 10px;
+            margin-left: -10px;
+        }
     }
 }
 .user-drop-wrap {
@@ -413,14 +441,15 @@ select {
     margin-left: -75%;
     width: 200px;
     z-index: 600;
-    padding-top: 24px;
+    padding-top: 21px;
     white-space: nowrap;
     border-radius: 3px;
     @include transition();
     visibility: hidden;
     opacity: 0;
 }
-.user-drop {
+.user-drop,
+.main-nav__notifications-dropdown__inner {
     background: #424546;
     color: white;
     display: block;
@@ -450,15 +479,15 @@ select {
         border-width: 10px;
         margin-left: -10px;
     }
-    a {
-        display: block;
-        padding: 10px 0;
-        text-shadow: 1px 1px 1px #000;
-        @include transition();
-        @include desktop {
-            &:hover {
-                background: #222526;
-            }
+}
+.user-drop a {
+    display: block;
+    padding: 10px 0;
+    text-shadow: 1px 1px 1px #000;
+    @include transition();
+    @include desktop {
+        &:hover {
+            background: #222526;
         }
     }
 }
@@ -628,7 +657,14 @@ select {
         right: 10px;
         color: white;
         font-size: 18px;
-        opacity: .5;
+        @include transition();
+        @include desktop {
+            opacity: .5;
+            &:hover {
+                opacity: 1;
+            }    
+        }
+        
         .fa-cog {
             text-shadow: 0px 0px 5px rgba(0, 0, 0, .75);
         }
@@ -849,7 +885,7 @@ body.no-user .main {
 }
 .post_title {
     color: #6095A3;
-    margin-bottom: .5em;
+    margin-bottom: .25em;
     @include phone {
         padding-right: 60px;
     }
@@ -945,6 +981,11 @@ body.no-user .main {
     }
     h3 {
         margin-top: 0;
+        line-height: .8em;
+    }
+    .next-showcase__venue {
+        display: block;
+        margin-bottom: 0;
     }
 }
 .im-going {
@@ -1264,11 +1305,12 @@ p.large-text {
 }
 
 time.icon {
-  font-size: .75em; /* change icon size */
+  font-size: .65em; /* change icon size */
   display: block;
   position: relative;
-  width: 7em;
-  height: 7em;
+  width: 5em;
+  height: auto;
+  padding-bottom: 1.5em;
   background-color: #fff;
   border-radius: 0.6em;
   box-shadow: 0 1px 0 #bdbdbd, 0 2px 0 #fff, 0 3px 0 #bdbdbd, 0 4px 0 #fff, 0 5px 0 #bdbdbd, 0 0 0 1px #bdbdbd;
@@ -1285,11 +1327,10 @@ time.icon * {
 time.icon strong {
   position: absolute;
   top: 0;
-  padding: 0.4em 0;
+  padding: 0.25em 0;
   color: #fff;
   background-color: $teal;
   border-bottom: 1px dashed $teal;
-  box-shadow: 0 2px 0 $teal;
 }
 time.icon em {
   position: absolute;
@@ -1297,9 +1338,9 @@ time.icon em {
   color: $teal;
 }
 time.icon span {
-  font-size: 2.2em;
+  font-size: 1.75em;
   letter-spacing: -0.05em;
-  padding-top: 1.2em;
+  padding-top: 1.1em;
   color: #2f2f2f;
 }
 @include desktop {
@@ -1702,7 +1743,7 @@ input[type=checkbox] {
 }
 
 .comment-notification-quote {
-    background: #f5f5f5;
+    background: #ebebeb;
     padding: 10px;
     margin-top: 10px;
     border-radius: 5px;
@@ -1717,15 +1758,15 @@ input[type=checkbox] {
         position: absolute;
         pointer-events: none;
         border-color: rgba(245, 245, 245, 0);
-        border-bottom-color: #f5f5f5;
+        border-bottom-color: #ebebeb;
         border-width: 5px;
         margin-left: -5px;
     }
 }
 .comment-notification-quote {
     position: relative;
-    background: #f9f9f9;
-    border: 1px solid #f0f0f0;
+    background: #ebebeb;
+    border: 1px solid #e0e0e0;
 }
 .comment-notification-quote:after, .comment-notification-quote:before {
     bottom: 100%;
@@ -1740,13 +1781,13 @@ input[type=checkbox] {
 
 .comment-notification-quote:after {
     border-color: rgba(249, 249, 249, 0);
-    border-bottom-color: #f9f9f9;
+    border-bottom-color: #ebebeb;
     border-width: 5px;
     margin-left: -5px;
 }
 .comment-notification-quote:before {
     border-color: rgba(240, 240, 240, 0);
-    border-bottom-color: #f0f0f0;
+    border-bottom-color: #e0e0e0;
     border-width: 6px;
     margin-left: -6px;
 }
@@ -1759,7 +1800,8 @@ input[type=checkbox] {
     color: #999 !important;
 }
 .main-nav__notifications {
-    padding: 0 10px;
+    padding: 0 20px;
+    position: relative;
 }
 .main-nav__notifications-link {
     position: relative;
@@ -1780,4 +1822,56 @@ input[type=checkbox] {
     line-height: 13px;
     color: white;
     font-family: $font-family-sans-serif;
+}
+.main-nav__notifications-dropdown {
+    // display: none;
+    padding-top: 24px;
+    font-family: 'gm', sans-serif;
+    position: absolute;
+    font-size: 11px;
+    top: 80%;
+    right: -74px;
+    width: 300px;
+    opacity: 0;
+    visibility: hidden;
+    @include transition();
+    li {
+        list-style: none;
+    }
+    a {
+        display: inline;
+        text-transform: none;
+    }
+    .main-nav__notifications-dropdown__inner {
+        padding: 10px;
+    }
+    .main-nav__notifications-dropdown__inner:after {
+        left: 66%;
+    }
+    .main-nav__notification {
+        padding: 5px 0;
+        text-align: left;
+    }
+    .mark-as-read {
+        // padding: 5px 0;
+        padding-bottom: 5px;
+        display: block;
+        text-align: right;
+        // background: #111111;
+        float: none;
+    }
+    &.show {
+        top: 100%;
+        opacity: 1;
+        visibility: visible;
+    }
+}
+@include desktop {
+   .main-nav__notifications:hover {
+        .main-nav__notifications-dropdown {
+            top: 100%;
+            opacity: 1;
+            visibility: visible;
+        }
+    }
 }

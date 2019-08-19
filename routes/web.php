@@ -64,6 +64,7 @@ Route::get('/prompts/{param}','PromptController@showSingle');
 Route::group(['middleware' => ['auth']], function () { 
 	Route::get('/suggestions','PromptSubmissionsController@create');
 	Route::post('/suggestions','PromptSubmissionsController@store');
+	Route::get('/delete-suggestion/{id}','PromptSubmissionsController@destroy');
 });
 Route::get('/suggestions/pick','PromptSubmissionsController@pick')
 	->middleware('is_admin')
@@ -90,6 +91,7 @@ Route::get('/{username}/followers','ProfilesController@showFollowers');
 Route::get('/{username}/edit','ProfilesController@edit');
 Route::post('/update-profile/{username}','ProfilesController@update');
 Route::get('/{username}/{param}','ProfilesController@showSinglePost');
+Route::get('/{username}/{param}/comments','ProfilesController@showSinglePostWithComments');
 Route::get('/user/like/{id}',['as' => 'user.like', 'uses' => 'LikeController@likeUser']);
 
 

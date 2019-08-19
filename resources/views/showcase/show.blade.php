@@ -4,13 +4,19 @@
 <div id="page-content" class="flex small--flex-wrap">
 	<div class="sidebar small--one-whole">
 		<div class="sidebar__inner" data-sticky="true">
-			<time datetime="{{ $showcase->date_time->format('Y-m-d') }}" class="icon">
-				<em class='time-day'>{{ $showcase->date_time->format('D') }}</em>
-				<strong class="time-month">{{ $showcase->date_time->format('M') }}</strong>
-				<span class="time-date">{{ $showcase->date_time->format('j') }}</span>
-			</time><br/>
-			<h1>{{$showcase->venue}}</h1>
-			<p class="large-text">
+			<h1 class="flex flex--align-center flex--justify-space-between">
+				<small>
+					<time datetime="{{ $showcase->date_time->format('Y-m-d') }}" class="icon">
+						<em class='time-day'>{{ $showcase->date_time->format('D') }}</em>
+						<strong class="time-month">{{ $showcase->date_time->format('M') }}</strong>
+						<span class="time-date">{{ $showcase->date_time->format('j') }}</span>
+					</time></small>
+					<span>{{$showcase->venue}}</span>
+					@if(Auth::user()->type == 'admin')
+					<small><a class="float-right" href="/admin/showcases/{{$showcase->id}}/edit"><i class="fa fa-cog"></i></a></small>
+					@endif 
+				</h1>
+			<p class="">
 				{{ $showcase->date_time->format('M j, Y | ga') }}
 				<br/>
 				{{ $showcase->address}}

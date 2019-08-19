@@ -2,7 +2,7 @@
 
 @section('content')
 <hr class="hr--invisible">
-<a href="/admin">&lt; Back</a>
+<a href="/admin"><i class="fa fa-chevron-left"></i> Back</a>
 <div class="container--thin">
 <h1 class="title">All Showcases</h1>
 @if ($showcases->count())
@@ -17,7 +17,7 @@
 			<span>{{ $showcase->venue }} | {{ $showcase->date_time->format('M j, Y - ga') }}</span>
 		</label>
 	</form>
-	<a href="/admin/showcases/{{$showcase->id}}/edit" class="btn btn--small">Edit</a>
+	<a href="/admin/showcases/{{$showcase->id}}/edit"><i class="fa fa-cog"></i></a>
 </li>
 @endforeach
 </ul>

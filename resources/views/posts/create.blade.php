@@ -37,7 +37,7 @@
 				@enderror
 			</div>
 			<div class="field">
-				<label for="filename">Song File <i>(mp3 only)</i></label>
+				<label for="filename">Song File <i>(mp3 only / 10MB max)</i></label>
 				<input id="filename" type="file" name="filename" {{ old('filename') }}>
 				@error('filename')
 				<div class="alert alert-danger" role="alert">{{ $message }}</div>

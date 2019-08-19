@@ -9,7 +9,7 @@
 	<div class="main small--one-whole">
 		@include('snippets.post')
 		@if (Auth::id() == $post->user_id) 
-		<a class="btn" href="/posts/{{$post->id}}/edit">Edit Song</a>
+		<a class="btn" href="/posts/{{$post->id}}/edit"><i class="fa fa-cog"></i> Edit Song</a>
 		@endif
 	</div>
 	@if (Auth::user())
@@ -18,4 +18,7 @@
 	</div>
 	@endif
 </div>
+@if ($showComments) 
+<style>.post__comments {display: block !important;}</style>
+@endif
 @endsection

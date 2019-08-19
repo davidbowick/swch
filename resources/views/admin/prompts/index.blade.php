@@ -18,7 +18,7 @@
 				</span>
 			</label>
 		</form>
-		<a href="/admin/prompts/{{$prompt->id}}/edit" class="btn btn--small">Edit</a>
+		<a href="/admin/prompts/{{$prompt->id}}/edit"><i class="fa fa-cog"></i></a>
 	</li>
 	@endforeach
 </ul>
