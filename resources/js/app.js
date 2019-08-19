@@ -4,9 +4,11 @@
  * building robust, powerful web applications using Vue and Laravel.
  */
 // require('./jquery.form.min.js');
+
 require('./sticky-sidebar.min.js');
 require('./cookies.min.js');
-
+require('./pusher.min.js');
+require('./bootstrap.js');
 
 
 function isMobile() {
@@ -398,7 +400,7 @@ $(document).on('submit','.suggestion-form',function(e) {
 		type: 'post',
 		data: $this.serialize(),
 		success: function (r) {
-			$.get('/suggestion',function() {
+			$.get('/suggestions',function() {
 				$('#main-content').html($(r).find('#main-content').html());
 			});
 		},
@@ -802,3 +804,16 @@ $(document).on('click','.mark-as-read',function(e) {
 		});
 	});
 });
+
+ // Enable pusher logging - don't include this in production
+ Pusher.logToConsole = false;
+
+ var pusher = new Pusher('55b25b761e2e34f0d87f', {
+ 	cluster: 'us3',
+ 	forceTLS: true
+ });
+
+ var channel = pusher.subscribe('notifications');
+ channel.bind('status-liked', function(data) {
+ 	alert(JSON.stringify(data));
+ });

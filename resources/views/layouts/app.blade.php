@@ -52,7 +52,7 @@
                                     <ul>
                                         <li><a href="/{{ Auth::user()->username }}">View Profile</a></li>
                                         <li><a href="/posts/create">Submit a Song</a></li>
-                                        {{-- <li><a href="/suggestions">Submit a Prompt</a></li> --}}
+                                        <li><a href="/suggestions">Submit a Prompt</a></li>
                                         <li><a href="/{{ Auth::user()->username }}/edit">Edit Profile</a></li>
                                         <li><a href="/search">Search</a></li>
                                         <li><a class="no-link" href="/logout">Log Out</a></li>

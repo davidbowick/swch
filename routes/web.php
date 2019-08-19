@@ -18,6 +18,11 @@ Route::get('/verify-notification',function() {
 	return $markdown->render('vendor.notifications.email',$mailMessage->toArray());
 });
 
+Route::get('/test',function() {
+	event(new App\Events\PostLiked('Someone'));
+	return "Event has been sent!";
+});
+
 
 
 

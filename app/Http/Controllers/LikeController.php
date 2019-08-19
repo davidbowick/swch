@@ -8,6 +8,7 @@ use App\User;
 use App\Post;
 use App\Notifications\LikeNotification;
 use App\Like;
+use App\Events\PostLiked;
 // use SoftDeletes;
 
 class LikeController extends Controller
@@ -33,11 +34,7 @@ class LikeController extends Controller
         $post = Post::find($id);
         $post_user = User::find($post->user_id);
         $liked_by = Auth::user();
-        /*$like_notification = [
-            'user_id' => $post_user,
-            'post_id' => $id,
-            'liked_by' => $liked_by
-        ];*/
+
         $like_notification = [
             'post' => [
                 'id' => $post->id,
@@ -63,17 +60,15 @@ class LikeController extends Controller
     		]);
             User::find($post->user_id)->notify(new LikeNotification($like_notification));
             $liked = true;
+            broadcast(new PostLiked($liked_by))->toOthers();
     	} else {
     		if(is_null($existing_like->deleted_at)) {
     			$existing_like->delete();
                 $liked = false;
-                // LikeNotification::find()
-                // LikeNotification::where('data', 'LIKE', '%'.$like_notification.'%')->delete();
-
     		} else {
     			$existing_like->restore();
-                // User::find($post_user)->notify(new LikeNotification($like_notification));
                 $liked = true;
+                broadcast(new PostLiked($liked_by))->toOthers();
     		}
     	}
         // dd($existing_like);

@@ -34,19 +34,19 @@
 <div class="profile__meta">
 	<ul class="profile__social-links">
 		@if ($user->profile->website)
-		<li><a href="{{ $user->profile->website }}" target="_blank"><i class="fa fa-link"></i></a></li>
+		<li><a href="{{ $user->profile->website }}" class="no-link" target="_blank"><i class="fa fa-link"></i></a></li>
 		@endif
 		@if ($user->profile->twitter_url)
-		<li><a href="{{ $user->profile->twitter_url }}" target="_blank"><i class="fa fa-twitter"></i></a></li>
+		<li><a href="{{ $user->profile->twitter_url }}" class="no-link" target="_blank"><i class="fa fa-twitter"></i></a></li>
 		@endif 
 		@if ($user->profile->facebook_url)
-		<li><a href="{{ $user->profile->facebook_url }}" target="_blank"><i class="fa fa-facebook"></i></a></li>
+		<li><a href="{{ $user->profile->facebook_url }}" class="no-link" target="_blank"><i class="fa fa-facebook"></i></a></li>
 		@endif 
 		@if ($user->profile->instagram_url)
-		<li><a href="{{ $user->profile->instagram_url }}" target="_blank"><i class="fa fa-instagram"></i></a></li>
+		<li><a href="{{ $user->profile->instagram_url }}" class="no-link" target="_blank"><i class="fa fa-instagram"></i></a></li>
 		@endif 
 		@if ($user->profile->youtube_url)
-		<li><a href="{{ $user->profile->youtube_url }}" target="_blank"><i class="fa fa-youtube"></i></a></li>
+		<li><a href="{{ $user->profile->youtube_url }}" class="no-link" target="_blank"><i class="fa fa-youtube"></i></a></li>
 		@endif 
 	</ul>
 	@if ($user->profile->city)

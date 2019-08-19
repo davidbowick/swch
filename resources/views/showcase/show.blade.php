@@ -4,12 +4,12 @@
 <div id="page-content" class="flex small--flex-wrap">
 	<div class="sidebar small--one-whole">
 		<div class="sidebar__inner" data-sticky="true">
+			<time datetime="{{ $showcase->date_time->format('Y-m-d') }}" class="icon">
+				<em class='time-day'>{{ $showcase->date_time->format('D') }}</em>
+				<strong class="time-month">{{ $showcase->date_time->format('M') }}</strong>
+				<span class="time-date">{{ $showcase->date_time->format('j') }}</span>
+			</time><br/>
 			<h1>{{$showcase->venue}}</h1>
-			{{-- <time datetime="{{ $showcase->date_time->format('Y-m-d') }}" class="icon">
-				<em>{{ $showcase->date_time->format('l') }}</em>
-				<strong>{{ $showcase->date_time->format('F') }}</strong>
-				<span>{{ $showcase->date_time->format('j') }}</span>
-			</time> --}}
 			<p class="large-text">
 				{{ $showcase->date_time->format('M j, Y | ga') }}
 				<br/>
@@ -34,7 +34,7 @@
 			
 			<iframe width="100%" height="300" id="gmap_canvas" src="https://maps.google.com/maps?q={{urlencode($showcase->address)}}&t=&z=13&ie=UTF8&iwloc=&output=embed" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe></div>
 		<hr class="hr--invisible">
-		<h3>{{ $users_attending->count() }} Users {{ $showcase->isUpcoming() ? 'Attending' : 'Attended' }}</h3>
+		<h3>{{ $users_attending->count() }} {{ $users_attending->count() > 1 ? 'Users' : 'User' }} {{ $showcase->isUpcoming() ? 'Attending' : 'Attended' }}</h3>
 		@foreach($showcase->users as $user)
 			@include('snippets.user-card')
 		@endforeach
