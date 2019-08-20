@@ -25,7 +25,7 @@
                         <a class="main-nav__admin-link" href="/admin">Admin</a>
                         @endif
                         <a href="#" class="no-link main-nav__search-link"><i class="fa fa-search"></i></a> 
-                        <div class="top-search-wrapper small--hide">
+                        <div class="top-search-wrapper">
                             <form method="GET" action="/search" id="top-search">
                                 <input id="ts" type="text" placeholder="Search" name="q" value="" autocomplete="off">
                                 <button class="top-search--submit" type="submit"><i class="fa fa-search"></i></button>

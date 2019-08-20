@@ -595,9 +595,13 @@ $('#main-header').mouseleave(function() {
 
 $(document).on('click','.main-nav__search-link',function(e) {
 	e.preventDefault();
-	$(this).hide();
+	if(isMobile()) {
+		$('.top-search-wrapper').slideToggle('fast');
+	} else {
+		$(this).hide();
+		$('#top-search').addClass('show');
+	}
 	$('#ts').focus();
-	$('#top-search').addClass('show');
 });
 
 
