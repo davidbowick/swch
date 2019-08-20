@@ -29,18 +29,16 @@ class HomeController extends Controller
     {
         // dd('what?');
         $prompts = Prompt::where('active',1)->take(2)->get();
+        $prompt_arr = Prompt::where('active',1)->take(2)->get('id')->toArray();
         $showcase = Showcase::where('active',1)->firstOrFail();
         if($showcase) {
             $users_attending = Like::where('likeable_id',$showcase->id)->where('likeable_type','App\Showcase')->count();
         }
-        $top_posts = Post::withCount('likes')->orderByDesc('likes_count')->get();
+        $top_posts = Post::withCount('likes')->orderByDesc('play_count')->orderByDesc('likes_count')->get();
         if(Auth::user()) {
            $user = Auth::user();
            $userIds = Like::where('user_id',Auth::id())->where('likeable_type','App\User')->get('likeable_id')->toArray();
-            // dd($userIds);
-           $posts = Post::whereIn('user_id',$userIds)->get();
-           // $posts = $top_posts;
-           // dd($posts);
+           $posts = Post::latest()->whereIn('user_id',$userIds)->whereIn('prompt_id',$prompt_arr)->get();
            return view('home',compact('posts','prompts','showcase','users_attending','user','top_posts'));
         } else {
             return view('welcome');

@@ -4,6 +4,7 @@ namespace App\Events;
 
 
 use App\User;
+use Auth;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Broadcasting\PrivateChannel;
@@ -19,17 +20,28 @@ class PostLiked implements ShouldBroadcast
     public $user;
     public $name;
     public $message;
+    public $data;
 
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct(User $user)
+    public function __construct($notifier)
     {
-        // $this->username = $username;
-        $this->user = $user;
-        $this->message = "{$user->name} liked your post";
+        $this->data = array(
+            'user'=> $notifier['user'],
+            'post'=> $notifier['post'],
+            'liked_by' => $notifier['liked_by'],
+            'type'=> $notifier['type']
+        );
+        if($notifier['type'] == 'like') {
+            $this->message = '<a href="/' . $notifier['liked_by']->username . '">' . $notifier['liked_by']->name . '</a> liked <a href="/' . $notifier['user']->username . '/' . $notifier['post']->slug . '">' . $notifier['post']->title .'</a>';
+        }
+        if($notifier['type'] == 'comment') {
+            $url = '/' . $notifier['user']->username . '/' . $notifier['post']->slug . '/comments';
+            $this->message = '<a href="' . $url . '">' . $notifier['liked_by']->name . '</a> commented on <a href="' . $url . '">' . $notifier['post']->title .'</a>';
+        }
     }
 
     /**
@@ -39,12 +51,12 @@ class PostLiked implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return new PrivateChannel('notifications');
-        // return ['notifications'];
+        // return new PrivateChannel('notifications');
+        return ['notifications.' . $this->data['user']->id];
     }
 
     public function broadcastAs()
     {
-      return 'status-liked';
+      return 'post-liked';
     }
 }

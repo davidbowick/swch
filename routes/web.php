@@ -34,6 +34,7 @@ Route::get('/welcome','HomeController@welcome');
 
 Route::get('/notifications','PageController@notifications');
 Route::get('/notifications/all-read','PageController@markAllRead');
+Route::get('/notification/{id}/mark-as-read','PageController@markSingleRead');
 
 Route::get('/contact','PageController@contact');
 Route::post('/contact','PageController@contactSubmit');

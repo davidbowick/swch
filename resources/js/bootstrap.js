@@ -43,12 +43,18 @@ if (token) {
  * allows your team to easily build robust real-time web applications.
  */
 
-import Echo from 'laravel-echo'
+import Echo from "laravel-echo"
 
-window.Pusher = require('pusher-js');
+// window.Pusher = require('pusher-js');
 window.Echo = new Echo({
     broadcaster: 'pusher',
-    key: process.env.MIX_PUSHER_APP_KEY,
-    cluster: process.env.MIX_PUSHER_APP_CLUSTER,
-    encrypted: true
+    key: '55b25b761e2e34f0d87f',
+    cluster: 'us3',
+    forceTLS: true
+});
+
+var channel = window.Echo.channel('notifications');
+channel.listen('post-liked',function(data) {
+	// alert(JSON.stringify(data));
+	console.log(data);
 });

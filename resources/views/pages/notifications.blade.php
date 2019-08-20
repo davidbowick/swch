@@ -11,28 +11,37 @@
 			@foreach ($unreadNotifications as $notification) 
 			@php
 				$n = $notification['data'];
+
 				$post = $n['post'];
 				$post_user = $n['post_user'];
 				$notified_by = $n['notified_by'];
 			@endphp
-			<li>
+			
 			@if ($notification['type'] == 'App\Notifications\LikeNotification')
+			<li class="notification--like">
+				<a class="no-link mark-single--as-read" href="/notification/{{ $notification['id'] }}/mark-as-read"><i class="fa fa-times"></i></a>
 				<a href="/{{ $notified_by['username'] }}">{{ $notified_by['name'] }}</a> liked <a href="/{{ $post_user['username'] }}/{{$post['slug']}}">{{$post['title']}}</a>
-			@else 
+			</li>
+			@else
+			<li class="notification--comment "> 
+				<a class="no-link mark-single--as-read" href="/notification/{{ $notification['id'] }}/mark-as-read"><i class="fa fa-times"></i></a>
 				<a href="/{{ $notified_by['username'] }}">{{ $notified_by['name'] }}</a> commented on <a href="/{{ $post_user['username'] }}/{{$post['slug']}}/comments">{{$post['title']}}</a>
 				<div class="comment-notification-quote">{{$n['comment']}}</div>
-			@endif
-			
+
 			</li>
+			@endif
 			@endforeach
 		</ul>
 	</div>
 	@if($readNotifications->count() > 0)
 	<hr class="hr--invisible">
 	@endif
+	@else 
+	<h3>No New Notifications</h3>
 	@endif
 
 	@if($readNotifications->count() > 0)
+	<hr>
 	<h3 class="grey">Old Notifications</h3>
 	<div class="rte old-notifications">
 		<ul>
@@ -43,15 +52,19 @@
 				$post_user = $n['post_user'];
 				$notified_by = $n['notified_by'];
 			@endphp
-			<li>
+			
 			@if ($notification['type'] == 'App\Notifications\LikeNotification')
+			<li class="notification--like">
 				<a href="/{{ $notified_by['username'] }}">{{ $notified_by['name'] }}</a> liked <a href="/{{ $post_user['username'] }}/{{$post['slug']}}">{{$post['title']}}</a>
-			@else 
+			</li>
+			@else
+			<li class="notification--comment"> 
 				<a href="/{{ $notified_by['username'] }}">{{ $notified_by['name'] }}</a> commented on <a href="/{{ $post_user['username'] }}/{{$post['slug']}}">{{$post['title']}}</a>
 				<div class="comment-notification-quote">{{$n['comment']}}</div>
+			</li>
 			@endif
 			
-			</li>
+			
 			@endforeach
 		</ul>
 	</div>

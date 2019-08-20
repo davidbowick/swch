@@ -364,18 +364,35 @@ select {
     display: inline-block;
     vertical-align: middle;
     // margin-right: 10px;
+    // display: none;
+    position: relative;
     margin-bottom: 0;
+    width: 0;
+    overflow:hidden;
     opacity: 1;
     @include transition();
+    &.show {
+        width: 165px;
+    }
     input[type=text] {
         font-size: 10px;
         padding: 5px;
-        width: 165px;
+        width: 100%;
     }
     input[type=submit] {
         visibility: hidden;
         opacity: 0;
         display: none;
+    }
+    button[type=submit] {
+        position: absolute;
+        top: 0;
+        right: 0;
+        background: 0;
+        border: 0;
+        line-height: 21px;
+        cursor: pointer;
+        font-size: 14px;
     }
 }
 #top-search-results {
@@ -1809,6 +1826,45 @@ input[type=checkbox] {
     font-size: 11px;
     text-decoration: none;
 }
+.main-nav__search-link {
+    font-size: 14px;
+}
+.new-notifications,
+.old-notifications {
+    ul {
+        margin-left: 0;
+    }
+    li {
+        margin-bottom: 1em;
+        color: $grey;
+    }
+    a {
+        color: #000;
+    }
+}
+.mark-single--as-read {
+    float: right;
+    text-decoration: none !important;
+}
+.notification--like,
+.notification--comment {
+    padding-left: 1.3em;
+    list-style: none;
+    position: relative;
+    &:before {
+        color: $grey;
+        font-family: 'FontAwesome';
+        display: inline-block;
+        margin-left: -1.3em; /* same as padding-left set on li */
+        width: 1.3em; /* same as padding-left set on li */
+    }
+}
+.notification--like:before  {
+    content: "\f087";
+}
+.notification--comment:before {
+    content: "\f0e5";
+}
 .old-notifications {
     color: #999 !important;
 }
@@ -1818,7 +1874,7 @@ input[type=checkbox] {
 }
 .main-nav__notifications-link {
     position: relative;
-    font-size: 12px;
+    font-size: 14px;
     vertical-align: middle;
 }
 .has-notifications {
@@ -1830,11 +1886,19 @@ input[type=checkbox] {
     background: $teal;
     width: 13px;
     height: 13px;
+    // display: none;
+    @include transition();
+    opacity: 0;
+    visibility: hidden;
     border-radius: 50%;
     text-align: center;
     line-height: 13px;
     color: white;
     font-family: $font-family-sans-serif;
+    &.show {
+        opacity: 1;
+        visibility: visible;
+    }
 }
 .main-nav__notifications-dropdown {
     // display: none;
@@ -1856,13 +1920,13 @@ input[type=checkbox] {
         text-transform: none;
     }
     .main-nav__notifications-dropdown__inner {
-        padding: 10px;
+        // padding: 10px;
     }
     .main-nav__notifications-dropdown__inner:after {
         left: 66%;
     }
     .main-nav__notification {
-        padding: 5px 0;
+        padding: 10px 0;
         text-align: left;
         text-transform: none;
     }
@@ -1877,14 +1941,25 @@ input[type=checkbox] {
         // background: #111111;
         float: none;
     }
+    
     &.show {
         top: 100%;
         opacity: 1;
         visibility: visible;
     }
+    .main-nav__notification-list {
+        padding: 0 10px;
+        background: #393B3C;
+        // background: white;
+        // color: black;
+        // a {
+        //     color: black;
+        // }
+    }
 }
 @include desktop {
-   .main-nav__notifications:hover {
+   .main-nav__notifications.hoverable:hover,
+   .main-nav__notifications.hover {
         .main-nav__notifications-dropdown {
             top: 100%;
             opacity: 1;
@@ -1892,6 +1967,15 @@ input[type=checkbox] {
         }
     }
 }
+
+.main-nav__notifications-header {
+    padding: 10px 10px 0;
+    margin-bottom: 1em;
+    .mark-as-read {
+        padding-bottom: 0;
+    }
+}
+
 @include tablet {
     .delete-suggestion  {
         padding: 10px;
@@ -1908,4 +1992,97 @@ input[type=checkbox] {
     i {
         font-size: 90%;
     }
+}
+
+.ring {
+    // animation: shake 0.82s cubic-bezier(.36,.07,.19,.97) both;
+    // transform: translate3d(0, 0, 0);
+    // backface-visibility: hidden;
+    // perspective: 1000px;
+    -webkit-animation: ring 4s ease-in-out;
+    -webkit-transform-origin: 50% 4px;
+    -moz-animation: ring 4s ease-in-out;
+    -moz-transform-origin: 50% 4px;
+    animation: ring 4s ease-in-out;
+    transform-origin: 50% 4px;
+}
+@-webkit-keyframes ring {
+  0% { -webkit-transform: rotateZ(0); }
+  1% { -webkit-transform: rotateZ(30deg); }
+  3% { -webkit-transform: rotateZ(-28deg); }
+  5% { -webkit-transform: rotateZ(34deg); }
+  7% { -webkit-transform: rotateZ(-32deg); }
+  9% { -webkit-transform: rotateZ(30deg); }
+  11% { -webkit-transform: rotateZ(-28deg); }
+  13% { -webkit-transform: rotateZ(26deg); }
+  15% { -webkit-transform: rotateZ(-24deg); }
+  17% { -webkit-transform: rotateZ(22deg); }
+  19% { -webkit-transform: rotateZ(-20deg); }
+  21% { -webkit-transform: rotateZ(18deg); }
+  23% { -webkit-transform: rotateZ(-16deg); }
+  25% { -webkit-transform: rotateZ(14deg); }
+  27% { -webkit-transform: rotateZ(-12deg); }
+  29% { -webkit-transform: rotateZ(10deg); }
+  31% { -webkit-transform: rotateZ(-8deg); }
+  33% { -webkit-transform: rotateZ(6deg); }
+  35% { -webkit-transform: rotateZ(-4deg); }
+  37% { -webkit-transform: rotateZ(2deg); }
+  39% { -webkit-transform: rotateZ(-1deg); }
+  41% { -webkit-transform: rotateZ(1deg); }
+  43% { -webkit-transform: rotateZ(0); }
+  100% { -webkit-transform: rotateZ(0); }
+}
+
+@-moz-keyframes ring {
+  0% { -moz-transform: rotate(0); }
+  1% { -moz-transform: rotate(30deg); }
+  3% { -moz-transform: rotate(-28deg); }
+  5% { -moz-transform: rotate(34deg); }
+  7% { -moz-transform: rotate(-32deg); }
+  9% { -moz-transform: rotate(30deg); }
+  11% { -moz-transform: rotate(-28deg); }
+  13% { -moz-transform: rotate(26deg); }
+  15% { -moz-transform: rotate(-24deg); }
+  17% { -moz-transform: rotate(22deg); }
+  19% { -moz-transform: rotate(-20deg); }
+  21% { -moz-transform: rotate(18deg); }
+  23% { -moz-transform: rotate(-16deg); }
+  25% { -moz-transform: rotate(14deg); }
+  27% { -moz-transform: rotate(-12deg); }
+  29% { -moz-transform: rotate(10deg); }
+  31% { -moz-transform: rotate(-8deg); }
+  33% { -moz-transform: rotate(6deg); }
+  35% { -moz-transform: rotate(-4deg); }
+  37% { -moz-transform: rotate(2deg); }
+  39% { -moz-transform: rotate(-1deg); }
+  41% { -moz-transform: rotate(1deg); }
+  43% { -moz-transform: rotate(0); }
+  100% { -moz-transform: rotate(0); }
+}
+
+@keyframes ring {
+  0% { transform: rotate(0); }
+  1% { transform: rotate(30deg); }
+  3% { transform: rotate(-28deg); }
+  5% { transform: rotate(34deg); }
+  7% { transform: rotate(-32deg); }
+  9% { transform: rotate(30deg); }
+  11% { transform: rotate(-28deg); }
+  13% { transform: rotate(26deg); }
+  15% { transform: rotate(-24deg); }
+  17% { transform: rotate(22deg); }
+  19% { transform: rotate(-20deg); }
+  21% { transform: rotate(18deg); }
+  23% { transform: rotate(-16deg); }
+  25% { transform: rotate(14deg); }
+  27% { transform: rotate(-12deg); }
+  29% { transform: rotate(10deg); }
+  31% { transform: rotate(-8deg); }
+  33% { transform: rotate(6deg); }
+  35% { transform: rotate(-4deg); }
+  37% { transform: rotate(2deg); }
+  39% { transform: rotate(-1deg); }
+  41% { transform: rotate(1deg); }
+  43% { transform: rotate(0); }
+  100% { transform: rotate(0); }
 }

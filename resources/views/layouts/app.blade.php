@@ -23,47 +23,63 @@
                         @if(Auth::check())
                         @if(Auth::user()->type == 'admin')
                         <a class="main-nav__admin-link" href="/admin">Admin</a>
-                        @endif 
+                        @endif
+                        <a href="#" class="no-link main-nav__search-link"><i class="fa fa-search"></i></a> 
                         <div class="top-search-wrapper small--hide">
-                            <form method="GET" action="/search" id="top-search">                               
+                            <form method="GET" action="/search" id="top-search">
                                 <input id="ts" type="text" placeholder="Search" name="q" value="" autocomplete="off">
-                                <input class="hidden" type="submit" value="Submit"> 
+                                <button class="top-search--submit" type="submit"><i class="fa fa-search"></i></button>
                             </form> 
                             <div id="top-search-results">
                                 <div id="top-search-results__inner"></div>
                             </div>
                         </div>
-                        <div class="main-nav__notifications">
-                            <a class="main-nav__notifications-link" href="/notifications">
-                                <i class="fa fa-bell"></i>
-                                 @if (Auth::user()->unreadNotifications->count() > 0)
-                                 <span class="has-notifications">{{Auth::user()->unreadNotifications->count()}}
-                                @endif
-                            </a>    
-                            @if (Auth::user()->unreadNotifications->count() > 0)
-                            <div class="main-nav__notifications-dropdown">
-                                <div class="main-nav__notifications-dropdown__inner">
-                                    <a href="/notifications" class="mark-as-read no-link"><small>Mark all as read</small></a>
-                                    @foreach (Auth::user()->unreadNotifications as $notification) 
-                                    @php
-                                    $n = $notification['data'];
-                                    $post = $n['post'];
-                                    $post_user = $n['post_user'];
-                                    $notified_by = $n['notified_by'];
-                                    @endphp
-                                    <div class="main-nav__notification">
-                                        @if ($notification['type'] == 'App\Notifications\LikeNotification')
-                                        <a href="/{{ $notified_by['username'] }}">{{ $notified_by['name'] }}</a> liked <a href="/{{ $post_user['username'] }}/{{$post['slug']}}">{{$post['title']}}</a>
-                                        @else 
-                                        <a href="/{{ $post_user['username'] }}/{{$post['slug']}}/comments">{{ $notified_by['name'] }} commented on {{$post['title']}}</a>
-                                        @endif
+                        @php 
+                        $notificationCount = Auth::user()->unreadNotifications->count();
+                        $hasNotifications = $notificationCount > 0 ? true : false;
+                        @endphp
+                        <div class="main-nav__notifications--wrapper">
+                            <div class="main-nav__notifications {{ $hasNotifications ? 'hoverable': '' }}">
+                                <a class="main-nav__notifications-link" href="/notifications">
+                                    <i class="fa fa-bell"></i>
+                                    <span class="has-notifications {{ $hasNotifications ? 'show' : ''}}">{{ $notificationCount }}</span>
+                                </a>    
+                                <div class="main-nav__notifications-dropdown">
+                                    <div class="main-nav__notifications-dropdown__inner">
+                                        <div class="main-nav__notifications-header flex flex--align-center flex--justify-space-between">
+                                           <h4 class="no-margin"><a href="/notifications">Notifications</a></h4>
+                                            <a href="/notifications" class="mark-as-read no-link"><small>Mark all as read</small></a>
+                                        </div>
+                                        <div class="main-nav__notification-list">
+                                            @php
+                                            $notification_limit = 5;
+                                            @endphp
+                                            @if ($hasNotifications)
+                                            @foreach (Auth::user()->unreadNotifications()->take($notification_limit)->get() as $notification) 
+                                            @php
+                                            $n = $notification['data'];
+                                            $post = $n['post'];
+                                            $post_user = $n['post_user'];
+                                            $notified_by = $n['notified_by'];
+                                            @endphp
+                                            <div class="main-nav__notification">
+                                                <a class="no-link mark-single--as-read" href="/notification/{{ $notification['id'] }}/mark-as-read"><i class="fa fa-times"></i></a>
+                                                @if ($notification['type'] == 'App\Notifications\LikeNotification')
+                                                <a href="/{{ $notified_by['username'] }}">{{ $notified_by['name'] }}</a> liked <a href="/{{ $post_user['username'] }}/{{$post['slug']}}">{{$post['title']}}</a>
+                                                @else 
+                                                <a href="/{{ $post_user['username'] }}/{{$post['slug']}}/comments">{{ $notified_by['name'] }} commented on {{$post['title']}}</a>
+                                                @endif
+                                            </div>
+                                            @endforeach
+                                            @endif
+                                        </div>
                                     </div>
-                                    @endforeach
+                                    @if ($notificationCount > $notification_limit)
+                                    <a class="view-all--notifications" href="/notifications">View all</a>
+                                    @endif
                                 </div>
                             </div>
-                             @endif
                         </div>
-                        
                         <div class="main-nav__user-wrapper flex">
                             <a class="main-nav__user-link" href="/{{ Auth::user()->username }}">
                                 <img class="tiny-profile-pic" src="/storage/uploads/avatars/{{ Auth::user()->avatar }}" >
@@ -95,7 +111,6 @@
             <div class="container">
                 @yield('content')
             </div>
-
         </main>
         <div class="main-preloader" style="display: none;">
             <svg width="30px"  height="30px"  xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid" class="lds-rolling" style="background: none;"><circle cx="50" cy="50" fill="none" stroke="#000000" stroke-width="10" r="25" stroke-dasharray="117.80972450961724 41.269908169872416" transform="rotate(41.2639 50 50)"><animateTransform attributeName="transform" type="rotate" calcMode="linear" values="0 50 50;360 50 50" keyTimes="0;1" dur="1s" begin="0s" repeatCount="indefinite"></animateTransform></circle>
@@ -138,7 +153,7 @@
                                 <button class="btn btn--dark" type="submit">Sign up!</button>
                             </div>
                             <div id="mce-responses" class="alert">
-                                
+
                             </div>    <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
                             <div style="position: absolute; left: -5000px;" aria-hidden="true"><input type="text" name="b_5035c57f5d2a06c796c105e76_754537b934" tabindex="-1" value=""></div>
                         </form>
@@ -189,11 +204,11 @@
   @if (Auth::user())
   <script type="text/javascript">
     var currentUser = {{Auth::user()->id}};
-  </script>
-  @endif
-  @yield('scripts')
-  <script type="text/javascript" src="{{ asset('js/jquery-3.4.1.min.js') }}" defer></script>
-  <script type="text/javascript" src="{{ asset('js/jquery.form.min.js') }}" defer></script>
-  <script type="text/javascript" src="{{ asset('js/app.js') }}" defer></script>
+</script>
+@endif
+@yield('scripts')
+<script type="text/javascript" src="{{ asset('js/jquery-3.4.1.min.js') }}" defer></script>
+<script type="text/javascript" src="{{ asset('js/jquery.form.min.js') }}" defer></script>
+<script type="text/javascript" src="{{ asset('js/app.js') }}" defer></script>
 </body>
 </html>

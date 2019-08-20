@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Mail\Contact;
 use Auth;
 use Mail;
+use Notification;
+use Illuminate\Notifications\DatabaseNotification;
 
 class PageController extends Controller
 {
@@ -29,5 +31,9 @@ class PageController extends Controller
     public function markAllRead() {
       $user = Auth::user();
       $user->unreadNotifications->markAsRead();
+    }
+    public function markSingleRead($id) {
+      Auth::user()->notifications()->find($id)->markAsRead();
+      return redirect()->back();
     }
 }

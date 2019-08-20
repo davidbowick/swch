@@ -76,7 +76,8 @@ var NowPlaying = {
 var AUDIO_PLAYING = false,
 CURRENT_SONG = false,
 SOMETHING = true,
-USE_PLAYLIST = false;
+USE_PLAYLIST = false,
+MAIN_CONTENT = '#main-content';
 
 
 $(function() {
@@ -582,6 +583,21 @@ $('.main-nav__user-links').mouseleave(function() {
 	$(tsr).parent().fadeOut('fast',function() {
 		// $(tsr).empty();
 	}); 
+
+	$('.main-nav__notifications').removeClass('hover');
+});
+$('#main-header').mouseleave(function() {
+	$('#top-search').removeClass('show');
+	$('#ts').val('');
+	$('.main-nav__search-link').fadeIn();
+});
+
+
+$(document).on('click','.main-nav__search-link',function(e) {
+	e.preventDefault();
+	$(this).hide();
+	$('#ts').focus();
+	$('#top-search').addClass('show');
 });
 
 
@@ -801,17 +817,43 @@ $(function() {
 	});
 });
 
-$(document).on('click','.mark-as-read',function(e) {
+$(document).on('click','#main-content .mark-as-read',function(e) {
 	e.preventDefault();
 	$('#main-content').fadeTo('fast',0);
 	$.get('/notifications/all-read',function() {
 		$.get('/notifications',function(data) {
 			var newHtml = $(data).find('#main-content').html();
 			$('.main-nav__notifications').html($(data).find('.main-nav__notifications').html());
+			$('.main-nav__notifications').removeClass('hoverable');
 			$('#main-content').html(newHtml).fadeTo('fast',1);;
 		});
 	});
 });
+$(document).on('click','.main-nav__notifications .mark-as-read',function(e) {
+	e.preventDefault();
+	$.get('/notifications/all-read',function() {
+		$('.main-nav__notifications').removeClass('hoverable')
+		.find('.has-notifications').removeClass('show').text(0);		
+		$('.main-nav__notification-list').empty();
+	});
+});
+
+$(document).on('click','.mark-single--as-read',function(e) {
+	e.preventDefault();
+	var $this = $(this);
+	$.get($this.attr('href'),function(data) {
+		if (window.location.href.indexOf("/notifications") > -1) {
+			$(MAIN_CONTENT).html($(data).find(MAIN_CONTENT).html());
+		}
+		$('.main-nav__notifications--wrapper').html($(data).find('.main-nav__notifications--wrapper').html());
+		var n = parseInt($('.has-notifications').text());
+		if($this.parent().hasClass('main-nav__notification') && n > 0) {
+			$('.main-nav__notifications').addClass('hover');
+		}
+
+	});
+});
+
 
  $(document).on('click','.delete-suggestion',function(e) {
  	e.preventDefault();
@@ -833,8 +875,20 @@ $(document).on('click','.mark-as-read',function(e) {
  	forceTLS: true
  });
 
- var channel = pusher.subscribe('notifications');
- channel.bind('status-liked', function(data) {
- 	alert(JSON.stringify(data));
+ var channel = pusher.subscribe('notifications.'+currentUser);
+ channel.bind('post-liked', function(data) {
+ 	var notificationsCount = '.main-nav__notifications .has-notifications',
+ 		notificationsList = '.main-nav__notification-list',
+ 		bell = '.main-nav__notifications-link .fa-bell',
+ 		bellRingTime = 4000;
+ 	$(bell).addClass('ring');
+ 	$('.has-notifications').addClass('show');
+ 	$('.main-nav__notifications').addClass('hoverable');
+ 	setTimeout(function() {
+ 		$(bell).removeClass('ring');
+ 	}, bellRingTime);
+ 	$(notificationsCount).text(parseInt($(notificationsCount).text()) + 1);	
+ 	var newNotification = $('<div class="main-nav__notification">'+data.message+'</div>').prependTo($(notificationsList));
  });
+
 

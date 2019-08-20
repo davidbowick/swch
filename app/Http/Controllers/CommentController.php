@@ -8,6 +8,7 @@ use App\User;
 use Auth;
 use Illuminate\Http\Request;
 use App\Notifications\CommentNotification;
+use App\Events\PostLiked;
 
 class CommentController extends Controller
 {
@@ -25,7 +26,13 @@ class CommentController extends Controller
         ]);
         $post_user = $post->user_id;
         // return $post_user;
+        // post_user = User::find($post->user_id);
         $comment = Comment::where('id', $comment->id)->with('user')->first();
+        $this->notifier['user'] = $post->user;
+        $this->notifier['post'] = $post;
+        $this->notifier['liked_by'] = $liked_by;
+        $this->notifier['type'] = 'comment';
+
         $comment_notification = [
             'post' => [
                 'id' => $post->id,
@@ -45,6 +52,7 @@ class CommentController extends Controller
             'comment' => $comment->comment
         ];
         User::find($post_user)->notify(new CommentNotification($comment_notification));
+        event(new PostLiked($this->notifier));
         // dd($comment_notification);
         // $post_user->notify(new CommentNotification($comment_notification));
         // dd($comment_notification);
