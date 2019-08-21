@@ -886,7 +886,7 @@ window.Echo = new Echo({
 var channel = window.Echo.channel('notifications');
 channel.listen('post-liked',function(data) {
 	// alert(JSON.stringify(data));
-	console.log(data);
+	// console.log(data);
 });
 
  Pusher.logToConsole = false;

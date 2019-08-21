@@ -86,6 +86,12 @@ class RegisterController extends Controller
             'likeable_type' => 'App\User'
         ]);
 
+        Like::create([
+            'user_id' => 1,
+            'likeable_id' => $user->id,
+            'likeable_type' => 'App\User'
+        ]);
+
         Profile::create([
             'user_id' => $user->id
         ]);

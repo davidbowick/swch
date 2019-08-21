@@ -1,6 +1,5 @@
 @extends('layouts.app')
 @section('content')
-
 <div id="page-content" class="flex small--flex-wrap">
 	<div class="sidebar small--one-whole">
 		<div class="sidebar__inner" data-sticky="true">
@@ -12,9 +11,9 @@
 						<span class="time-date">{{ $showcase->date_time->format('j') }}</span>
 					</time></small>
 					<span>{{$showcase->venue}}</span>
-					@if(Auth::user()->type == 'admin')
+					{{-- @if(Auth::user()->type == 'admin')
 					<small><a class="float-right" href="/admin/showcases/{{$showcase->id}}/edit"><i class="fa fa-cog"></i></a></small>
-					@endif 
+					@endif  --}}
 				</h1>
 			<p class="">
 				{{ $showcase->date_time->format('M j, Y | ga') }}
@@ -46,15 +45,4 @@
 		@endforeach
 	</div>
 </div>
-
-{{-- <script src="//unpkg.com/leaflet@1.5.1/dist/leaflet.js" integrity="sha512-GffPMF3RvMeYyc1LWMHtK8EbPv0iNZ8/oTtHPx9/cc2ILxQ+u905qIwdpULaqDkyBKgOaB57QTMg7ztg8Jm2Og==" crossorigin=""></script>
-<script>
-	var showcaseLat = {{$showcase->lat}};
-	var showcaseLng = {{$showcase->lng}};
-	var map = L.map('showcase-map',{ center: [showcaseLat, showcaseLng], zoom: 14});
-	L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', { attribution: '© OpenStreetMap' }).addTo(map);
-	var myDataPoint = L.marker([showcaseLat, showcaseLng]).addTo(map);
-	myDataPoint.bindPopup("{{$showcase->venue}}<br/>{{$showcase->address}}");
-
-</script> --}}
 @endsection
