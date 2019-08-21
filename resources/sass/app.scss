@@ -1018,7 +1018,10 @@ body.no-user .main {
     input[type=text] {
         background: #ebebeb;
         border-color: transparent;
-        font-size: 13px;
+        font-size: 16px;
+        @include desktop {
+            font-size: 13px;    
+        }
     }
     input[type=submit] {
         display: none;

@@ -8,7 +8,7 @@
 require('./sticky-sidebar.min.js');
 require('./cookies.min.js');
 require('./pusher.min.js');
-require('./bootstrap.js');
+// require('./bootstrap.js');
 
 
 function isMobile() {
@@ -872,6 +872,23 @@ $(document).on('click','.mark-single--as-read',function(e) {
  });
 
  // Enable pusher logging - don't include this in production
+
+ import Echo from "laravel-echo"
+
+// window.Pusher = require('pusher-js');
+window.Echo = new Echo({
+    broadcaster: 'pusher',
+    key: '55b25b761e2e34f0d87f',
+    cluster: 'us3',
+    forceTLS: true
+});
+
+var channel = window.Echo.channel('notifications');
+channel.listen('post-liked',function(data) {
+	// alert(JSON.stringify(data));
+	console.log(data);
+});
+
  Pusher.logToConsole = false;
 
  var pusher = new Pusher('55b25b761e2e34f0d87f', {
