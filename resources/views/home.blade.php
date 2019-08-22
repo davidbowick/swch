@@ -24,8 +24,9 @@
         @foreach ($posts as $post)
             @include('snippets.post')
         @endforeach
+         <hr class="hr--invisible hr--double-margin">
         @endif 
-        <hr class="hr--invisible hr--double-margin">
+       
         @if ($top_posts->count())
         <h4>Top Past Submissions</h4>
         @foreach ($top_posts as $post)

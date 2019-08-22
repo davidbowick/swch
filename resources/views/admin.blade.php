@@ -8,14 +8,14 @@
 		<h4>Current Prompts</h4>
 		@if ($prompts->count())
 		<div class="current-prompts__admin">
-			<ul>
+			<ol>
 				@foreach ($prompts as $prompt)
 				<li>
 					<b class="gm current-prompt"><a data-prompt-id="{{ $prompt->id }}" href="/admin/prompts/{{ $prompt->id }}/edit">{{ $prompt->title }}</a>
 					</b>
 				</li>
 				@endforeach
-			</ul>
+			</ol>
         </div>
 		@endif
 		<p>
