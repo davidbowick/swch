@@ -65,7 +65,9 @@ class LikeController extends Controller
     		]);
             User::find($post->user_id)->notify(new LikeNotification($like_notification));
             $liked = true;
-            event(new PostLiked($this->notifier));
+            if($type == 'App\Post') {
+                event(new PostLiked($this->notifier));    
+            }
     	} else {
     		if(is_null($existing_like->deleted_at)) {
     			$existing_like->delete();
@@ -73,7 +75,9 @@ class LikeController extends Controller
     		} else {
     			$existing_like->restore();
                 $liked = true;
-                event(new PostLiked($this->notifier));
+                if($type == 'App\Post') {
+                    event(new PostLiked($this->notifier));    
+                }
     		}
     	}
         // dd($existing_like);
