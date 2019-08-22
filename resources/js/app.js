@@ -123,12 +123,12 @@ $(function() {
 		$seek = $item.find('.seek'),
 		$mainProgress = '.main-player__playbar--progress',
 		mainTitle = '.main-player__title',
-		sID = $item.parent().parent().data('song-id');
+		sID = $item.parent().parent().data('song-id'),
 		prompt = $item.data('prompt-title'),
 		promptSlug = $item.data('prompt-slug'),
 		userLink = $item.find('.post_artist').html(),
 		postLink = $item.find('.share').attr('href'),
-		liked = $item.find('.like').hasClass('liked'),
+		liked = $item.find('.like').hasClass('liked');
 		$mainPlayer.attr('data-song-id',$songId);
 
 		// Nothing is Playing
@@ -295,7 +295,7 @@ function togglePlayPause(songId) {
 $(document).on('click','.main-player .play-pause-btn',function(e) {
 	e.preventDefault();
 	var $this = $(this),
-	btn = $this.find('i');
+	btn = $this.find('i'),
 	songId = $('.main-player').attr('data-song-id');
 	if(NowPlaying.isPlaying) {
 		$('.main-player__audio').get(0).pause();
