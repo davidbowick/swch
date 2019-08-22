@@ -114,7 +114,7 @@ $(function() {
 		var $this = $(this);
 		var $item = $this.closest('.post'),
 		$mainPlayer = $('.main-player'),
-		$songId = $item.data('song-id');
+		$songId = $item.data('song-id'),
 		$btn = $item.find('.play-pause-btn i'),
 		$mainBtn = $mainPlayer.find('.play-pause-btn i'),
 		$thebtn = $btn.parent(),
