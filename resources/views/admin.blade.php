@@ -18,11 +18,13 @@
 			</ol>
         </div>
 		@endif
+		<hr>
 		<p>
 			<a class="btn btn--dark" href="/admin/prompts/create">Add New</a>
 		</p>
 		<hr>
 		<a class="link--small" href="/admin/prompts">All Prompts</a>
+
 		<hr class="hr--invisible">
 	</div>
 	@endif
@@ -35,6 +37,7 @@
 			@include('snippets.next-showcase')
 			</a>
 		@endif 
+		<hr>
 		<p>
 			<a class="btn btn--dark" href="/admin/showcases/create">Add New</a>
 		</p>
