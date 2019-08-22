@@ -85,7 +85,7 @@ class FaqController extends Controller
     public function update(Request $request, Faq $faq)
     {
         // $faq = 
-        $faq->update(request(['qusetion','answer']));
+        $faq->update(request(['question','answer']));
         return redirect('/admin/faqs');
     }
 

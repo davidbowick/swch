@@ -671,6 +671,7 @@ $(document).on('click','a:not(.no-link)',function(e) {
 
 if(isMobile()) {
 	var userDropWrap = '.user-drop-wrap';
+	var searchContainer = '.top-search-wrapper';
 	$(document).on('click','.main-nav__user-link',function(e) {
 		e.preventDefault();
 		$(userDropWrap).toggleClass('show');
@@ -682,6 +683,9 @@ if(isMobile()) {
 		if ($(e.target).closest(userDropWrap).length === 0) {
 			$(userDropWrap).removeClass('show');
 		}
+		if(!$(e.target).closest(searchContainer).length && $(searchContainer).is(":visible")) {
+			$(searchContainer).fadeOut();
+		}  
 	});
 }
 

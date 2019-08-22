@@ -5,6 +5,7 @@
 	<h1>Edit Profile</h1>
 	<form enctype="multipart/form-data" method="POST" action="/update-profile/{{$user->username}}">
 		@csrf
+
 		<div class="field flex flex--align-center">
 			<div class="profile-edit__image">
 				<img src="/storage/uploads/avatars/{{ $user->avatar }}" >
@@ -82,6 +83,7 @@
 			<button type="submit" class="btn btn--primary">Update Profile</button>
 		</div>
 	</form>
+	<a href="/change-password">Change Password</a>
 </div>
 <hr class="hr--invisible hr--double-margin" />
 @endsection

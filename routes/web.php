@@ -40,6 +40,8 @@ Route::get('/contact','PageController@contact');
 Route::post('/contact','PageController@contactSubmit');
 
 Auth::routes(['verify'=>true]);
+Route::get('/change-password','AdminController@showChangePasswordForm');
+Route::post('/change-password','AdminController@updatePassword');
 
 Route::get('/logout', '\App\Http\Controllers\Auth\LoginController@logout');
 

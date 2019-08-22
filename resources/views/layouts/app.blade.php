@@ -47,165 +47,164 @@
                                 <div class="main-nav__notifications-dropdown">
                                     <div class="main-nav__notifications-dropdown__inner">
                                         <div class="main-nav__notifications-header flex flex--align-center flex--justify-space-between">
-                                           <h4 class="no-margin"><a href="/notifications">Notifications</a></h4>
-                                            <a href="/notifications" class="mark-as-read no-link"><small>Mark all as read</small></a>
-                                        </div>
-                                        <div class="main-nav__notification-list">
-                                            @php
-                                            $notification_limit = 5;
-                                            @endphp
-                                            @if ($hasNotifications)
-                                            @foreach (Auth::user()->unreadNotifications()->take($notification_limit)->get() as $notification) 
-                                            @php
-                                            $n = $notification['data'];
-                                            $post = $n['post'];
-                                            $post_user = $n['post_user'];
-                                            $notified_by = $n['notified_by'];
-                                            @endphp
-                                            <div class="main-nav__notification">
-                                                <a class="no-link mark-single--as-read" href="/notification/{{ $notification['id'] }}/mark-as-read"><i class="fa fa-times"></i></a>
-                                                @if ($notification['type'] == 'App\Notifications\LikeNotification')
-                                                <a href="/{{ $notified_by['username'] }}">{{ $notified_by['name'] }}</a> liked <a href="/{{ $post_user['username'] }}/{{$post['slug']}}">{{$post['title']}}</a>
-                                                @else 
-                                                <a href="/{{ $post_user['username'] }}/{{$post['slug']}}/comments">{{ $notified_by['name'] }} commented on {{$post['title']}}</a>
-                                                @endif
-                                            </div>
-                                            @endforeach
+                                         <h4 class="no-margin"><a href="/notifications">Notifications</a></h4>
+                                         <a href="/notifications" class="mark-as-read no-link"><small>Mark all as read</small></a>
+                                     </div>
+                                     <div class="main-nav__notification-list">
+                                        @php
+                                        $notification_limit = 5;
+                                        @endphp
+                                        @if ($hasNotifications)
+                                        @foreach (Auth::user()->unreadNotifications()->take($notification_limit)->get() as $notification) 
+                                        @php
+                                        $n = $notification['data'];
+                                        $post = $n['post'];
+                                        $post_user = $n['post_user'];
+                                        $notified_by = $n['notified_by'];
+                                        @endphp
+                                        <div class="main-nav__notification">
+                                            <a class="no-link mark-single--as-read" href="/notification/{{ $notification['id'] }}/mark-as-read"><i class="fa fa-times"></i></a>
+                                            @if ($notification['type'] == 'App\Notifications\LikeNotification')
+                                            <a href="/{{ $notified_by['username'] }}">{{ $notified_by['name'] }}</a> liked <a href="/{{ $post_user['username'] }}/{{$post['slug']}}">{{$post['title']}}</a>
+                                            @else 
+                                            <a href="/{{ $post_user['username'] }}/{{$post['slug']}}/comments">{{ $notified_by['name'] }} commented on {{$post['title']}}</a>
                                             @endif
                                         </div>
+                                        @endforeach
+                                        @endif
                                     </div>
-                                    @if ($notificationCount > $notification_limit)
-                                    <a class="view-all--notifications" href="/notifications">View all</a>
-                                    @endif
                                 </div>
+                                @if ($notificationCount > $notification_limit)
+                                <a class="view-all--notifications" href="/notifications">View all</a>
+                                @endif
                             </div>
                         </div>
-                        <div class="main-nav__user-wrapper flex">
-                            <a class="main-nav__user-link" href="/{{ Auth::user()->username }}">
-                                <img class="tiny-profile-pic" src="/storage/uploads/avatars/{{ Auth::user()->avatar }}" >
-                                {{ Auth::user()->getFirstName() }}
-                            </a>
-                            <div class="user-drop-wrap">
-                                <div class="user-drop">
-                                    <ul>
-                                        <li><a href="/{{ Auth::user()->username }}">View Profile</a></li>
-                                        <li><a href="/posts/create">Submit a Song</a></li>
-                                        <li><a href="/suggestions">Submit a Prompt</a></li>
-                                        <li><a href="/{{ Auth::user()->username }}/edit">Edit Profile</a></li>
-                                        <li><a href="/search">Search</a></li>
-                                        <li><a class="no-link" href="/logout">Log Out</a></li>
-                                    </ul>
-                                </div>
+                    </div>
+                    <div class="main-nav__user-wrapper flex">
+                        <a class="main-nav__user-link" href="/{{ Auth::user()->username }}">
+                            <img class="tiny-profile-pic" src="/storage/uploads/avatars/{{ Auth::user()->avatar }}" >
+                            {{ Auth::user()->getFirstName() }}
+                        </a>
+                        <div class="user-drop-wrap">
+                            <div class="user-drop">
+                                <ul>
+                                    <li><a href="/{{ Auth::user()->username }}">View Profile</a></li>
+                                    <li><a href="/posts/create">Submit a Song</a></li>
+                                    <li><a href="/suggestions">Submit a Prompt</a></li>
+                                    <li><a href="/{{ Auth::user()->username }}/edit">Edit Profile</a></li>
+                                    <li><a href="/search">Search</a></li>
+                                    <li><a class="no-link" href="/logout">Log Out</a></li>
+                                </ul>
                             </div>
                         </div>
-                        @else 
-                        <a class="main-nav__sign-up" href="/register">Register</a>
-                        <a class="main-nav__login" href="/login">Log In</a>
-                        @endif 
                     </div>
-                </div>
-            </nav>
-        </header>
-        <div id="fade"></div>
-        <main id="main-content" class="py-4 ">
-            <div class="container">
-                @yield('content')
-            </div>
-        </main>
-        <div class="main-preloader" style="display: none;">
-            <svg width="30px"  height="30px"  xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid" class="lds-rolling" style="background: none;"><circle cx="50" cy="50" fill="none" stroke="#000000" stroke-width="10" r="25" stroke-dasharray="117.80972450961724 41.269908169872416" transform="rotate(41.2639 50 50)"><animateTransform attributeName="transform" type="rotate" calcMode="linear" values="0 50 50;360 50 50" keyTimes="0;1" dur="1s" begin="0s" repeatCount="indefinite"></animateTransform></circle>
-            </svg>
-        </div>
-        <footer class="main-footer clearfix">
-            <div class="container">
-                <div class="even-columns small--flex-wrap small--text-center">
-                    <div class="even-column">
-                        <img src="/images/songwriting-challenge.png" width="100" alt="Songwriting Challenge">
-                    </div>
-                    <div class="even-column">
-                        <h4>Profile</h4>
-                        <ul>
-                            @if (Auth::user()) 
-                            <li><a href="/{{ Auth::user()->username }}">View Profile</a></li>
-                            <li><a href="/posts/create">Submit a Song</a></li>
-                            <li><a href="/{{ Auth::user()->username }}/edit">Edit Profile</a></li>
-                            <li><a href="/search">Search</a></li>
-                            <li><a href="/logout">Log Out</a></li>
-                            @else
-                            <li><a href="/login">Log In</a></li>
-                            <li><a href="/register">Register</a></li>
-                            @endif
-                        </ul>
-                    </div>
-                    <div class="even-column">
-                        <h4>Help</h4>
-                        <ul>
-                            <li><a href="/faq">FAQ</a></li>
-                            <li><a href="/contact">Contact</a></li>
-                        </ul>
-                    </div>
-                    <div class="even-column newsletter-column">
-                        <h4>Stay up-to-date</h4>
-                        <form action="https://davidbowick.us12.list-manage.com/subscribe/post-json?u=5035c57f5d2a06c796c105e76&amp;id=754537b934&c=?" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate footer-signup" target="_blank" novalidate autocomplete="off">
-                            <div class="field flex">
-                                <label class="visually-hidden" for="mce-EMAIL">Email Address </label>
-                                <input type="email" value="" placeholder="Email Address" name="EMAIL" class="required email" id="mce-EMAIL">
-                                <button class="btn btn--dark" type="submit">Sign up!</button>
-                            </div>
-                            <div id="mce-responses" class="alert">
-
-                            </div>    <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
-                            <div style="position: absolute; left: -5000px;" aria-hidden="true"><input type="text" name="b_5035c57f5d2a06c796c105e76_754537b934" tabindex="-1" value=""></div>
-                        </form>
-                    </div>
+                    @else 
+                    <a class="main-nav__sign-up" href="/register">Register</a>
+                    <a class="main-nav__login" href="/login">Log In</a>
+                    @endif 
                 </div>
             </div>
-        </footer>
-    </div>
-    <div class="main-player" data-song-id="0">
+        </nav>
+    </header>
+    <div id="fade"></div>
+    <main id="main-content" class="py-4 ">
         <div class="container">
-            <div class="flex flex--align-center small--flex--justify-center">
-                <audio class="main-player__audio" src=""></audio>
-                <div class="main-player__image small--hide"></div>
-                <div class="main-player__title"></div>
-                <a class="main-player__prompt" href="/prompts/etc"><i class="fa fa-tag"></i> <span class="main-player__prompt-name"></span></a>
-                
-                <div class="main-player__playbar-wrapper flex flex--align-center">
-                    <span class="main-player__current-time small--hide"></span>
-                    <div class="main-player__playbar">
-                        <div class="main-player__playbar--loading"></div>
-                        <div class="main-player__playbar--progress"></div>
-                    </div>
-                    <span class="main-player__total-time small--hide"></span>
+            @yield('content')
+        </div>
+    </main>
+    <div class="main-preloader" style="display: none;">
+        <svg width="30px"  height="30px"  xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid" class="lds-rolling" style="background: none;"><circle cx="50" cy="50" fill="none" stroke="#000000" stroke-width="10" r="25" stroke-dasharray="117.80972450961724 41.269908169872416" transform="rotate(41.2639 50 50)"><animateTransform attributeName="transform" type="rotate" calcMode="linear" values="0 50 50;360 50 50" keyTimes="0;1" dur="1s" begin="0s" repeatCount="indefinite"></animateTransform></circle>
+        </svg>
+    </div>
+    <footer class="main-footer clearfix">
+        <div class="container">
+            <div class="even-columns small--flex-wrap small--text-center">
+                <div class="even-column">
+                    <img src="/images/songwriting-challenge.png" width="100" alt="Songwriting Challenge">
                 </div>
-                <div class="main-player__transport flex flex--align-center">
-                    <a href="#" class="play-pause-btn no-link">
-                        <i class="fa fa-play"></i> 
-                    </a>
-                    <div class="main-player__volume-wrapper">
-                        <i class="fa fa-volume-up"></i>
+                <div class="even-column">
+                    <h4>Profile</h4>
+                    <ul>
+                        @if (Auth::user()) 
+                        <li><a href="/{{ Auth::user()->username }}">View Profile</a></li>
+                        <li><a href="/posts/create">Submit a Song</a></li>
+                        <li><a href="/{{ Auth::user()->username }}/edit">Edit Profile</a></li>
+                        <li><a href="/search">Search</a></li>
+                        <li><a href="/logout">Log Out</a></li>
+                        @else
+                        <li><a href="/login">Log In</a></li>
+                        <li><a href="/register">Register</a></li>
+                        @endif
+                    </ul>
+                </div>
+                <div class="even-column">
+                    <h4>Help</h4>
+                    <ul>
+                        <li><a href="/faq">FAQ</a></li>
+                        <li><a href="/contact">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="even-column newsletter-column">
+                    <h4>Stay up-to-date</h4>
+                    <form action="https://davidbowick.us12.list-manage.com/subscribe/post-json?u=5035c57f5d2a06c796c105e76&amp;id=754537b934&c=?" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate footer-signup" target="_blank" novalidate autocomplete="off">
+                        <div class="field flex">
+                            <label class="visually-hidden" for="mce-EMAIL">Email Address </label>
+                            <input type="email" value="" placeholder="Email Address" name="EMAIL" class="required email" id="mce-EMAIL">
+                            <button class="btn btn--dark" type="submit">Sign up!</button>
+                        </div>
+                        <div id="mce-responses" class="alert">
 
-                        <div class="volume__sliderWrapper" role="slider" aria-valuemin="0" aria-valuemax="1" aria-label="Volume" aria-valuenow="0.73">
-                            <div class="volume__sliderInner">
-                              <div class="volume__sliderBackground"></div>
-                              <div class="volume__sliderProgress" style="height: 67.16px;"></div>
-                              <div class="volume__sliderHandle" style="top: 34.84px;">
-                                  <div class="volume__sliderHandleInner"></div>
-                              </div>
+                        </div>    <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
+                        <div style="position: absolute; left: -5000px;" aria-hidden="true"><input type="text" name="b_5035c57f5d2a06c796c105e76_754537b934" tabindex="-1" value=""></div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </footer>
+</div>
+<div class="main-player" data-song-id="0">
+    <div class="container">
+        <div class="flex flex--align-center small--flex--justify-center">
+            <audio class="main-player__audio" src=""></audio>
+            <div class="main-player__image small--hide"></div>
+            <div class="main-player__title"></div>
+            <a class="main-player__prompt" href="/prompts/etc"><i class="fa fa-tag"></i> <span class="main-player__prompt-name"></span></a>
+
+            <div class="main-player__playbar-wrapper flex flex--align-center">
+                <span class="main-player__current-time small--hide"></span>
+                <div class="main-player__playbar">
+                    <div class="main-player__playbar--loading"></div>
+                    <div class="main-player__playbar--progress"></div>
+                </div>
+                <span class="main-player__total-time small--hide"></span>
+            </div>
+            <div class="main-player__transport flex flex--align-center">
+                <a href="#" class="play-pause-btn no-link">
+                    <i class="fa fa-play"></i> 
+                </a>
+                <div class="main-player__volume-wrapper">
+                    <i class="fa fa-volume-up"></i>
+
+                    <div class="volume__sliderWrapper" role="slider" aria-valuemin="0" aria-valuemax="1" aria-label="Volume" aria-valuenow="0.73">
+                        <div class="volume__sliderInner">
+                          <div class="volume__sliderBackground"></div>
+                          <div class="volume__sliderProgress" style="height: 67.16px;"></div>
+                          <div class="volume__sliderHandle" style="top: 34.84px;">
+                              <div class="volume__sliderHandleInner"></div>
                           </div>
                       </div>
                   </div>
-                  <a href="/post/like/" class="no-link main-player__like"><i class="fa fa-heart"></i></a>
               </div>
+              <a href="/post/like/" class="no-link main-player__like"><i class="fa fa-heart"></i></a>
           </div>
       </div>
   </div>
-  <!-- Scripts -->
-  @if (Auth::user())
-  <script type="text/javascript">
-    var currentUser = {{Auth::user()->id}};
+</div>
+<!-- Scripts -->
+
+<script type="text/javascript">
+    var currentUser = {{ Auth::user() ? Auth::user()->id : 'false' }};
 </script>
-@endif
 @yield('scripts')
 <script type="text/javascript" src="{{ asset('js/jquery-3.4.1.min.js') }}" defer></script>
 <script type="text/javascript" src="{{ asset('js/jquery.form.min.js') }}" defer></script>
