@@ -1092,6 +1092,7 @@ body.no-user .main {
             position: absolute;
             top: 50%;
             left: 50%;
+
             @include transform(translate(-50%,-50%));
         }
     }
@@ -1218,6 +1219,28 @@ body.no-user .main {
 }
 .one-whole {
     width: 100%;
+}
+
+@include tablet {
+    .small--one-sixth {
+        width: 16.667%;
+    }
+    .small--one-fifth {
+        width: 20%;
+    }
+    .small--one-fourth,
+    .small--one-quarter {
+        width: 25%;
+    }
+    .small--one-third {
+        width: 33%;
+    }
+    .small--one-half {
+        width: 50%;
+    }
+    .small--one-whole {
+        width: 100%;
+    }
 }
 
 
@@ -1356,7 +1379,10 @@ p.large-text {
 .error-page {
     background: url('/images/sc-bg.jpg') center center;
     // background-size: cover;
-    padding: $gutter-site 0;
+    padding: ($gutter-site / 2) 0;
+    @include desktop {
+        padding: $gutter-site 0;    
+    }
     min-height: 250px;
     margin-bottom: -$gutter-site;
 }

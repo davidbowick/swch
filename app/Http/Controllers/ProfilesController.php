@@ -63,6 +63,9 @@ class ProfilesController extends Controller
         $request  = request();
         $user = Auth::user();
         $validated = $request->validate([
+            'bio' => 'nullable',
+            'city' => 'nullable',
+            'state' => 'nullable',
             'website' => $url_regex,
             'facebook_url' => $url_regex,
             'twitter_url' => $url_regex,

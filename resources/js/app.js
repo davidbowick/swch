@@ -608,12 +608,28 @@ $(document).on('click','.main-nav__search-link',function(e) {
 $("#registration-form #name").keyup(debounce(function(){
 	var keyword = $(this).val(),
 	usernameInput = '#username';
-	if (keyword.length >= MIN_LENGTH && CURRENT_QUERY != keyword) {
-		CURRENT_QUERY = keyword;
+	if (keyword.length >= 3) {
 		var generateUsername = keyword.replace(/[^a-z0-9\s]/gi, '').replace(/[_\s]/g, '').toLowerCase();
 		$(usernameInput).val(generateUsername);
 	}
-},500));
+},250));
+/*
+$("#registration-form #email").keyup(debounce(function(){
+	var keyword = $(this).val(),
+	usernameInput = '#username';
+	if (keyword.length >= 3) {
+		var generateUsername = keyword.replace(/[^a-z0-9\s]/gi, '').replace(/[_\s]/g, '').toLowerCase();
+		$(usernameInput).val(generateUsername);
+	}
+},250));
+*/
+
+$('#registration-form').submit(function() {
+	var email = $('#email').val();
+	$('#mce-email').val(email);
+	$('#mc-embedded-subscribe-form').submit();	
+
+});
 
 var siteURL = "http://" + top.location.host.toString();
 var $internalLinks = $("a[href^='"+siteURL+"'], a[href^='/'], a[href^='./'], a[href^='../']");
