@@ -50,6 +50,14 @@ ul {
     padding-left: 0;
     margin-bottom: 2em;
 }
+ol {
+    padding-left: 0;
+    list-style-position: outside;
+    margin-left: 1em;
+    li + li {
+        margin-top: .5em;
+    }
+}
 .rte ul {
     list-style-type: disc;
     margin-left: 1em;
@@ -102,6 +110,8 @@ hr {
 }
 h1,h2,h3,h4 {
     margin-top: 0;
+    letter-spacing: 1px;
+    font-weight: normal;
     small {
         font-family: 'gm';
         font-size: 12px;
@@ -113,22 +123,22 @@ h1,h2,h3,h4 {
 h1,.h1 {
     font-size: 36px;
     font-family: 'beebs';
-    letter-spacing: .025em;
+    letter-spacing: 1px;
 }
 h2,.h2 {
     font-size: 28px;
     font-family: 'beebs';
-    letter-spacing: .025em;
+    letter-spacing: 1px;
 }
 h3,.h3 {
     font-size: 24px;
     font-family: 'beebs';
-    letter-spacing: .025em;
+    letter-spacing: 1px;
 }
 h4,.h4 {
     font-size: 18px;
     font-family: 'beebs';
-    letter-spacing: .025em;
+    letter-spacing: 1px;
 }
 label {
     font-weight: bold;
@@ -298,6 +308,7 @@ select {
     }
 }
 
+
 #main-header {
     -webkit-box-shadow: 0 0 10px 0 rgba(0,0,0,.2);
     box-shadow: 0 0 10px 0 rgba(0,0,0,.2);
@@ -403,11 +414,17 @@ select {
     }
     button[type=submit] {
         position: absolute;
-        top: 0;
+        top: 0%;
         right: 0;
+        bottom: 0;
         background: 0;
         border: 0;
-        line-height: 21px;
+        // @include transform(translateY(-50%));
+        line-height: 25px;
+        @include desktop {
+            line-height: 21px;    
+        }
+
         cursor: pointer;
         font-size: 14px;
     }
@@ -1045,8 +1062,9 @@ body.no-user .main {
     background-color: transparent;
     border: 1px solid #999;
     border-radius: 3px;
-    min-height: 18px;
+    // min-height: 18px;
     text-align: left;
+    margin-top: 1em;
     padding: 0;
     background-origin: border-box;
     display: inline-block;
@@ -1087,8 +1105,8 @@ body.no-user .main {
         font-weight: bold;
         font-family: 'beebs';
         margin-left: 30px;
-        padding: 5px ($gutter-site / 4);
-        letter-spacing: .05em;
+        padding: 7px ($gutter-site / 3);
+        letter-spacing: 1px;
     }
 }
 .im-going.liked {
@@ -1190,7 +1208,8 @@ body.no-user .main {
 .one-fifth {
     width: 20%;
 }
-.one-fourth {
+.one-fourth,
+.one-quarter {
     width: 25%;
 }
 .one-third {
@@ -1324,12 +1343,17 @@ p.large-text {
     }
 }
 
-.template--welcome {
-    #main-content > .container {
-        padding: 0;
-        max-width: 100%;
-    }
-}
+// .template--welcome {
+//     #main-content > .container {
+//         padding: 0;
+//         max-width: 100%;
+//     }
+//     @include tablet {
+//         .welcome > .container {
+//             //padding: 0;
+//         }   
+//     }
+// }
 .welcome,
 .error-page {
     background: url('/images/sc-bg.jpg') center center;
@@ -1424,6 +1448,9 @@ time.icon span {
     }
     .small--flex--justify-center {
         @include justify-content(center);
+    }
+    .small--flex-reverse {
+        @include flex-direction(row-reverse);
     }
     .small--one-whole {
         width: 100%;

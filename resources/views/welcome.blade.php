@@ -62,4 +62,10 @@
 	</div>
 </div>
 </div>
+<style>
+	#main-content > .container {
+        padding: 0;
+        max-width: 100%;
+    }
+</style>
 @endsection

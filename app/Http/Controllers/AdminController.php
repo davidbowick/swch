@@ -19,13 +19,22 @@ class AdminController extends Controller
     }
     public function admin() {
     	$prompts = Prompt::where('active',1)->take(2)->get();
+
     	$showcase = Showcase::where('active',1)->firstOrFail();
     	$users = User::latest()->take(20)->get();
     	$posts = Post::latest()->take(20)->get();
+        $total_users = User::count();
+        $total_posts = Post::count();
+        $total_prompts = Prompt::count();
         $users_attending = Like::where('likeable_id',$showcase->id)->where('likeable_type','App\Showcase')->count();
         // dd($showcase);
-    	return view('admin', compact('prompts','showcase','users','users_attending','posts'));
+    	return view('admin', compact('prompts','showcase','users','users_attending','posts','total_users','total_posts','total_prompts'));
     }
+    public function allUsers() {
+        $users = User::orderBy('name','asc')->get();
+        return view('admin.users.index',compact('users'));
+    }
+
     public function showChangePasswordForm() {
         return view('auth.changepassword');
     }

@@ -3,7 +3,7 @@
 <div id="page-content" class="flex small--flex-wrap">
 	<div class="sidebar small--one-whole">
 		<div class="sidebar__inner" data-sticky="true">
-			<h1 class="flex flex--align-center flex--justify-space-between">
+			<h1 class="flex flex--align-center flex--justify-space-between small--flex-reverse">
 				<small>
 					<time datetime="{{ $showcase->date_time->format('Y-m-d') }}" class="icon">
 						<em class='time-day'>{{ $showcase->date_time->format('D') }}</em>
@@ -18,7 +18,8 @@
 			<p class="">
 				{{ $showcase->date_time->format('M j, Y | ga') }}
 				<br/>
-				{{ $showcase->address}}
+				{{-- {{ $showcase->address}} --}}
+				{!! nl2br(e($showcase->address)) !!}
 			</p>
 			<button data-event-id="{{ $showcase->id }}" data-user-id="{{ Auth::id() }}" class="im-going {{ $showcase->isLiked ? 'liked' : '' }}">
 				<span class="icon"><i class="fa fa-{{ $showcase->isLiked ? 'thumbs-up' : 'question' }}"></i></span>
@@ -27,11 +28,11 @@
 			<hr class="hr--invisible">
 			<hr class="hr--invisible">
 			<h3>Prompts</h3>
-			<ul>
+			<ol class="ol-numbers">
 				@foreach($showcase->prompts as $prompt)
 				<li><a class="no-underline" href="/prompts/{{$prompt->slug}}"><b>{{ $prompt->title }}</b></a></li>
 				@endforeach
-			</ul>
+			</ol>
 		</div>
 	</div>
 	<div class="main no-right-padding no-top-padding small--one-whole">

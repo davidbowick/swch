@@ -647,6 +647,9 @@ $(document).on('click','a:not(.no-link)',function(e) {
 				var newHtml = $(data).find(mainContent).html();
 				$('.main-nav__notifications').html($(data).find('.main-nav__notifications').html());
 				$(mainContent).html(newHtml);
+				// $('body').removeClass('template--welcome');
+				// $('body').attr('class',$(data).find('body').attr('class'));
+				$("body").attr("class", /body([^>]*)class=(["']+)([^"']*)(["']+)/gi.exec(data.substring(data.indexOf("<body"), data.indexOf("</body>") + 7))[3]);
 				window.history.pushState({"html":newHtml,"pageTitle":''},"", myHref);
 				window.scrollTo(0, 0);
 				clearInterval(timer);

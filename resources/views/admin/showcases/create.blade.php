@@ -16,7 +16,7 @@
 		</div>
 		<div class="field">
 			<label for="address">Address</label>
-			<input id="address" type="text" name="address" placeholder="Address">
+			<textarea id="address" name="address" placeholder="Address"></textarea>
 		</div>
 		<br/>
 		<button type="submit" class="btn btn--primary">Add Showcase</button>

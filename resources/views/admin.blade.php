@@ -45,18 +45,19 @@
 	@endif 
 
 	@if ($users)
-	<div class="anim-in grid__item rte small--one-whole">
-		<h4>Users</h4>
+	<div class="anim-in grid__item small--one-whole">
+		<h4>Users <small class="float-right">({{$total_users}})</small></h4>
 		@foreach ($users as $user)
 			@include('snippets.user-card')
 		@endforeach
-		<hr class="hr--invisible">
+		<hr >
+		<a href="/admin/users" class="link--small">All Users</a>
 	</div>
 	@endif 
 
 	@if ($posts)
 	<div class="anim-in grid__item rte small--one-whole">
-		<h4>Submissions</h4>
+		<h4>Submissions <small> ({{$total_posts}})</small></h4>
 		<ul class="admin-list__submissions">
 			@foreach ($posts as $post)
 			<li>

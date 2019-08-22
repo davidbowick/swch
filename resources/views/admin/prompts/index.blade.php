@@ -3,7 +3,7 @@
 <hr class="hr--invisible">
 <a class="back-btn" href="/admin"><i class="fa fa-chevron-left"></i> Back</a>
 <div class="container--thin">
-<h1 class="title">Prompts</h1>
+<h1 class="title flex flex--align-center">Prompts &nbsp;&nbsp;<small class="grey">({{$prompts->count()}})</small></h1>
 @if ($prompts->count())
 <ul class="admin-list">
 	@foreach ($prompts as $prompt)

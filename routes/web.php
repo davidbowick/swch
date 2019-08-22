@@ -53,6 +53,7 @@ Route::get('/admin','AdminController@admin')
 Route::resource('/admin/prompts','PromptController');
 Route::resource('/admin/showcases','ShowcaseController');
 Route::resource('/admin/faqs','FaqController');
+Route::get('/admin/users','AdminController@allUsers');
 Route::get('/faq','FaqController@faqPage');
 
 # Search

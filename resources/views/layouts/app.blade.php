@@ -11,7 +11,7 @@
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>
-<body class="{{ Auth::user() ? 'user--logged-in' : 'no-user' }} {{ empty($body_class) ? '' : $body_class }}">
+<body class="{{ Auth::user() ? 'user--logged-in' : 'no-user' }} {{ empty($body_class) ? '' : $body_class }} template--{{$view_name}}">
     <div id="app">
         <header id="main-header">
             <nav class="main-nav">

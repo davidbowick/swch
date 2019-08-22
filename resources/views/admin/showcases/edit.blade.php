@@ -27,7 +27,7 @@
 	</div>
 	<div class="field">
 		<label for="address">Address</label>
-		<input id="address" type="text" name="address" placeholder="Address" value="{{ $showcase->address }}">
+		<textarea id="address" name="address" placeholder="Address">{{ $showcase->address }}</textarea>
 	</div>
 	<div class="field">
 		<input id="is-active" type="checkbox" name="active[]" value="{{ $showcase->active }}" {{ $showcase->active ? 'checked' : '' }}>
