@@ -45,6 +45,13 @@ Route::post('/change-password','AdminController@updatePassword');
 
 Route::get('/logout', '\App\Http\Controllers\Auth\LoginController@logout');
 
+#Sitemap
+Route::get('/sitemap.xml', 'SitemapController@index');
+Route::get('/sitemap/posts', 'SitemapController@posts');
+Route::get('/sitemap/users', 'SitemapController@users');
+Route::get('/sitemap/prompts', 'SitemapController@prompts');
+Route::get('/sitemap/showcases', 'SitemapController@showcases');
+
 Route::get('/admin','AdminController@admin')
 	->middleware('is_admin')
 	->name('admin');
@@ -100,3 +107,4 @@ Route::get('/user/like/{id}',['as' => 'user.like', 'uses' => 'LikeController@lik
 
 
 Route::post('/deploy','DeployController@deploy');
+

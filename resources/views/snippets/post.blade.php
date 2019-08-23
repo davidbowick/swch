@@ -5,9 +5,9 @@
 			<audio src="/storage/uploads/mp3s/{{ $post->filename }}"></audio>
 			@endif 
 			<div class="post__cover">
-				<img src="/storage/uploads/avatars/{{ $post->user->avatar }}">
+				<img alt="{{$user->name}}'s Profile Image" src="/storage/uploads/avatars/{{ $post->user->avatar }}">
 				@if ($post->filename)
-				<a href="/play/{{ $post->id }}" class="no-link play-pause-btn"><i class="fa fa-play"></i></a>
+				<a href="/play/{{ $post->id }}" class="no-link play-pause-btn"><i class="fa fa-play"></i><span class="visually-hidden">Play or Pause This Song</span></a>
 				@endif
 			</div>
 			<div class="post__detail">
@@ -16,7 +16,6 @@
 				<a href="/prompts/{{ $post->prompt->slug }}" class="the-tag--mobile medium-up--hide">
 					<i class="fa fa-tag"></i> 
 					{{ str_limit($post->prompt->title, 20,'...') }}
-
 				</a>
 				@if ($post->filename)
 				<div class="loading"></div>
@@ -26,6 +25,7 @@
 					@if ($post->filename)
 					<a href="/play/{{ $post->id }}" class="play-pause-btn no-link">
 						<i class="fa fa-play"></i> 
+						<span class="visually-hidden">Play or Pause This Song</span>
 						<span class="play-count">{{ $post->play_count }}</span>
 					</a>
 					@endif
@@ -33,19 +33,19 @@
 						class="like {{ $post->isLiked ? 'liked' : '' }} no-link"
 						data-song-id="{{ $post->id }}" 
 						data-user-id="{{ $post->user_id }}">
+						<span class="visually-hidden">Like or unlike this Song</span>
 						<i class="fa fa-heart"></i> 
 						<span class="like-count">{{ $post->likes->count() }}</span>
 					</a>
 					<a href="/prompts/{{ $post->prompt->slug }}" class="the-tag small--hide">
 						<i class="fa fa-tag"></i> 
-						{{-- {{ $post->prompt->title }} --}}
 						{{ str_limit($post->prompt->title, 20,'...') }}
 					</a>
-					<a href="#" class="post__comment-link no-link">
+					<a href="#" class="post__comment-link no-link" aria-expanded="false">
 						<i class="fa fa-comment"></i> 
+						<span class="visually-hidden">Show or Hide Comments</span>
 						<span class="comment-count">{{ $post->comments->count() }}</span>
 					</a>
-
 					{{-- <a 	href="/{{$post->user->username}}/{{$post->slug}}" 
 						class="share" 
 						data-song-link="/{{$post->user->username}}/{{$post->slug}}" data-song-name="{{$post->title}}" 
@@ -53,14 +53,16 @@
 						<i class="fa fa-share"></i>
 					</a> --}}
 					@if ($post->lyrics)
-					<a href="#" class="show-lyrics no-link">LYRICS</a>
+					<a href="#" class="show-lyrics no-link">LYRICS
+						<span class="visually-hidden">Show or Hide Lyrics</span>
+					</a>
 					@endif
 					{{-- @if ($post->type) 
 					<a href="#" class="post-type no-link">{{ $post->type }}</a>
 					@endif --}}
 				</div>
 				<div class="bars" style="display: none;">
-					<img src="https://s3.amazonaws.com/songwritingchallenge/images/audio-playing.gif">
+					<img src="//s3.amazonaws.com/songwritingchallenge/images/audio-playing.gif">
 				</div>
 				<div class="time"></div>
 			</div>
@@ -68,7 +70,6 @@
 		@if ($post->lyrics)
 		<div class="post__lyrics" style="display: none;">
 			<p>{!! str_ireplace($post->prompt->title,'<b>'.$post->prompt->title.'</b>',nl2br(e($post->lyrics))) !!}</p>
-			{{-- <p>{!! nl2br(e($post->lyrics)) !!}</p> --}}
 		</div>
 		@endif
 		<div class="post__comments" style="display: none;">
@@ -78,7 +79,7 @@
 				<div class="post__comment flex flex--align-center {{ array('odd', 'even')[($loop->iteration)%2] }}">
 					<div class="post__comment--user">
 						<a href="/{{$post->user->username}}">
-							<img src="/storage/uploads/avatars/{{ $comment->user->avatar }}" width="20" />
+							<img alt="" src="/storage/uploads/avatars/{{ $comment->user->avatar }}" width="20" />
 						</a>
 					</div>
 					<div class="post__comment--text">{{ $comment->comment }}</div>

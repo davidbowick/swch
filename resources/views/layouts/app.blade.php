@@ -3,12 +3,24 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <!-- CSRF Token -->
+    @if(strpos($_SERVER['REQUEST_URI'], 'admin') !== false)
+    <meta name="robots" content="noindex,nofollow" />
+    @endif
+    {{-- Social --}}
+    <meta property="og:title" content="SW/CH | The Songwriting Challenge">
+    <meta property="og:description" content="A songwriting community to encourage regular writing by using community-generated prompts.">
+    <meta property="og:image" content="https://euro-travel-example.com/thumbnail.jpg">
+    <meta property="og:url" content="https://songwritingchallenge.com/">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta property="og:site_name" content="SW/CH">
+    <meta name="twitter:image:alt" content="Alt text for image">
+    {{-- Non-Essential, But Required for Analytics --}}
+    {{-- CSRF Token --}}
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="icon" type="image/png" href="{{ asset('images/favicon.png') }}" >
-    <title>SW/CH - The Songwriting Challenge</title>
-    <!-- Styles -->
+    {{-- <title>The Songwriting Challenge - A Songwriting Community  | SW/CH</title> --}}
+    <title>@yield('title','The Songwriting Challenge - A Songwriting Community') | SW/CH</title> 
+    {{-- Styles --}}
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>
 <body class="{{ Auth::user() ? 'user--logged-in' : 'no-user' }} {{ empty($body_class) ? '' : $body_class }} template--{{$view_name}}">
@@ -17,12 +29,12 @@
             <nav class="main-nav">
                 <div class="container flex flex--justify-space-between flex--align-center">
                     <a class="logo" href="{{ url('/') }}">
-                        <svg id="Layer_1" width="74" height="32" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 74.1 40"><path fill="#ffffff" d="M31.7 34.1l1.5-11.4L30.5 5h-4.6l-2.3 14.6L21.5 5h-4.6l4.8 29.1h4.2l2.4-15.9 2.5 15.9zM38 0l-5.4 40h3.9l5.9-40zM14.5 26.9c0 2-.5 3.8-1.6 5.2-.7 1-1.8 1.7-3 2.1-.8.2-1.6.3-2.4.3-1.7 0-3.2-.4-4.3-1.3-1-.7-1.7-1.7-2.2-2.8-.6-1.3-.9-2.7-1-4.1l4.2-.3c.2 1.7.6 2.9 1.4 3.7.4.5 1.1.8 1.8.8 1 0 1.7-.5 2.3-1.4.3-.5.4-1.1.4-1.9 0-1.2-.5-2.4-1.6-3.6-.9-.8-2.2-2-3.9-3.7C3.1 18.4 2 17.1 1.4 16c-.7-1.3-1-2.7-1-4.1 0-2.6.9-4.7 2.7-6 1.1-.8 2.5-1.2 4.1-1.2 1.6 0 2.9.4 4 1.1.9.6 1.6 1.4 2.1 2.3.6 1 .9 2.2 1 3.4l-4.2.8c-.1-1.2-.5-2.1-1-2.8-.4-.5-1-.7-1.7-.7-.8-.2-1.5.2-1.9.9-.4.6-.5 1.4-.5 2.1 0 1.3.6 2.7 1.7 4.1.6.7 1.2 1.3 1.9 1.9 1 .9 1.7 1.4 2 1.8 1 1 1.8 2 2.5 3.2.3.4.5.9.7 1.4.4.8.7 1.7.7 2.7zM49.5 34.5c-3.8 0-6.9-3.1-7-6.9v-16c0-1.9.7-3.6 2-4.9 2.7-2.7 7.1-2.7 9.8 0 1.3 1.3 2 3.1 2 4.9v3.3h-4.5v-3.4c0-1.4-1.1-2.5-2.5-2.5-.7 0-1.3.3-1.8.7-.5.5-.7 1.1-.7 1.8v16c0 1.4 1.1 2.5 2.5 2.5.7 0 1.3-.3 1.8-.7.5-.5.8-1.1.7-1.8v-4h4.5v4.1c.2 3.8-2.9 6.9-6.8 6.9zM64.4 21.8v12.3H60V5h4.4v12.4h5.3V5h4.4v29.1h-4.4V21.8h-5.3z"/></svg>
+                        <svg aria-labelledby="swchLogo swchDesc" id="swch-logo" width="59" height="32" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 74.1 40" role="img"><title id="swchLogo">SW/CH Logo</title><desc id="swchDesc">The logo for SW/CH - The Songwriting Challenge</desc></desc><path fill="#ffffff" d="M31.7 34.1l1.5-11.4L30.5 5h-4.6l-2.3 14.6L21.5 5h-4.6l4.8 29.1h4.2l2.4-15.9 2.5 15.9zM38 0l-5.4 40h3.9l5.9-40zM14.5 26.9c0 2-.5 3.8-1.6 5.2-.7 1-1.8 1.7-3 2.1-.8.2-1.6.3-2.4.3-1.7 0-3.2-.4-4.3-1.3-1-.7-1.7-1.7-2.2-2.8-.6-1.3-.9-2.7-1-4.1l4.2-.3c.2 1.7.6 2.9 1.4 3.7.4.5 1.1.8 1.8.8 1 0 1.7-.5 2.3-1.4.3-.5.4-1.1.4-1.9 0-1.2-.5-2.4-1.6-3.6-.9-.8-2.2-2-3.9-3.7C3.1 18.4 2 17.1 1.4 16c-.7-1.3-1-2.7-1-4.1 0-2.6.9-4.7 2.7-6 1.1-.8 2.5-1.2 4.1-1.2 1.6 0 2.9.4 4 1.1.9.6 1.6 1.4 2.1 2.3.6 1 .9 2.2 1 3.4l-4.2.8c-.1-1.2-.5-2.1-1-2.8-.4-.5-1-.7-1.7-.7-.8-.2-1.5.2-1.9.9-.4.6-.5 1.4-.5 2.1 0 1.3.6 2.7 1.7 4.1.6.7 1.2 1.3 1.9 1.9 1 .9 1.7 1.4 2 1.8 1 1 1.8 2 2.5 3.2.3.4.5.9.7 1.4.4.8.7 1.7.7 2.7zM49.5 34.5c-3.8 0-6.9-3.1-7-6.9v-16c0-1.9.7-3.6 2-4.9 2.7-2.7 7.1-2.7 9.8 0 1.3 1.3 2 3.1 2 4.9v3.3h-4.5v-3.4c0-1.4-1.1-2.5-2.5-2.5-.7 0-1.3.3-1.8.7-.5.5-.7 1.1-.7 1.8v16c0 1.4 1.1 2.5 2.5 2.5.7 0 1.3-.3 1.8-.7.5-.5.8-1.1.7-1.8v-4h4.5v4.1c.2 3.8-2.9 6.9-6.8 6.9zM64.4 21.8v12.3H60V5h4.4v12.4h5.3V5h4.4v29.1h-4.4V21.8h-5.3z"/></svg>
                     </a>
                     <div class="main-nav__user-links flex">
                         @if(Auth::check())
                         @if(Auth::user()->type == 'admin')
-                        <a class="main-nav__admin-link" href="/admin">Admin</a>
+                        <a class="main-nav__admin-link" href="/admin"><i class="fa fa-cog"></i></a>
                         @endif
                         <a href="#" class="no-link main-nav__search-link"><i class="fa fa-search"></i></a> 
                         <div class="top-search-wrapper">
@@ -81,11 +93,10 @@
                         </div>
                     </div>
                     <div class="main-nav__user-wrapper flex">
-                        <a class="main-nav__user-link" href="/{{ Auth::user()->username }}">
-                            <img class="tiny-profile-pic" src="/storage/uploads/avatars/{{ Auth::user()->avatar }}" >
-                            {{ Auth::user()->getFirstName() }}
+                        <a aria-expanded="false" class="main-nav__user-link" href="/{{ Auth::user()->username }}">
+                            <img class="tiny-profile-pic" src="/storage/uploads/avatars/{{ Auth::user()->avatar }}" >{{ Auth::user()->getFirstName() }}
                         </a>
-                        <div class="user-drop-wrap">
+                        <div  class="user-drop-wrap">
                             <div class="user-drop">
                                 <ul>
                                     <li><a href="/{{ Auth::user()->username }}">View Profile</a></li>
@@ -111,16 +122,24 @@
         <div class="container">
             @yield('content')
         </div>
+        {{-- Global site tag (gtag.js) - Google Analytics --}}
+        <script async src="//www.googletagmanager.com/gtag/js?id=UA-146360947-1"></script>
+        <script>
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', 'UA-146360947-1');
+      </script>
     </main>
     <div class="main-preloader" style="display: none;">
-        <svg width="30px"  height="30px"  xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid" class="lds-rolling" style="background: none;"><circle cx="50" cy="50" fill="none" stroke="#000000" stroke-width="10" r="25" stroke-dasharray="117.80972450961724 41.269908169872416" transform="rotate(41.2639 50 50)"><animateTransform attributeName="transform" type="rotate" calcMode="linear" values="0 50 50;360 50 50" keyTimes="0;1" dur="1s" begin="0s" repeatCount="indefinite"></animateTransform></circle>
+        <svg width="30px"  height="30px" aria-labeledby="preloaderLogo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid" class="lds-rolling" style="background: none;"><title id="preloaderLogo">Preloader</title><circle cx="50" cy="50" fill="none" stroke="#000000" stroke-width="10" r="25" stroke-dasharray="117.80972450961724 41.269908169872416" transform="rotate(41.2639 50 50)"><animateTransform attributeName="transform" type="rotate" calcMode="linear" values="0 50 50;360 50 50" keyTimes="0;1" dur="1s" begin="0s" repeatCount="indefinite"></animateTransform></circle>
         </svg>
     </div>
     <footer class="main-footer clearfix">
         <div class="container">
             <div class="even-columns small--flex-wrap small--text-center">
                 <div class="even-column">
-                    <img src="/images/songwriting-challenge.png" width="100" alt="Songwriting Challenge">
+                    <img src="/images/songwriting-challenge.png" width="100" alt="">
                 </div>
                 <div class="even-column">
                     <h4>Profile</h4>

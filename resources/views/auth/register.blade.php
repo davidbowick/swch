@@ -1,5 +1,5 @@
 @extends('layouts.app')
-
+@section('title','Register')
 @section('content')
 <hr class="hr--invisible">
 <div class="container--tiny">

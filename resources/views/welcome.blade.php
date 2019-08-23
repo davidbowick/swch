@@ -1,4 +1,5 @@
 @extends('layouts.app',['body_class'=>'template--welcome'])
+@section('title','The Songwriting Challenge - A Songwriting Community')
 @section('content')
 <div class="welcome">
 	<div class="container flex flex--justify-space-between small--flex-wrap">

@@ -1,5 +1,5 @@
 @extends('layouts.app')
-
+@section('title','Submit Song - The Songwriting Challenge')
 @section('content')
 <div class="flex small--flex-wrap">
 	<div class="sidebar one-third small--one-whole ">

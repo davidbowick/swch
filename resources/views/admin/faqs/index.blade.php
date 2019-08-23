@@ -1,7 +1,7 @@
 @extends('layouts.app')
+@section('title','FAQs - The Songwriting Challenge')
 @section('content')
 <hr class="hr--invisible">
-
 @if ($faqs)
 <div class="faqs container--thin">
 <h1 class="title">

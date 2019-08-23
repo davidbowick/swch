@@ -1,4 +1,7 @@
 @extends('layouts.app',['body_class'=>'template--profile'])
+@if ($user)
+@section('title',$user->name . ' - The Songwriting Challenge' )
+@endif
 @section('content')
 @if ($user)
 <div id="page-content" class="flex small--flex-wrap">

@@ -1,5 +1,5 @@
 @extends('layouts.app')
-
+@section('title','Prompt Submission')
 @section('content')
 <hr class="hr--invisible">
 <div class="container--tiny">

@@ -1,4 +1,5 @@
 @extends('layouts.app')
+@section('title','Contact - The Songwriting Challenge')
 @section('content')
 <hr class="hr--invisible">
 <div class="container--tiny">

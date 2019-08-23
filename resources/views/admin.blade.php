@@ -1,5 +1,5 @@
 @extends('layouts.app',['body_class'=>'template--admin'])
-
+@section('title','Admin')
 @section('content')
 <hr class="hr--invisible" >
 <div class="grid grid--double-gutters grid--uniform flex small--flex-wrap">

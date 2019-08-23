@@ -1,4 +1,5 @@
 @extends('layouts.app')
+@section('title','The Songwriting Challenge - A Songwriting Community')
 @section('content')
 <div id="page-content" class="flex small--flex-wrap">
     <div class="sidebar small--one-whole">

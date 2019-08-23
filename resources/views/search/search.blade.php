@@ -1,4 +1,5 @@
 @extends('layouts.app')
+@section('title','Search')
 @section('content')
 <hr class="hr--invisible">
 <h1>

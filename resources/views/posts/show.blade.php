@@ -1,4 +1,7 @@
 @extends('layouts.app')
+@if ($user and $post)
+@section('title',$user->name . ' - ' .$post->title )
+@endif
 @section('content')
 <div id="page-content" class="flex small--flex-wrap">
 	<div class="sidebar small--one-whole">
