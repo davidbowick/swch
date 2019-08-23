@@ -697,6 +697,7 @@ select {
     width: calc(100% + 50px);
     margin-left: -$gutter-site-mobile;
     margin-top: -$gutter-site-mobile;
+
     @include desktop {
         width: 114%;
         margin-left: -7%;
@@ -708,9 +709,19 @@ select {
         border-radius: 2px;
     }
     position: relative;
+    .profile-pic {
+        display: block;
+        position: relative;
+        padding-bottom: 100%;
+    }
     img {
         width: 100%;
         vertical-align: top;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
     }
     .profile-name {
         position: absolute;

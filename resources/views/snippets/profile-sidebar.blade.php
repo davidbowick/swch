@@ -1,5 +1,5 @@
 <div class="main-profile-pic">
-	<a href="/{{$user->username}}">
+	<a class="profile-pic" href="/{{$user->username}}">
 		<img alt="{{$user->name}}'s Profile Image" src="{{s3_avatar_image('normal',$user->avatar)}}" >
 	</a>
 	<a class="profile-name" href="/{{$user->username}}">{{$user->name}}</a>

@@ -81,9 +81,9 @@ class ProfilesController extends Controller
             $avatar = $request->file('avatar');
             $extension = $avatar->getClientOriginalExtension();
             $avatarName = $user->id.'_avatar'.time().'.'.$extension;
-            $normal = Image::make($avatar)->resize(300,300)->encode($extension);
-            $medium = Image::make($avatar)->resize(150,150)->encode($extension);
-            $small = Image::make($avatar)->resize(24,24)->encode($extension);
+            $normal = Image::make($avatar)->resize(300,300)->encode($extension, 75);
+            $medium = Image::make($avatar)->resize(150,150)->encode($extension, 75);
+            $small = Image::make($avatar)->resize(24,24)->encode($extension, 75);
             Storage::disk('s3')->put('/avatars/normal/'.$avatarName, (string)$normal,'public');
             Storage::disk('s3')->put('/avatars/medium/'.$avatarName, (string)$medium,'public');
             Storage::disk('s3')->put('/avatars/small/'.$avatarName, (string)$small,'public');
