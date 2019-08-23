@@ -22,7 +22,7 @@
 </div>
 <div class="flex flex--wrap user--followers-list">
 	@foreach($user->likes as $follower)
-		<a data-tooltip="{{$follower->name}}" class="user-mini-link one-sixth" href="/{{$follower->username}}"><img width="30" alt="" src="{{$follower->avatar}}"><span class="visually-hidden">{{$follower->name}}</span></a>
+		<a data-tooltip="{{$follower->name}}" class="user-mini-link one-sixth" href="/{{$follower->username}}"><img width="30" alt="" src="{{s3_avatar_image('normal',$follower->avatar)}}"><span class="visually-hidden">{{$follower->name}}</span></a>
 	@endforeach
 </div>
 @if ($user->profile)
