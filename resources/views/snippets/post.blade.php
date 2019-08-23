@@ -1,11 +1,11 @@
-<div class="post anim-in" data-prompt="{{ $post->prompt->id}}" data-prompt-title="{{$post->prompt->title}}" data-prompt-slug="{{ $post->prompt->slug }}" data-song-id="{{ $post->id }}" data-plays="" data-title="{{ $post->title }}" data-audio="{{ $post->filename ? '/storage/uploads/mp3s/'.$post->filename : 'null' }}" data-user-name="{{$post->user->name}}">
+<div class="post anim-in" data-prompt="{{ $post->prompt->id}}" data-prompt-title="{{$post->prompt->title}}" data-prompt-slug="{{ $post->prompt->slug }}" data-song-id="{{ $post->id }}" data-plays="" data-title="{{ $post->title }}" data-audio="{{ $post->filename ? s3_mp3($post->filename) : 'null' }}" data-user-name="{{$post->user->name}}">
 	<div class="post_player">
 		<div class="post__inner flex">
 			@if ($post->filename)
-			<audio src="/storage/uploads/mp3s/{{ $post->filename }}"></audio>
+			<audio src="{{ s3_mp3($post->filename) }}"></audio>
 			@endif 
 			<div class="post__cover">
-				<img alt="{{$user->name}}'s Profile Image" src="/storage/uploads/avatars/{{ $post->user->avatar }}">
+				<img alt="{{$user->name}}'s Profile Image" src="{{s3_avatar_image('medium',$post->user->avatar)}}">
 				@if ($post->filename)
 				<a href="/play/{{ $post->id }}" class="no-link play-pause-btn"><i class="fa fa-play"></i><span class="visually-hidden">Play or Pause This Song</span></a>
 				@endif
@@ -79,7 +79,7 @@
 				<div class="post__comment flex flex--align-center {{ array('odd', 'even')[($loop->iteration)%2] }}">
 					<div class="post__comment--user">
 						<a href="/{{$post->user->username}}">
-							<img alt="" src="/storage/uploads/avatars/{{ $comment->user->avatar }}" width="20" />
+							<img alt="" src="{{s3_avatar_image('small',$post->user->avatar)}}" width="20" />
 						</a>
 					</div>
 					<div class="post__comment--text">{{ $comment->comment }}</div>

@@ -34,13 +34,22 @@
                     <div class="main-nav__user-links flex">
                         @if(Auth::check())
                         @if(Auth::user()->type == 'admin')
-                        <a class="main-nav__admin-link" href="/admin"><i class="fa fa-cog"></i></a>
+                        <a class="main-nav__admin-link" href="/admin">
+                            <i class="fa fa-cog"></i>
+                            <span class="visually-hidden">Admin</span>
+                        </a>
                         @endif
-                        <a href="#" class="no-link main-nav__search-link"><i class="fa fa-search"></i></a> 
+                        <a href="#" class="no-link main-nav__search-link">
+                            <i class="fa fa-search"></i>
+                            <span class="visually-hidden">Search</span>
+                        </a> 
                         <div class="top-search-wrapper">
                             <form method="GET" action="/search" id="top-search">
                                 <input id="ts" type="text" placeholder="Search" name="q" value="" autocomplete="off">
-                                <button class="top-search--submit" type="submit"><i class="fa fa-search"></i></button>
+                                <button class="top-search--submit" type="submit">
+                                    <i class="fa fa-search"></i>
+                                    <span class="visually-hidden">Search Submit</span>
+                                </button>
                             </form> 
                             <div id="top-search-results">
                                 <div id="top-search-results__inner"></div>
@@ -94,7 +103,7 @@
                     </div>
                     <div class="main-nav__user-wrapper flex">
                         <a aria-expanded="false" class="main-nav__user-link" href="/{{ Auth::user()->username }}">
-                            <img class="tiny-profile-pic" src="/storage/uploads/avatars/{{ Auth::user()->avatar }}" >{{ Auth::user()->getFirstName() }}
+                            <img class="tiny-profile-pic" src="{{s3_avatar_image('small',Auth::user()->avatar)}}" >{{ Auth::user()->getFirstName() }}
                         </a>
                         <div  class="user-drop-wrap">
                             <div class="user-drop">

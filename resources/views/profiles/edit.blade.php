@@ -9,7 +9,7 @@
 
 		<div class="field flex flex--align-center">
 			<div class="profile-edit__image">
-				<img src="/storage/uploads/avatars/{{ $user->avatar }}" >
+				<img src="{{s3_avatar_image('medium',$user->avatar)}}" >
 			</div>
 			<div class="profile-edit__image-input">
 				<label for="avatar">Profile Image</label>

@@ -1,6 +1,6 @@
 <div class="main-profile-pic">
 	<a href="/{{$user->username}}">
-		<img alt="{{$user->name}}'s Profile Image" src="/storage/uploads/avatars/{{ $user->avatar }}" >
+		<img alt="{{$user->name}}'s Profile Image" src="{{s3_avatar_image('normal',$user->avatar)}}" >
 	</a>
 	<a class="profile-name" href="/{{$user->username}}">{{$user->name}}</a>
 	@if(Auth::user())
@@ -22,7 +22,7 @@
 </div>
 <div class="flex flex--wrap user--followers-list">
 	@foreach($user->likes as $follower)
-		<a data-tooltip="{{$follower->name}}" class="user-mini-link one-sixth" href="/{{$follower->username}}"><img width="30" alt="" src="/storage/uploads/avatars/{{$follower->avatar}}"><span class="visually-hidden">{{$follower->name}}</span></a>
+		<a data-tooltip="{{$follower->name}}" class="user-mini-link one-sixth" href="/{{$follower->username}}"><img width="30" alt="" src="{{$follower->avatar}}"><span class="visually-hidden">{{$follower->name}}</span></a>
 	@endforeach
 </div>
 @if ($user->profile)

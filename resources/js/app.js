@@ -251,7 +251,7 @@ function hidePlayer() {
 }
 function nextSong(s) {
 	var mainAudio = '.main-player__audio';
-	$(mainAudio).attr('src','/storage/uploads/mp3s/'+s.filename);
+	$(mainAudio).attr('src','//songwritingchallenge.s3.amazonaws.com/mp3s/'+s.filename);
 	$(mainAudio).get(0).load();
 	var promise = $(mainAudio).get(0).play();
 	if (promise !== undefined) {
@@ -259,7 +259,7 @@ function nextSong(s) {
 			$('.post[data-song-id="'+NowPlaying.currentPostId+'"').find('.bars').fadeOut();
 			NowPlaying.isPlaying = true;
 			$('.main-player__title').html('<b><a href="/'+s.user.username+'">'+s.user.name+'</b><br/><a href="/'+s.user.username+'/'+s.slug+'">'+s.title+'</a>');
-			$('.main-player__image img').attr('src','/storage/uploads/avatars/'+s.user.avatar);
+			$('.main-player__image img').attr('src','//songwritingchallenge.s3.amazonaws.com/avatars/small/'+s.user.avatar);
 			$('.main-player__prompt').attr('href','/prompts/'+s.prompt.slug);
 			$('.main-player__prompt-name').text(s.prompt.title);
 			$('.play-pause-btn i').removeClass('fa-pause').addClass('fa-play');

@@ -7,6 +7,7 @@ use App\Post;
 use Auth;
 use Illuminate\Http\Request;
 use Illuminiate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Support\Facades\Storage;
 use Image;
 
 class ProfilesController extends Controller
@@ -77,8 +78,18 @@ class ProfilesController extends Controller
             $request->validate([
                 'avatar' => 'required|image|mimes:jpeg,jpg|max:1000',
             ]);
-            $avatarName = $user->id.'_avatar'.time().'.'.request()->avatar->getClientOriginalExtension();
-            $request->avatar->storeAs('uploads/avatars',$avatarName);
+            $avatar = $request->file('avatar');
+            $extension = $avatar->getClientOriginalExtension();
+            $avatarName = $user->id.'_avatar'.time().'.'.$extension;
+            $normal = Image::make($avatar)->resize(300,300)->encode($extension);
+            $medium = Image::make($avatar)->resize(150,150)->encode($extension);
+            $small = Image::make($avatar)->resize(24,24)->encode($extension);
+            Storage::disk('s3')->put('/avatars/normal/'.$avatarName, (string)$normal,'public');
+            Storage::disk('s3')->put('/avatars/medium/'.$avatarName, (string)$medium,'public');
+            Storage::disk('s3')->put('/avatars/small/'.$avatarName, (string)$small,'public');
+            // dd($avatarName);
+            // dd($path);
+            // $request->avatar->storeAs('uploads/avatars',$avatarName);
             $user->update([
                 'avatar' => $avatarName
             ]);

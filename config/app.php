@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'name' => env('APP_NAME', '[SW/CH]'),
+    'name' => env('APP_NAME', 'SW/CH'),
     'deploy_secret' => env('APP_DEPLOY_SECRET'),
 
     /*
@@ -162,6 +162,7 @@ return [
         Illuminate\Translation\TranslationServiceProvider::class,
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
+
 
         /*
          * Package Service Providers...

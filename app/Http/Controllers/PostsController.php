@@ -9,6 +9,7 @@ use Auth;
 use Illuminate\Http\Request;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Support\Facades\Storage;
 
 class PostsController extends Controller
 {
@@ -49,8 +50,10 @@ class PostsController extends Controller
             'lyrics' => 'nullable'
         ]);
         if($request->filename) {
-            $fileName = $user->id.''.$request->slug.'.'.$request->filename->getClientOriginalExtension();
-            $request->filename->storeAs('uploads/mp3s',$fileName);
+            $file = $request->filename;
+            $fileName = $user->id.''.$request->slug.'.'.$file->getClientOriginalExtension();
+            // $request->filename->storeAs('uploads/mp3s',$fileName);
+            Storage::disk('s3')->put('/mp3s/'.$fileName, file_get_contents($file),'public');
             $request->filename = $fileName;
         } else {
             $fileName = '';
@@ -88,16 +91,22 @@ class PostsController extends Controller
             'filename' => 'nullable|mimes:audio/mp3,mpga,mp3|max:12000',
             'lyrics' => 'nullable'
         ]);
-
+        $post->update($validated);
         if($request->filename) {
-            $fileName = $post->user->id.''.$request->slug.'.'.$request->filename->getClientOriginalExtension();
-            $request->filename->storeAs('uploads/mp3s',$fileName);
-            $request->filename = $fileName;
+            $file = $request->filename;
+            $fileName = $post->user->id.''.$request->slug.'.'.$file->getClientOriginalExtension();
+            // $request->filename->storeAs('uploads/mp3s',$fileName);
+            // dd($fileName);
+            Storage::disk('s3')->put('/mp3s/'.$fileName, file_get_contents($file),'public');
+            // $request->filename = $fileName;
+            // $fileName = $post->user->id.''.$request->slug.'.'.$request->filename->getClientOriginalExtension();
+            // $request->filename->storeAs('uploads/mp3s',$fileName);
+            // $request->filename = $fileName;
             $post->update([
                 'filename' => $fileName
             ]);
         } 
-        $post->update($validated);
+        
         return redirect('/'.$post->user->username.'/'.$post->slug);
     }
     public function increasePlayCount($id) {
