@@ -6,6 +6,13 @@
     @if(strpos($_SERVER['REQUEST_URI'], 'admin') !== false)
     <meta name="robots" content="noindex,nofollow" />
     @endif
+    <meta rel="manifest" href="{{ asset('manifest.json') }}" />
+    <meta name="theme-color" content="#222526" />
+    <link rel="icon" type="image/png" href="{{ asset('images/favicon-256.png') }}" sizes="256x256" />
+    <link rel="icon" type="image/png" href="{{ asset('images/favicon-128.png') }}" sizes="128x128" />
+    <link rel="icon" type="image/png" href="{{ asset('images/favicon-64.png') }}" sizes="64x64" />
+    <link rel="icon" type="image/png" href="{{ asset('images/favicon-32.png') }}" sizes="32x32" />
+    <link rel="icon" type="image/png" href="{{ asset('images/favicon-32.png') }}">
     {{-- Social --}}
     <meta property="og:title" content="SW/CH | The Songwriting Challenge">
     <meta property="og:description" content="A songwriting community to encourage regular writing by using community-generated prompts.">
@@ -17,7 +24,7 @@
     {{-- Non-Essential, But Required for Analytics --}}
     {{-- CSRF Token --}}
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <link rel="icon" type="image/png" href="{{ asset('images/favicon.png') }}" >
+    
     {{-- <title>The Songwriting Challenge - A Songwriting Community  | SW/CH</title> --}}
     <title>@yield('title','The Songwriting Challenge - A Songwriting Community') | SW/CH</title> 
     {{-- Styles --}}

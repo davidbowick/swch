@@ -2,7 +2,7 @@
 	<div class="post_player">
 		<div class="post__inner flex">
 			@if ($post->filename)
-			<audio src="{{ s3_mp3($post->filename) }}"></audio>
+			{{-- <audio src="{{ s3_mp3($post->filename) }}"></audio> --}}
 			@endif 
 			<div class="post__cover">
 				<img alt="{{$user->name}}'s Profile Image" src="{{s3_avatar_image('medium',$post->user->avatar)}}">

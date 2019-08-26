@@ -1,0 +1,30 @@
+{
+	"name":"SW/CH",
+	"short_name":"SW/CH",
+	"description":"A songwriting community to encourage regular writing by using community-generated prompts.",
+	"start_url":"/?homescreen=1",
+	"background_color":"#222526",
+	"theme_color":"#222526",
+	"icons":[
+		{
+			"src":"favicon-256.png",
+			"sizes":"256x256",
+			"type":"image/png"
+		},
+		{
+			"src":"favicon-138.png",
+			"sizes":"128x128",
+			"type":"image/png"
+		},
+		{
+			"src":"favicon-64.png",
+			"sizes":"64x64",
+			"type":"image/png"
+		},
+		{
+			"src":"favicon-32.png",
+			"sizes":"32x32",
+			"type":"image/png"
+		}
+	]
+}
