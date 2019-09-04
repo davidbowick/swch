@@ -154,20 +154,20 @@
           gtag('js', new Date());
           gtag('config', 'UA-146360947-1');
         </script>
-        <script>
-        // if ('serviceWorker' in navigator) {
-        //     navigator.serviceWorker.register('{{ asset('sw.js') }}');
-        // }
-      //   if ('serviceWorker' in navigator) {
-      //     window.addEventListener('load', function() {
-      //       navigator.serviceWorker.register('{{ asset('sw.js') }}').then(function(registration) {
-      //         console.log('ServiceWorker registration successful with scope: ', registration.scope);
-      //     }, function(err) {
-      //         console.log('ServiceWorker registration failed: ', err);
-      //     });
-      //   });
-      // }
-        </script>
+        {{-- <script> 
+        if ('serviceWorker' in navigator) {
+          navigator.serviceWorker.register('{{ asset('sw.js') }}');
+         }
+         if ('serviceWorker' in navigator) {
+           window.addEventListener('load', function() {
+             navigator.serviceWorker.register('{{ asset('sw.js') }}').then(function(registration) {
+               console.log('ServiceWorker registration successful with scope: ', registration.scope);
+           }, function(err) {
+               console.log('ServiceWorker registration failed: ', err);
+           });
+         });
+       }
+         </script> --}}
 
     </main>
     <div class="main-preloader" style="display: none;">
