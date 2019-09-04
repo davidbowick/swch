@@ -31,8 +31,6 @@
     <meta property="og:site_name" content="SW/CH" />
     <meta name="twitter:image:alt" content="Alt text for image" /> --}}
     {{-- Non-Essential, But Required for Analytics --}}
-   
-    
     {{-- <title>The Songwriting Challenge - A Songwriting Community  | SW/CH</title> --}}
     <title>@yield('title','The Songwriting Challenge - A Songwriting Community') | SW/CH</title> 
     {{-- Styles --}}
