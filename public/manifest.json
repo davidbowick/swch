@@ -1,6 +1,8 @@
 {
 	"name":"SW/CH",
 	"short_name":"SW/CH",
+	"lang":"en-US",
+	"display":"standalone",
 	"description":"A songwriting community to encourage regular writing by using community-generated prompts.",
 	"start_url":"/?homescreen=1",
 	"background_color":"#222526",

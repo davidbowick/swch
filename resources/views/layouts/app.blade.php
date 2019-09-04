@@ -6,24 +6,32 @@
     @if(strpos($_SERVER['REQUEST_URI'], 'admin') !== false)
     <meta name="robots" content="noindex,nofollow" />
     @endif
+     {{-- CSRF Token --}}
+    <meta name="csrf-token" content="{{ csrf_token() }}" />
+    {{-- PWA Stuff --}}
     <meta rel="manifest" href="{{ asset('manifest.json') }}" />
-    <meta name="theme-color" content="#222526" />
     <link rel="icon" type="image/png" href="{{ asset('images/favicon-256.png') }}" sizes="256x256" />
     <link rel="icon" type="image/png" href="{{ asset('images/favicon-128.png') }}" sizes="128x128" />
     <link rel="icon" type="image/png" href="{{ asset('images/favicon-64.png') }}" sizes="64x64" />
     <link rel="icon" type="image/png" href="{{ asset('images/favicon-32.png') }}" sizes="32x32" />
     <link rel="icon" type="image/png" href="{{ asset('images/favicon-32.png') }}">
+    <link rel="apple-touch-icon" href="{{ asset('images/favicon-256.png') }}">   
+    <meta name="theme-color" content="#222526"/>  
+    <meta name="apple-mobile-web-app-capable" content="yes" />  
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" /> 
+    <meta name="apple-mobile-web-app-title" content="SW/CH" /> 
+    <meta name="msapplication-TileImage" content="{{ asset('images/favicon-256.png') }}" />  
+    <meta name="msapplication-TileColor" content="#222526" />
     {{-- Social --}}
-    <meta property="og:title" content="SW/CH | The Songwriting Challenge">
-    <meta property="og:description" content="A songwriting community to encourage regular writing by using community-generated prompts.">
-    <meta property="og:image" content="https://euro-travel-example.com/thumbnail.jpg">
-    <meta property="og:url" content="https://songwritingchallenge.com/">
-    <meta name="twitter:card" content="summary_large_image">
-    <meta property="og:site_name" content="SW/CH">
-    <meta name="twitter:image:alt" content="Alt text for image">
+    <meta property="og:title" content="SW/CH | The Songwriting Challenge" />
+    <meta property="og:description" content="A songwriting community to encourage regular writing by using community-generated prompts." />
+    <meta property="og:image" content="https://euro-travel-example.com/thumbnail.jpg" />
+    <meta property="og:url" content="https://songwritingchallenge.com/" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta property="og:site_name" content="SW/CH" />
+    <meta name="twitter:image:alt" content="Alt text for image" />
     {{-- Non-Essential, But Required for Analytics --}}
-    {{-- CSRF Token --}}
-    <meta name="csrf-token" content="{{ csrf_token() }}">
+   
     
     {{-- <title>The Songwriting Challenge - A Songwriting Community  | SW/CH</title> --}}
     <title>@yield('title','The Songwriting Challenge - A Songwriting Community') | SW/CH</title> 
@@ -145,7 +153,22 @@
           function gtag(){dataLayer.push(arguments);}
           gtag('js', new Date());
           gtag('config', 'UA-146360947-1');
-      </script>
+        </script>
+        <script>
+        // if ('serviceWorker' in navigator) {
+        //     navigator.serviceWorker.register('{{ asset('sw.js') }}');
+        // }
+        if ('serviceWorker' in navigator) {
+          window.addEventListener('load', function() {
+            navigator.serviceWorker.register('{{ asset('sw.js') }}').then(function(registration) {
+              console.log('ServiceWorker registration successful with scope: ', registration.scope);
+          }, function(err) {
+              console.log('ServiceWorker registration failed: ', err);
+          });
+        });
+      }
+        </script>
+
     </main>
     <div class="main-preloader" style="display: none;">
         <svg width="30px"  height="30px" aria-labeledby="preloaderLogo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid" class="lds-rolling" style="background: none;"><title id="preloaderLogo">Preloader</title><circle cx="50" cy="50" fill="none" stroke="#000000" stroke-width="10" r="25" stroke-dasharray="117.80972450961724 41.269908169872416" transform="rotate(41.2639 50 50)"><animateTransform attributeName="transform" type="rotate" calcMode="linear" values="0 50 50;360 50 50" keyTimes="0;1" dur="1s" begin="0s" repeatCount="indefinite"></animateTransform></circle>
