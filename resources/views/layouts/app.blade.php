@@ -9,7 +9,9 @@
      {{-- CSRF Token --}}
     <meta name="csrf-token" content="{{ csrf_token() }}" />
     {{-- PWA Stuff --}}
-   {{--  <meta rel="manifest" href="{{ asset('manifest.json') }}" />
+    {{-- <meta rel="manifest" href="/manifest.json" /> --}}
+    <link rel="manifest" href="/manifest.json">
+
     <link rel="icon" type="image/png" href="{{ asset('images/favicon-256.png') }}" sizes="256x256" />
     <link rel="icon" type="image/png" href="{{ asset('images/favicon-128.png') }}" sizes="128x128" />
     <link rel="icon" type="image/png" href="{{ asset('images/favicon-64.png') }}" sizes="64x64" />
@@ -21,10 +23,11 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black" /> 
     <meta name="apple-mobile-web-app-title" content="SW/CH" /> 
     <meta name="msapplication-TileImage" content="{{ asset('images/favicon-256.png') }}" />  
-    <meta name="msapplication-TileColor" content="#222526" /> --}}
+    <meta name="msapplication-TileColor" content="#222526" />
     {{-- Social --}}
     <meta property="og:title" content="SW/CH | The Songwriting Challenge" />
     <meta property="og:description" content="A songwriting community to encourage regular writing by using community-generated prompts." />
+
     {{-- <meta property="og:image" content="https://euro-travel-example.com/thumbnail.jpg" /> --}}
 {{--     <meta property="og:url" content="https://songwritingchallenge.com/" />
     <meta name="twitter:card" content="summary_large_image" />
@@ -33,6 +36,7 @@
     {{-- Non-Essential, But Required for Analytics --}}
     {{-- <title>The Songwriting Challenge - A Songwriting Community  | SW/CH</title> --}}
     <title>@yield('title','The Songwriting Challenge - A Songwriting Community') | SW/CH</title> 
+    <meta name="Description" content="A songwriting community to encourage regular writing by using community-generated prompts.">
     {{-- Styles --}}
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>
@@ -116,7 +120,7 @@
                     </div>
                     <div class="main-nav__user-wrapper flex">
                         <a aria-expanded="false" class="main-nav__user-link" href="/{{ Auth::user()->username }}">
-                            <img class="tiny-profile-pic" src="{{s3_avatar_image('small',Auth::user()->avatar)}}" >{{ Auth::user()->getFirstName() }}
+                            <img class="tiny-profile-pic" alt="{{Auth::user()->name}} Profile Image" src="{{s3_avatar_image('small',Auth::user()->avatar)}}" >{{ Auth::user()->getFirstName() }}
                         </a>
                         <div  class="user-drop-wrap">
                             <div class="user-drop">
@@ -152,20 +156,17 @@
           gtag('js', new Date());
           gtag('config', 'UA-146360947-1');
         </script>
-        {{-- <script> 
-        if ('serviceWorker' in navigator) {
-          navigator.serviceWorker.register('{{ asset('sw.js') }}');
-         }
-         if ('serviceWorker' in navigator) {
-           window.addEventListener('load', function() {
-             navigator.serviceWorker.register('{{ asset('sw.js') }}').then(function(registration) {
-               console.log('ServiceWorker registration successful with scope: ', registration.scope);
-           }, function(err) {
-               console.log('ServiceWorker registration failed: ', err);
+        <script> 
+           if ('serviceWorker' in navigator) {
+             window.addEventListener('load', function() {
+               navigator.serviceWorker.register('{{ asset('sw.js') }}').then(function(registration) {
+                 console.log('ServiceWorker registration successful with scope: ', registration.scope);
+             }, function(err) {
+                 console.log('ServiceWorker registration failed: ', err);
+             });
            });
-         });
-       }
-         </script> --}}
+         }
+     </script>
 
     </main>
     <div class="main-preloader" style="display: none;">

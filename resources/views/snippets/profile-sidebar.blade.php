@@ -5,7 +5,7 @@
 	<a class="profile-name" href="/{{$user->username}}">{{$user->name}}</a>
 	@if(Auth::user())
 	@if (Auth::user()->id == $user->id)
-	<a class="edit-profile" href="/{{$user->username}}/edit"><i class="fa fa-cog"></i></a>
+	<a class="edit-profile" href="/{{$user->username}}/edit"><i class="fa fa-cog"></i><span class="visually-hidden">Edit Profile</span></a>
 	@endif
 	@endif
 </div>
@@ -35,7 +35,7 @@
 	<ul class="profile__social-links">
 		@if ($user->profile->website)
 		<li>
-			<a href="{{ $user->profile->website }}" class="no-link" target="_blank">
+			<a href="{{ $user->profile->website }}" class="no-link" target="_blank" rel="noopener">
 				<i class="fa fa-link"></i>
 				<span class="visually-hidden">{{$user->name}}'s Official Website</span>
 			</a>
@@ -43,7 +43,7 @@
 		@endif
 		@if ($user->profile->twitter_url)
 		<li>
-			<a href="{{ $user->profile->twitter_url }}" class="no-link" target="_blank">
+			<a href="{{ $user->profile->twitter_url }}" class="no-link" target="_blank" rel="noopener">
 				<i class="fa fa-twitter"></i>
 				<span class="visually-hidden">{{$user->name}} on Twitter</span>
 			</a>
@@ -51,7 +51,7 @@
 		@endif 
 		@if ($user->profile->facebook_url)
 		<li>
-			<a href="{{ $user->profile->facebook_url }}" class="no-link" target="_blank">
+			<a href="{{ $user->profile->facebook_url }}" class="no-link" target="_blank" rel="noopener">
 				<i class="fa fa-facebook"></i>
 				<span class="visually-hidden">{{$user->name}} on Facebook</span>
 			</a>
@@ -59,7 +59,7 @@
 		@endif 
 		@if ($user->profile->instagram_url)
 		<li>
-			<a href="{{ $user->profile->instagram_url }}" class="no-link" target="_blank">
+			<a href="{{ $user->profile->instagram_url }}" class="no-link" target="_blank" rel="noopener">
 				<i class="fa fa-instagram"></i>
 				<span class="visually-hidden">{{$user->name}} on Instagram</span>
 			</a>
@@ -67,7 +67,7 @@
 		@endif 
 		@if ($user->profile->youtube_url)
 		<li>
-			<a href="{{ $user->profile->youtube_url }}" class="no-link" target="_blank">
+			<a href="{{ $user->profile->youtube_url }}" class="no-link" target="_blank" rel="noopener">
 				<i class="fa fa-youtube"></i>
 				<span class="visually-hidden">{{$user->name}} on Youtube</span>
 			</a>

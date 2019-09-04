@@ -79,7 +79,7 @@
 				<div class="post__comment flex flex--align-center {{ array('odd', 'even')[($loop->iteration)%2] }}">
 					<div class="post__comment--user">
 						<a href="/{{$post->user->username}}">
-							<img alt="" src="{{s3_avatar_image('small',$post->user->avatar)}}" width="20" />
+							<img alt="" src="{{s3_avatar_image('small',$post->user->avatar)}}" width="20" height="20" />
 						</a>
 					</div>
 					<div class="post__comment--text">{{ $comment->comment }}</div>

@@ -1,6 +1,7 @@
 /* Heading Font */
 @font-face {
     font-family: 'beebs';
+    font-display: auto;
     src: url('/fonts/BebasNeue-webfont.eot');
     src: url('/fonts/BebasNeue-webfont.eot?#iefix') format('embedded-opentype'),
          url('/fonts/BebasNeue-webfont.woff') format('woff'),
@@ -12,6 +13,7 @@
 /* Body Font */
 @font-face {
 	font-family: 'gm';
+	font-display: auto;
 	src: url('/fonts/gotham-book-webfont.eot');
 	src: url('/fonts/gotham-book-webfont.eot?#iefix') format('embedded-opentype'),
 		 url('/fonts/gotham-book-webfont.woff') format('woff'),
@@ -22,6 +24,7 @@
 }
 @font-face {
 	font-family: 'gm';
+	font-display: auto;
 	src: url('/fonts/gotham-medium-webfont.eot');
 	src: url('/fonts/gotham-medium-webfont.eot?#iefix') format('embedded-opentype'),
 		 url('/fonts/gotham-medium-webfont.woff') format('woff'),
@@ -36,6 +39,7 @@
  */
  @font-face{
  	font-family:'FontAwesome';
+ 	font-display: auto;
  	src:url('/fonts/fontawesome-webfont.eot?v=4.6.1');
  	src:url('/fonts/fontawesome-webfont.eot?#iefix&v=4.6.1') format('embedded-opentype'),
  		url('/fonts/fontawesome-webfont.woff2?v=4.6.1') format('woff2'),
