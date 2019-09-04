@@ -1,3 +1,4 @@
+
 <?php
 
 /*
@@ -26,10 +27,6 @@ Route::get('/test',function() {
 
 
 
-Route::get('/','HomeController@index', function () {
-    return redirect()->intended('home');
-});
-
 Route::get('/welcome','HomeController@welcome');
 
 Route::get('/notifications','PageController@notifications');
@@ -40,6 +37,11 @@ Route::get('/contact','PageController@contact');
 Route::post('/contact','PageController@contactSubmit');
 
 Auth::routes(['verify'=>true]);
+
+Route::get('/','HomeController@index', function () {
+    return redirect()->intended('home');
+});
+
 Route::get('/change-password','AdminController@showChangePasswordForm');
 Route::post('/change-password','AdminController@updatePassword');
 
