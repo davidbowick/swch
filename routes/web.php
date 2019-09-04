@@ -108,5 +108,5 @@ Route::get('/{username}/{param}/comments','ProfilesController@showSinglePostWith
 Route::get('/user/like/{id}',['as' => 'user.like', 'uses' => 'LikeController@likeUser']);
 
 
-Route::post('/deploy','DeployController@deploy');
+// Route::post('/deploy','DeployController@deploy');
 
