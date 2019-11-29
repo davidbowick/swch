@@ -8,6 +8,9 @@ use App\Profile;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use App\Notifications\AdminNotifications;
+use Illuminate\Notifications\Notifiable;
+use App\Events\AdminEvents;
 use Illuminate\Foundation\Auth\RegistersUsers;
 
 class RegisterController extends Controller
@@ -23,7 +26,7 @@ class RegisterController extends Controller
     |
     */
 
-    use RegistersUsers;
+    use RegistersUsers, Notifiable;
 
     /**
      * Where to redirect users after registration.
@@ -95,6 +98,17 @@ class RegisterController extends Controller
         Profile::create([
             'user_id' => $user->id
         ]);
+
+        $this->notifier['user'] = $user;
+        $this->notifier['type'] = 'new_registration';
+        event(new AdminEvents($this->notifier));
+        $admins = User::where('type', 'admin');
+        if ($admins) {
+            // $admins->notify(new AdminNotifications($user));
+        }
+        // User::where('type','admin')->notify(new AdminNotifications($user));
+        // User::find($post->user_id)->notify(new LikeNotification($like_notification));
+
 
         $user->sendEmailVerificationNotification();
 

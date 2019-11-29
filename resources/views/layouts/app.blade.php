@@ -11,7 +11,6 @@
     {{-- PWA Stuff --}}
     {{-- <meta rel="manifest" href="/manifest.json" /> --}}
     <link rel="manifest" href="/manifest.json">
-
     <link rel="icon" type="image/png" href="{{ asset('images/favicon-256.png') }}" sizes="256x256" />
     <link rel="icon" type="image/png" href="{{ asset('images/favicon-128.png') }}" sizes="128x128" />
     <link rel="icon" type="image/png" href="{{ asset('images/favicon-64.png') }}" sizes="64x64" />
@@ -28,13 +27,13 @@
     <meta property="og:title" content="SW/CH | The Songwriting Challenge" />
     <meta property="og:description" content="A songwriting community to encourage regular writing by using community-generated prompts." />
 
-    {{-- <meta property="og:image" content="https://euro-travel-example.com/thumbnail.jpg" /> --}}
-{{--     <meta property="og:url" content="https://songwritingchallenge.com/" />
-    <meta name="twitter:card" content="summary_large_image" />
+    <meta property="og:image" content="{{ asset('images/favicon-512.png') }}" />
+    <meta property="og:url" content="https://songwritingchallenge.com/" />
+    <meta name="twitter:card" content="SW/CH | The Songwriting Challenge" />
     <meta property="og:site_name" content="SW/CH" />
-    <meta name="twitter:image:alt" content="Alt text for image" /> --}}
+    <meta name="twitter:image:alt" content="SW/CH | The Songwriting Challenge" />
+
     {{-- Non-Essential, But Required for Analytics --}}
-    {{-- <title>The Songwriting Challenge - A Songwriting Community  | SW/CH</title> --}}
     <title>@yield('title','The Songwriting Challenge - A Songwriting Community') | SW/CH</title> 
     <meta name="Description" content="A songwriting community to encourage regular writing by using community-generated prompts.">
     {{-- Styles --}}
@@ -54,6 +53,7 @@
                         <a class="main-nav__admin-link" href="/admin">
                             <i class="fa fa-cog"></i>
                             <span class="visually-hidden">Admin</span>
+                            {{-- <span class="has-notifications {{ $hasNotifications ? 'show' : ''}}">{{ $notificationCount }}</span> --}}
                         </a>
                         @endif
                         <a href="#" class="no-link main-nav__search-link">

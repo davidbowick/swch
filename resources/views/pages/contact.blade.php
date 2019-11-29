@@ -9,11 +9,11 @@
 		{{ session()->get('message') }}
 	</div>
 	@endif
-	<form action="/contact" method="POST">
+	<form id="contact-form" action="/contact" method="POST" honey-form>
 		@csrf
-		<div class="field special-field">
-			<label for="birthday">Birthday</label>
-			<input id="birthday" type="text" name="birthday" value="">
+		<div class="field">
+			<label class="visually-hidden" for="birthday">Birthday</label>
+			<input honey-input id="birthday" type="text" name="birthday" value="">
 		</div>
 		<div class="field">
 			<label for="name">Name</label>

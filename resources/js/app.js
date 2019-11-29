@@ -83,6 +83,7 @@ MAIN_CONTENT = '#main-content';
 $(function() {
 	fadeInElements();
 	stickySidebar();
+	honeypotForms();
 
 	/* Show lyrics on click */
 	$(document).on('click','.show-lyrics',function(e) {
@@ -706,6 +707,17 @@ $.fn.toggleAttr = function(attr) {
   });
 };
 
+function honeypotForms() {
+	var honeypotForm = $('[honey-form]');
+	honeypotForm.submit(function(e) {
+		var $this = $(this);
+		if($this.find('[honey-input]').val() != '') {
+			// alert('no way jose!');
+			return false;
+		}			
+	});
+}
+
 if(isMobile()) {
 	var userDropWrap = '.user-drop-wrap';
 	var searchContainer = '.top-search-wrapper';
@@ -954,8 +966,16 @@ channel.listen('post-liked',function(data) {
  	$(notificationsCount).text(parseInt($(notificationsCount).text()) + 1);	
  	var newNotification = $('<div class="main-nav__notification">'+data.message+'</div>').prependTo($(notificationsList));
  });
+ var adminChannel = pusher.subscribe('admin');
+ adminChannel.bind('admin',function(data) {
+ 	var adminNotificationsCount = '.main-nav__admin-link .has-notifications',
+ 		adminNotificationList = 'main-nav__admin-link .main-nav__notifications-list';
+ 	$(adminNotificationsCount).text(parseInt($(adminNotificationsCount).text()) + 1);
+ });
+
 
 
 if('serviceWorker' in navigator) {
 	navigator.serviceWorker.register('/js/sw.js');
 }
+

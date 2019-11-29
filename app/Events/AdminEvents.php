@@ -11,7 +11,7 @@ use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 
-class PostLiked implements ShouldBroadcast
+class AdminEvents implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
@@ -29,19 +29,12 @@ class PostLiked implements ShouldBroadcast
     {
         $this->data = array(
             'user'=> $notifier['user'],
-            'post'=> $notifier['post'],
-            'liked_by' => $notifier['liked_by'],
             'type'=> $notifier['type']
         );
-        if($notifier['type'] == 'like') {
-            $this->message = '<a href="/' . $notifier['liked_by']->username . '">' . $notifier['liked_by']->name . '</a> liked <a href="/' . $notifier['user']->username . '/' . $notifier['post']->slug . '">' . $notifier['post']->title .'</a>';
-        }
-        if($notifier['type'] == 'comment') {
-            $url = '/' . $notifier['user']->username . '/' . $notifier['post']->slug . '/comments';
-            $this->message = '<a href="' . $url . '">' . $notifier['liked_by']->name . '</a> commented on <a href="' . $url . '">' . $notifier['post']->title .'</a>';
+        if($notifier['type'] == 'registration') {
+        	$this->message = '<a href="/' . $notifier['user']->username . '">' . $notifier['user']->name . '</a> just signed up!' ;            
         }
     }
-
     /**
      * Get the channels the event should broadcast on.
      *
@@ -50,11 +43,11 @@ class PostLiked implements ShouldBroadcast
     public function broadcastOn()
     {
         // return new PrivateChannel('notifications');
-        return ['notifications.' . $this->data['user']->id];
+        return ['admin'];
     }
 
     public function broadcastAs()
     {
-      return 'post-liked';
+      return 'admin';
     }
 }

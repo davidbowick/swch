@@ -68,6 +68,7 @@ class LikeController extends Controller
             if($type == 'App\Post') {
                 event(new PostLiked($this->notifier));    
             }
+            
     	} else {
     		if(is_null($existing_like->deleted_at)) {
     			$existing_like->delete();

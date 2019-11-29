@@ -18,6 +18,7 @@ html {
 [hidden] {
     display: none;
 }
+
 .relative {
     position: relative;
 }
@@ -1414,6 +1415,7 @@ p.large-text {
     min-height: 250px;
     margin-bottom: -$gutter-site;
 }
+[honey-input],
 .visually-hidden { /* https://snook.ca/archives/html_and_css/hiding-content-for-accessibility */
     position: absolute !important;
     height: 1px; width: 1px;
