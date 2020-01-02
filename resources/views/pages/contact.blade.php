@@ -15,6 +15,11 @@
 			<label class="visually-hidden" for="birthday">Birthday</label>
 			<input honey-input id="birthday" type="text" name="birthday" value="">
 		</div>
+		<div class="field" style="display:none;">
+			<label for="faxonly">Fax Only
+				<input type="checkbox" name="faxonly" id="faxonly" />
+			</label>
+		</div>
 		<div class="field">
 			<label for="name">Name</label>
 			<input id="name" type="text" name="name" value="{{ Auth::user() ? Auth::user()->name : '' }}">
