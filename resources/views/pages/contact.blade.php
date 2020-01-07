@@ -11,13 +11,13 @@
 	@endif
 	<form id="contact-form" action="/contact" method="POST" honey-form>
 		@csrf
-		<div class="field">
+		<div class="field ohnohoney">
 			<label class="visually-hidden" for="birthday">Birthday</label>
-			<input honey-input id="birthday" type="text" name="birthday" value="">
+			<input autocomplete="off" honey-input id="birthday" type="text" name="birthday" value="">
 		</div>
-		<div class="field" style="display:none;">
+		<div class="field ohnohoney">
 			<label for="faxonly">Fax Only
-				<input type="checkbox" name="faxonly" id="faxonly" />
+				<input autocomplete="off" type="checkbox" name="faxonly" id="faxonly" />
 			</label>
 		</div>
 		<div class="field">
